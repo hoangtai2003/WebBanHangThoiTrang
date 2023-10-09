@@ -1,2 +1,8 @@
-<?php include_once('includes/header.php') ?>
-<?php include_once('includes/footer.php') ?>
+<?php
+    include('../config/config.php');
+    include('includes/header.php'); 
+?>
+<?php 
+    include('includes/footer.php') 
+?>
+
