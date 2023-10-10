@@ -12,5 +12,6 @@
             $_SESSION['message'] = "Mật khẩu mới của bạn là: ". "<b>$newPassword</b>" ;
             header('Location: forgot_password.php');
         }
+        $connection->close();
     }
 ?>

@@ -1,10 +1,7 @@
 <?php
     session_start();
-    if(!isset($_SESSION['message'])){
-        $_SESSION['message'] = "";
-    }
-    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
-        header("Location: ../../admin/index.php");
+    if(!isset($_SESSION['message_change'])){
+        $_SESSION['message_change'] = "";
     }
 ?>
 <!DOCTYPE html>
@@ -15,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login</title>
+        <title>Change Password</title>
         <link href="./../assets/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -27,26 +24,27 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Change Password</h3></div>
                                     <div class="card-body">
-                                        <form method="post" action="login_action.php">
+                                        <form method="post" action="change_password_action.php">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="name"  type="text" placeholder="UserName" />
-                                                <label for="inputEmail">UserName</label>
+                                                <input required class="form-control" name="old_password"  type="password" placeholder="Old Password" />
+                                                <label for="inputPassword">Old Password</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="password"  type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
+                                                <input required class="form-control" name="new_password"  type="password" placeholder="New Password" />
+                                                <label for="inputPassword">New Password</label>
                                             </div>
-                                            <font color=red><?php echo $_SESSION['message'];?></font>
+                                            <div class="form-floating mb-3">
+                                                <input required class="form-control" name="cnew_password"  type="password" placeholder="New Confirm Password" />
+                                                <label for="inputPassword">New Confirm Password</label>
+                                            </div>
+                                            <font color=red><?php echo $_SESSION['message_change'];?></font>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="forgot_password.php">Forgot Password?</a>
-                                                <button type="submit" class="btn btn-primary btn-block" name="login_btn">Login</button>
+                                                <button type="submit" class="btn btn-primary btn-block" name="change_btn">Save</button>
+                                                <a href="../../admin/index.php" class="btn btn-primary">Home</a>
                                             </div>
                                         </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.php">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -74,5 +72,5 @@
     </body>
 </html>
 <?php
-    unset($_SESSION['message']);
+    unset($_SESSION['message_change']);
 ?>
