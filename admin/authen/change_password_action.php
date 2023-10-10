@@ -24,6 +24,8 @@
             }
         }
         $connection->close();
+    }else{
+        header('Location: change_password.php');
     }
     
 ?>

@@ -13,5 +13,7 @@
             header('Location: forgot_password.php');
         }
         $connection->close();
+    }else{
+        header('Location: forgot_password.php');
     }
 ?>
