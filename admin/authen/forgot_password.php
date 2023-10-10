@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login</title>
+        <title>Forgot Password</title>
         <link href="./../assets/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -24,26 +24,21 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Forgot Password</h3></div>
                                     <div class="card-body">
-                                        <form method="post" action="login_action.php">
+                                        <form method="post" action="forgot_password_action.php">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="name"  type="text" placeholder="UserName" />
-                                                <label for="inputEmail">UserName</label>
+                                                <input required class="form-control" name="name" type="text" placeholder="UserName" />
+                                                <label for="inputUserName">UserName</label>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" name="password"  type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
-                                            </div>
-                                            <font color=red><?php echo $_SESSION['message'];?></font>
+                                            <font color="red"><?php echo $_SESSION['message']; ?></font>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="forgot_password.php">Forgot Password?</a>
-                                                <button type="submit" class="btn btn-primary btn-block" name="login_btn">Login</button>
+                                                <button type="submit" class="btn btn-primary btn-block" name="forgot_password_btn">Submit</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.php">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="login.php">Back to Login</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +50,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                           <div class="text-muted">&copy; Your Website 2023</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
