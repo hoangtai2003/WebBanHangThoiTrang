@@ -31,11 +31,11 @@
                                     <div class="card-body">
                                         <form method="post" action="login_action.php">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="name"  type="text" placeholder="UserName" />
+                                                <input required class="form-control" name="name"  type="text" placeholder="UserName" />
                                                 <label for="inputEmail">UserName</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="password"  type="password" placeholder="Password" />
+                                                <input required class="form-control" name="password"  type="password" placeholder="Password" />
                                                 <label for="inputPassword">Password</label>
                                             </div>
                                             <font color=red><?php echo $_SESSION['message'];?></font>
