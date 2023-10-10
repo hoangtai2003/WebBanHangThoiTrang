@@ -3,6 +3,9 @@
     if(!isset($_SESSION['message_change'])){
         $_SESSION['message_change'] = "";
     }
+    if(!isset($_SESSION['loggedin'])){
+        header('Location: login.php');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
