@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,25 +23,27 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
-                                        <form action="register_action" method="POST">
+                                        
+                                       <?php include('message.php') ?>
+                                        <form action="register_action.php" method="POST">
                                             <div class="form-floating mb-3">
-                                                <input require class="form-control" type="name" name="text" placeholder="Enter your name" />
+                                                <input required class="form-control" type="text" name="name" placeholder="Enter your name" />
                                                 <label>UserName</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input require class="form-control" type="email" name="email" placeholder="name@example.com" />
+                                                <input required class="form-control" type="email" name="email" placeholder="name@example.com" />
                                                 <label>Email address</label>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input require class="form-control" type="password" name="password" placeholder="Create a password" />
+                                                        <input required class="form-control" type="password" name="password" placeholder="Create a password" />
                                                         <label >Password</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input require class="form-control" type="password" name="cpassword" placeholder="Confirm password" />
+                                                        <input required class="form-control" type="password" name="cpassword" placeholder="Confirm password" />
                                                         <label>Confirm Password</label>
                                                     </div>
                                                 </div>

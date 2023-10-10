@@ -1,10 +1,3 @@
-<?php
-session_start(); 
-// if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
-//     header('Location: ../../admin/index.php');
-//     exit();
-// }
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,8 +6,8 @@ session_start();
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login</title>
-        <link href="./../assets/css/styles.css" rel="stylesheet" />
+        <title>Reset</title>
+        <link href="./../css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
@@ -25,30 +18,22 @@ session_start();
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Password Recovery</h3></div>
                                     <div class="card-body">
-                                        <?php include('message.php') ?>
-                                        <form action="login_action.php" method="POST">
+                                        <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
+                                        <form action="forgot_password_action" method="POST">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="email"  type="email" placeholder="name@example.com" />
+                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
                                                 <label for="inputEmail">Email address</label>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" name="password"  type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
-                                            </div>
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" name="remember_me" type="checkbox" value="" />
-                                                <label class="form-check-label">Remember Password</label>
-                                            </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
-                                                <button class="btn btn-primary" name="login_btn">Login</button>
+                                                <a class="small" href="login.html">Return to login</a>
+                                                <a class="btn btn-primary" href="login.html">Reset Password</a>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.php">Need an account? Sign up!</a></div>
+                                        <div class="small"><button name="forgot_password_btn">Need an account? Sign up!</button></div>
                                     </div>
                                 </div>
                             </div>
@@ -72,6 +57,6 @@ session_start();
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="./../assets/js/scripts.js"></script>
+        <script src="./../js/scripts.js"></script>
     </body>
 </html>
