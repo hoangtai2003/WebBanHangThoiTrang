@@ -1,6 +1,13 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 	<!-- Navbar Brand-->
-	<a class="navbar-brand ps-3" href="index.html">Admin</a>
+	<?php
+		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
+			// Người dùng đã đăng nhập, hiển thị tên người dùng trên thẻ <a>
+			echo '<a class="navbar-brand ps-3" href="index.php">'.$_SESSION['username'].'</a>';
+		} else {
+			header('Location: ../admin/authen/login.php');
+		}
+	?>
 	<!-- Sidebar Toggle-->
 	<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 	<!-- Navbar Search-->
@@ -18,7 +25,11 @@
 				<li><a class="dropdown-item" href="#!">Settings</a></li>
 				<li><a class="dropdown-item" href="#!">Activity Log</a></li>
 				<li><hr class="dropdown-divider" /></li>
-				<li><a class="dropdown-item" href="#!">Logout</a></li>
+				<li>
+					<form action="authen/logout_action.php" method="POST">
+						<button type="submit" name="logout_btn" class="dropdown-item">Logout</button>
+					</form>
+				</li>
 			</ul>
 		</li>
 	</ul>

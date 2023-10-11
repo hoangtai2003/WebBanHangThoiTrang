@@ -1,16 +1,31 @@
 <?php
     session_start();
     require_once('../../config/config.php');
-    if(isset($_POST['forgot_password_btn'])){
-        $name = $_POST['name'];
-        $sql = "select * from users where UserName = '".$name."'";
+    $name = $_SESSION['username'];
+    if (isset($_POST['change_btn'])){
+        $old_password = $_POST['old_password'];
+        $new_password = $_POST['new_password'];
+        $cnew_password = $_POST['cnew_password'];
+
+        $sql = "select UserPassword from users where UserName = '".$name."'";
         $result = $connection->query($sql) or die ($connection->error);
-        if(mysqli_fetch_array($result)>0){
-            $newPassword = '123';
-            $sqlUpdate = "update users set UserPassword = '".$newPassword."' where UserName = '".$name."'";
-            $resultUpdate = $connection->query($sqlUpdate);
-            $_SESSION['message'] = "Mật khẩu mới của bạn là: ". "<b>$newPassword</b>" ;
-            header('Location: forgot_password.php');
+        if($result->num_rows>0){
+            while($row = $result->fetch_assoc()){
+                $check_oldpassword = $row['UserPassword'];
+            }
+            if($old_password == $check_oldpassword && $new_password == $cnew_password){
+                $sqlUpdate = "update users set UserPassword = '".$new_password."' where UserName = '".$name."'";
+                $resultUpdate = $connection->query($sqlUpdate);
+                $_SESSION['message_change'] = "Đổi mật khẩu thành công!";
+                header('Location: change_password.php');
+            }else{
+                $_SESSION['message_change'] = "Sai thông tin!";
+                header('Location: change_password.php');
+            }
         }
+        $connection->close();
+    }else{
+        header('Location: change_password.php');
     }
+    
 ?>

@@ -29,8 +29,9 @@
             $_SESSION['message'] = 'Password and ConfirmPassword does not Match';
             header("Location: register.php");
         }
+        $connection->close();
     } else {
         header("Location: register.php");
     }
-    $connection->close();
+    
 ?>

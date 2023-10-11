@@ -1,9 +1,8 @@
 <?php
 session_start(); 
-// if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
-//     header('Location: ../../admin/index.php');
-//     exit();
-// }
+if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
+    header("Location: ../../admin/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,11 +26,11 @@ session_start();
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <?php include('message.php') ?>
+                                        <?php include('message.php')?>
                                         <form action="login_action.php" method="POST">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="email"  type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Email address</label>
+                                                <input required class="form-control" name="name"  type="text" placeholder="UserName" />
+                                                <label for="inputEmail">UserName</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" name="password"  type="password" placeholder="Password" />
@@ -42,7 +41,7 @@ session_start();
                                                 <label class="form-check-label">Remember Password</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
+                                                <a class="small" href="forgot_pasword.php">Forgot Password?</a>
                                                 <button class="btn btn-primary" name="login_btn">Login</button>
                                             </div>
                                         </form>
