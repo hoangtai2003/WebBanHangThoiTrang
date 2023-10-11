@@ -28,8 +28,8 @@
                                     <div class="card-body">
                                         <form method="post" action="forgot_password_action.php">
                                             <div class="form-floating mb-3">
-                                                <input required class="form-control" name="name" type="text" placeholder="UserName" />
-                                                <label for="inputUserName">UserName</label>
+                                                <input required class="form-control" name="email" type="email" placeholder="Email" />
+                                                <label for="inputEmail">Email</label>
                                             </div>
                                             <font color="red"><?php echo $_SESSION['message']; ?></font>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
