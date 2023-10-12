@@ -1,5 +1,5 @@
 <?php
-    include('../config/config.php');
+    include('../../config/config.php');
     if (isset($_POST['update_user'])){
         $user_id = $_POST['user_id'];
         $name = $_POST['name'];

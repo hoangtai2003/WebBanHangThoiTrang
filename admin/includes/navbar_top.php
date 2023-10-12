@@ -5,7 +5,7 @@
 			// Người dùng đã đăng nhập, hiển thị tên người dùng trên thẻ <a>
 			echo '<a class="navbar-brand ps-3" href="index.php">'.$_SESSION['username'].'</a>';
 		} else {
-			header('Location: ../admin/authen/login.php');
+			header('Location: ../authen/login.php');
 		}
 	?>
 	<!-- Sidebar Toggle-->
@@ -26,7 +26,7 @@
 				<li><a class="dropdown-item" href="#!">Activity Log</a></li>
 				<li><hr class="dropdown-divider" /></li>
 				<li>
-					<form action="authen/logout_action.php" method="POST">
+					<form action="../authen/logout_action.php" method="POST">
 						<button type="submit" name="logout_btn" class="dropdown-item">Logout</button>
 					</form>
 				</li>

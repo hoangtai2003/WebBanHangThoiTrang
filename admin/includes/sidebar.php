@@ -8,7 +8,7 @@
 						<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 						Dashboard
 					</a>
-					<a class="nav-link" href="user_list.php">
+					<a class="nav-link" href="../User/user_list.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
 						User
 					</a>

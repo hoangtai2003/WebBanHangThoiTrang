@@ -10,7 +10,7 @@
         if (mysqli_fetch_array($result)> 0){
             $_SESSION['loggedin'] = true;//đăng nhập thành công
             $_SESSION['username'] = $name;//lưu tên người dùng
-            header('Location: ../../admin/index.php');
+            header('Location: ../home/index.php');
             exit(0);
         }else {
             $_SESSION['message'] = "Invalid Email or Password";
