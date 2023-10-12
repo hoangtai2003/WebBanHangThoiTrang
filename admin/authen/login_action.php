@@ -7,12 +7,14 @@
         $password = $_POST['password'];
         $password_hash = md5($password);
 
-        $sql = "select UserName, UserPassword from users where UserName = '".$name."' and UserPassword = '".$password_hash."'";
+        $sql = "select UserName, UserPassword from users where BINARY UserName = '".$name."' and UserPassword = '".$password_hash."'";
         $result = $connection->query($sql) or die ($connection->error);
 
         if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $username = $row['UserName'];
             $_SESSION['loggedin'] = true;//đăng nhập thành công
-            $_SESSION['username'] = $name;//lưu tên người dùng
+            $_SESSION['username'] = $username;//lưu tên người dùng
             
             header("Location: ../../admin/index.php"); // Chuyển hướng đến trang dashboard hoặc trang chính sau khi đăng nhập thành công
         } else {
