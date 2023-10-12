@@ -16,10 +16,10 @@
             if($old_password == $check_oldpassword && $new_password == $cnew_password){
                 $sqlUpdate = "update users set UserPassword = '".$new_password."' where UserName = '".$name."'";
                 $resultUpdate = $connection->query($sqlUpdate);
-                $_SESSION['message_change'] = "Đổi mật khẩu thành công!";
+                $_SESSION['message'] = "Đổi mật khẩu thành công!";
                 header('Location: change_password.php');
             }else{
-                $_SESSION['message_change'] = "Sai thông tin!";
+                $_SESSION['message'] = "Sai thông tin!";
                 header('Location: change_password.php');
             }
         }

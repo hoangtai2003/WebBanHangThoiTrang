@@ -1,7 +1,7 @@
 <?php
     session_start();
-    if(!isset($_SESSION['message_change'])){
-        $_SESSION['message_change'] = "";
+    if(!isset($_SESSION['message'])){
+        $_SESSION['message'] = "";
     }
     if(!isset($_SESSION['loggedin'])){
         header('Location: login.php');
@@ -42,7 +42,7 @@
                                                 <input required class="form-control" name="cnew_password"  type="password" placeholder="New Confirm Password" />
                                                 <label for="inputPassword">New Confirm Password</label>
                                             </div>
-                                            <font color=red><?php echo $_SESSION['message_change'];?></font>
+                                            <font color=red><?php echo $_SESSION['message'];?></font>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <button type="submit" class="btn btn-primary btn-block" name="change_btn">Save</button>
                                                 <a href="../../admin/index.php" class="btn btn-primary">Home</a>
@@ -75,5 +75,5 @@
     </body>
 </html>
 <?php
-    unset($_SESSION['message_change']);
+    unset($_SESSION['message']);
 ?>

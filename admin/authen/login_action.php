@@ -10,7 +10,6 @@
         $result = $connection->query($sql) or die ($connection->error);
 
         if ($result->num_rows > 0) {
-            $_SESSION['message'] = "Login Successful";
             $_SESSION['loggedin'] = true;//đăng nhập thành công
             $_SESSION['username'] = $name;//lưu tên người dùng
             
