@@ -36,10 +36,6 @@ session_start();
                                                             <label>Email</label>
                                                             <input type="email" class="form-control" name="email" value=<?= $user['UserEmail'] ?>>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label>Password</label>
-                                                            <input type="password" class="form-control" name="password" value=<?= $user['UserPassword'] ?>>
-                                                        </div>
                                                         <button name="update_user" type="submit" class="btn btn-primary mt-2">Submit</button>
                                                     </form>
                                                 <?php

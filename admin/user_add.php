@@ -10,6 +10,7 @@ session_start();
         <main>
             <div class="container-fluid px-4">
                 <div class="row">
+                <?php include('../admin/authen/message.php'); ?>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">

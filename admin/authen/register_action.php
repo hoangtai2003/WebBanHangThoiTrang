@@ -8,7 +8,7 @@
         $password_hash = md5($password);
         $confirm_password =  $_POST['cpassword'];
         if ($password == $confirm_password){
-            $sql = "SELECT UserEmail from users where UserEmail = '$email'";
+            $sql = "SELECT UserEmail from users where  UserEmail = '$email'";
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
                 $_SESSION['message'] = "Already email Exists";

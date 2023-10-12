@@ -15,7 +15,7 @@ session_start();
                     <li class="breadcrumb-item active">List</li>
                 </ol>
                 <div class="row">
-                    <?php include('message.php'); ?>
+                    <?php include('../admin/authen/message.php'); ?>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
@@ -46,9 +46,8 @@ session_start();
                                                             <td><?=$row['UserEmail'];?></td>
                                                             <td><a href="user_edit.php?UserId=<?=$row['UserId']?>" class="btn btn-success">Edit</a></td>
                                                             <form action="user_delete_action.php" method="POST">
-                                                                <td><button type="submit" name="user_delete" class="btn btn-danger" value="<?=$row['UserId'];?>">Delete</button></td>
+                                                                <td><button type="submit" onclick="return confirm('Are you sure delete <?=$row['UserName'];?>?');" name="user_delete" class="btn btn-danger" value="<?=$row['UserId'];?>">Delete</button></td>
                                                             </form>
-                                                           
                                                         </tr>
                                                     <?php
                                                 }
