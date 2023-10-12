@@ -1,8 +1,5 @@
 <?php
     session_start();
-    if(!isset($_SESSION['message'])){
-        $_SESSION['message'] = "";
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,12 +23,12 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Forgot Password</h3></div>
                                     <div class="card-body">
+                                        <?php include('message.php') ?>
                                         <form method="post" action="forgot_password_action.php">
                                             <div class="form-floating mb-3">
                                                 <input required class="form-control" name="email" type="email" placeholder="Email" />
                                                 <label for="inputEmail">Email</label>
                                             </div>
-                                            <font color="red"><?php echo $_SESSION['message']; ?></font>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <button type="submit" class="btn btn-primary btn-block" name="forgot_password_btn">Submit</button>
                                             </div>
@@ -65,6 +62,3 @@
         <script src="./../assets/js/scripts.js"></script>
     </body>
 </html>
-<?php
-    unset($_SESSION['message']);
-?>

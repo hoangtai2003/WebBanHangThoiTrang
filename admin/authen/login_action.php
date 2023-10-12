@@ -5,8 +5,9 @@
     if (isset($_POST['login_btn'])){
         $name = $_POST['name'];
         $password = $_POST['password'];
+        $password_hash = md5($password);
 
-        $sql = "select UserName, UserPassword from users where UserName = '".$name."' and UserPassword = '".$password."'";
+        $sql = "select UserName, UserPassword from users where UserName = '".$name."' and UserPassword = '".$password_hash."'";
         $result = $connection->query($sql) or die ($connection->error);
 
         if ($result->num_rows > 0) {

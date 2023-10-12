@@ -4,8 +4,11 @@
     $name = $_SESSION['username'];
     if (isset($_POST['change_btn'])){
         $old_password = $_POST['old_password'];
+        $old_password_hash = md5($old_password);
         $new_password = $_POST['new_password'];
+        $new_password_hash = md5($new_password);
         $cnew_password = $_POST['cnew_password'];
+        $cnew_password_hash = md5($cnew_password);
 
         $sql = "select UserPassword from users where UserName = '".$name."'";
         $result = $connection->query($sql) or die ($connection->error);
@@ -13,8 +16,8 @@
             while($row = $result->fetch_assoc()){
                 $check_oldpassword = $row['UserPassword'];
             }
-            if($old_password == $check_oldpassword && $new_password == $cnew_password){
-                $sqlUpdate = "update users set UserPassword = '".$new_password."' where UserName = '".$name."'";
+            if($old_password_hash == $check_oldpassword && $new_password == $cnew_password){
+                $sqlUpdate = "update users set UserPassword = '".$new_password_hash."' where UserName = '".$name."'";
                 $resultUpdate = $connection->query($sqlUpdate);
                 $_SESSION['message'] = "Đổi mật khẩu thành công!";
                 header('Location: change_password.php');

@@ -1,8 +1,5 @@
 <?php
     session_start();
-    if(!isset($_SESSION['message'])){
-        $_SESSION['message'] = "";
-    }
     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
         header("Location: ../../admin/index.php");
     }
@@ -29,6 +26,7 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
+                                        <?php include('message.php') ?>
                                         <form method="post" action="login_action.php">
                                             <div class="form-floating mb-3">
                                                 <input required class="form-control" name="name"  type="text" placeholder="UserName" />
@@ -38,7 +36,6 @@
                                                 <input required class="form-control" name="password"  type="password" placeholder="Password" />
                                                 <label for="inputPassword">Password</label>
                                             </div>
-                                            <font color=red><?php echo $_SESSION['message'];?></font>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small" href="forgot_password.php">Forgot Password?</a>
                                                 <button type="submit" class="btn btn-primary btn-block" name="login_btn">Login</button>
@@ -73,6 +70,3 @@
         <script src="./../assets/js/scripts.js"></script>
     </body>
 </html>
-<?php
-    unset($_SESSION['message']);
-?>

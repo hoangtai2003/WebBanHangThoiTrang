@@ -5,6 +5,7 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $password_hash = md5($password);
         $confirm_password = $_POST['cpassword'];
         if ($password === $confirm_password){
             $sql = "SELECT UserName, UserEmail from users where UserName = '".$name."' or UserEmail = '".$email."'";
@@ -13,7 +14,7 @@
                 $_SESSION['message'] = "Already UserName or Email Exists";
                 header("Location: register.php");
             } else {
-                $user_query = "INSERT INTO users (UserName, UserEmail, UserPassword) values('".$name."','". $email."','" .$password."')";
+                $user_query = "INSERT INTO users (UserName, UserEmail, UserPassword) values('".$name."','". $email."','" .$password_hash."')";
                 $user_query_run = $connection->query($user_query);
                 if ($user_query_run)
                 {

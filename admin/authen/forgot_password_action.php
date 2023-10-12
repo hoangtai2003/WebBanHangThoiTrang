@@ -11,7 +11,8 @@
             $username = $row['UserName'];
 
             $newPassword = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
-            $sqlUpdate = "update users set UserPassword = '".$newPassword."' where UserEmail = '".$email."'";
+            $newPassword_hash = md5($newPassword);
+            $sqlUpdate = "update users set UserPassword = '".$newPassword_hash."' where UserEmail = '".$email."'";
             $resultUpdate = $connection->query($sqlUpdate);
 
             $title = "Cấp lại mật khẩu!";
