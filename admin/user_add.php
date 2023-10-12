@@ -23,15 +23,15 @@ session_start();
                                     </div>
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input type="text" name="name" class="form-control" value=>  
+                                        <input required type="text" name="name" class="form-control" value=>  
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" name="email" value=>
+                                        <input required type="email" class="form-control" name="email" value=>
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>
-                                        <input type="password" class="form-control" name="password">
+                                        <input required type="password" class="form-control" name="password">
                                     </div>
                                     <button name="add_user" type="submit" class="btn btn-primary mt-2">Submit</button>
                                 </form>

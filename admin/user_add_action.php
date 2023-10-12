@@ -6,7 +6,7 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         $password_hash = md5($password);
-        $sql = "SELECT UserEmail from users where UserEmail = '$email'";
+        $sql = "SELECT UserName, UserEmail from users where  UserEmail = '$email' UserName ='$name'";
         $result = mysqli_query($connection,$sql) or die ($connection->error);
         if (mysqli_num_rows($result) > 0){
             $_SESSION['message'] = "Already email Exists";
