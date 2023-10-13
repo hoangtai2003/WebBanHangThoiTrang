@@ -1,10 +1,7 @@
 <?php
 session_start();
-
     include('../../config/config.php');
     include('../includes/header.php'); 
-    include_once('../includes/navbar_top.php');
-    include_once('../includes/sidebar.php')
 ?>
     <div class="container-fluid px-4">
         <ol class="breadcrumb mt-5">
