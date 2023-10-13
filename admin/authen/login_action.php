@@ -4,7 +4,7 @@
     if(isset($_POST['login_btn'])){
         $name = $_POST['name'];
         $password = $_POST['password'];
-        $sql = "Select * from users where UserName = '$name' and UserPassword = '$password'  LIMIT 1";
+        $sql = "Select * from tb_user where UserName = '$name' and UserPassword = '$password'  LIMIT 1";
         $result =mysqli_query($connection,$sql) or die ($connection->error);
         if (mysqli_fetch_array($result)> 0){
             $_SESSION['loggedin'] = true;//đăng nhập thành công
