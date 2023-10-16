@@ -21,15 +21,15 @@ session_start();
                     <div class="card-body">
                         <form action="user_add_action.php" method="POST">
                             <div class="form-group">
-                                <input hidden type="text" name="user_id" class="form-control" value=>  
+                                <input hidden type="text" name="user_id" class="form-control">  
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input required type="text" name="name" class="form-control" value=>  
+                                <input required type="text" name="name" class="form-control">  
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input required type="email" class="form-control" name="email" value=>
+                                <input required type="email" class="form-control" name="email">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>

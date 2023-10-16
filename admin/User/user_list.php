@@ -26,7 +26,8 @@ session_start();
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Phân quyền</th>
                                     <th scope="col">Edit</th>
                                     <th scope="col">Delete</th>
                                 </tr>
@@ -44,13 +45,24 @@ session_start();
                                                     <td><?=$row['UserEmail'];?></td>
                                                     <td><?php
                                                             if($row['UserStatus']==1){
-                                                                echo "Hoạt động";
+                                                                ?>
+                                                                    <span class="badge rounded-pill bg-success p-3">Activate</span>
+                                                                <?php
                                                             }else{
-                                                                echo "Ngừng hoạt động";
+                                                                ?>
+                                                                    <span class="badge rounded-pill bg-success p-3">Inactivate</span>
+                                                                <?php
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td><a href="user_edit.php?UserId=<?=$row['UserId']?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit</a></td>
+                                                    <td><a class="btn btn-info rounded-pill p-2">Phân quyền</a></td>
+                                                    <td>
+                                                        <a 
+                                                            href="user_edit.php?UserId=<?=$row['UserId']?>" 
+                                                            class="btn btn-success">
+                                                            <i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit
+                                                        </a>
+                                                    </td>
                                                     <form action="user_delete_action.php" method="POST">
                                                     <td>
                                                         <button 

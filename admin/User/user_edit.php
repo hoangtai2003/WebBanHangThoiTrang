@@ -43,11 +43,11 @@ session_start();
                                                     <label>Status</label>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="rdstatus" id="rdstatus1" value=1 <?=$user['UserStatus'] == 1 ? 'checked' : '' ?>>
-                                                        <label class="form-check-label" for="rdstatus1">Hoạt động</label>
+                                                        <label class="form-check-label" for="rdstatus1">Activate</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="rdstatus" id="rdstatus0" value=0 <?=$user['UserStatus'] == 0 ? 'checked' : '' ?>>
-                                                        <label class="form-check-label" for="rdstatus0">Ngừng hoạt động</label>
+                                                        <label class="form-check-label" for="rdstatus0">Inactivate</label>
                                                     </div>
                                                 </div>
                                                 <button name="update_user" class="btn btn-primary mt-2">Submit</button>

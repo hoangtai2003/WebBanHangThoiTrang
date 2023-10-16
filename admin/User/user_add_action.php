@@ -16,7 +16,7 @@
                 $_SESSION['message'] = "Already email Exists";
                 header("Location: user_add.php");
             } else {
-                $sql = "Insert into users(UserName, UserEmail, UserPassword) values('$name', '$email', '$password_hash',)";
+                $sql = "Insert into users(UserName, UserEmail, UserPassword) values ('$name', '$email', '$password_hash')";
                 $result = mysqli_query($connection, $sql);
                 $connection->close();
                 if ($result){
@@ -29,9 +29,7 @@
                     exit(0);
                 }
             }
-        }
-       
-        
+        } 
     }
 
 ?>
