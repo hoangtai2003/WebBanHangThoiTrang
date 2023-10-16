@@ -36,6 +36,7 @@ session_start();
                                 <input required type="password" class="form-control" name="password">
                             </div>
                             <button name="add_user" type="submit" class="btn btn-primary mt-2">Submit</button>
+                            <a href="user_list.php" class="btn btn-danger mt-2">Back</a>  
                         </form>
                     </div>
                 </div>

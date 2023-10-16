@@ -26,6 +26,7 @@ session_start();
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
+                                    <th scope="col">Trạng thái</th>
                                     <th scope="col">Edit</th>
                                     <th scope="col">Delete</th>
                                 </tr>
@@ -41,6 +42,14 @@ session_start();
                                                     <th scope="row"><?=$row['UserId'];?></th>
                                                     <td><?=$row['UserName'];?></td>
                                                     <td><?=$row['UserEmail'];?></td>
+                                                    <td><?php
+                                                            if($row['UserStatus']==1){
+                                                                echo "Hoạt động";
+                                                            }else{
+                                                                echo "Ngừng hoạt động";
+                                                            }
+                                                        ?>
+                                                    </td>
                                                     <td><a href="user_edit.php?UserId=<?=$row['UserId']?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit</a></td>
                                                     <form action="user_delete_action.php" method="POST">
                                                     <td>
