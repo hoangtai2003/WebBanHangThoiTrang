@@ -14,6 +14,7 @@
             $newPassword_hash = md5($newPassword);
             $sqlUpdate = "update users set UserPassword = '".$newPassword_hash."' where UserEmail = '".$email."'";
             $resultUpdate = $connection->query($sqlUpdate);
+            $connection->close();
 
             $title = "Cấp lại mật khẩu!";
             $content = "<p>Tài khoản: <b>".$username."</b></p>
@@ -22,12 +23,13 @@
             $mail->forgot_password($title, $content, $email);
             $_SESSION['message'] = "Mật khẩu mới đã được gửi đến email của bạn! Vui lòng kiểm tra!" ;
             header('Location: forgot_password.php');
+            exit();
         }
         else{
             $_SESSION['message'] = "Email không tồn tại!" ;
             header('Location: forgot_password.php');
+            exit();
         }
-        $connection->close();
     }else{
         header('Location: forgot_password.php');
     }

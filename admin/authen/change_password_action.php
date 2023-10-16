@@ -13,6 +13,7 @@
         if (strpos($new_password, ' ') !== false || strpos($cnew_password, ' ') !== false){
             $_SESSION['message'] = "Ký tự nhập vào không được chứa khoảng trắng!";
             header("Location: change_password.php");
+            exit();
         }
         else{
             $sql = "select UserPassword from users where UserName = '".$name."'";
@@ -26,15 +27,18 @@
                     $resultUpdate = $connection->query($sqlUpdate);
                     $_SESSION['message'] = "Đổi mật khẩu thành công!";
                     header('Location: change_password.php');
+                    exit();
                 }else{
                     $_SESSION['message'] = "Sai thông tin!";
                     header('Location: change_password.php');
+                    exit();
                 }
             }
             $connection->close();
         }
     }else{
         header('Location: change_password.php');
+        exit();
     }
     
 ?>
