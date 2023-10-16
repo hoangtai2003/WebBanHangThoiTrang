@@ -1,0 +1,320 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI';
+    font-size: 13px;
+    font-weight: 400;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    min-width: 1200px;
+}
+
+
+.container {
+    min-width: 1200px;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+.box-home .header {
+    background: #009981;
+    margin: 50px 0 20px;
+    display: inline-block;
+    height: 30px;
+    overflow: hidden;
+}
+
+.box-home .header h4 {
+    padding: 5px 60px 6px 35px;
+    margin: 0 0 0 60px;
+    /* background: #00483d; */
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.box-home .header h4 {
+    color: #fff;
+
+}
+
+.lts-product {
+    display: flex;
+    /* justify-content: space-between; */
+    flex-flow: wrap;
+    margin: 0px -10px;
+    animation: append .2s ease-in-out;
+}
+
+.lts-product .item {
+    margin: 0 10px 10px 10px;
+    width: 23%;
+    background: #fff;
+    box-shadow: 0 4px 6px #00000029;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+}
+
+.lts-product .item .img {
+    position: relative;
+    height: 312px;
+    margin: 10px;
+}
+
+img.img_product {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sticker-left {
+    left: 5px;
+    text-align: left;
+}
+
+.sticker {
+    position: absolute;
+    top: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lts-product .item .info {
+    margin-top: 10px;
+    padding: 0 10px 15px 10px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    min-height: 150px;
+}
+
+.lts-product .item .info .price {
+    display: block;
+    color: red;
+    font-size: 18px;
+    clear: both;
+}
+
+.lts-product .item .note {
+    margin: 0;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.lts-product .item .bag {
+    display: inline-block;
+    background: #f7941e 0% 0% no-repeat padding-box;
+    box-shadow: 0 4px 6px #00000029;
+    border-radius: 3px;
+    padding: 3px 5px;
+    color: #fff;
+    font-size: 11px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.text-orange,
+.text-orange * {
+    color: #f7941e;
+}
+
+.lts-product .item .promote {
+    border-radius: 5px;
+    background-image: linear-gradient(#00917a, #079780);
+    padding: 2px;
+    box-shadow: 0 4px 6px #00000029;
+    margin: 3px;
+    position: absolute;
+    top: 50px;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 200ms, visibility 200ms;
+    transition: opacity 200ms, visibility 200ms;
+    color: #333;
+}
+
+
+
+/* new-product  */
+
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700');
+
+button.new-product {
+    margin: 20px;
+    border: none;
+    background: transparent;
+    padding: 0 24px;
+    font-size: 16px;
+    line-height: 52px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    position: relative;
+    color: #3e4651;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+}
+
+button.new-product:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 48px;
+    background: transparent;
+    border: 2px solid #4ab9f2;
+    z-index: -1;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+button.new-product:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    height: 30px;
+    width: 80%;
+    z-index: -1;
+    transition: 0.3s linear;
+}
+
+button.new-product:hover:after {
+    opacity: 0;
+    background: #4ab9f2;
+}
+
+button.new-product:hover {
+    color: #fff;
+}
+
+button.new-product:hover:before {
+    width: 100%;
+    background: #4ab9f2;
+    box-shadow: 0 10px 90px -2px rgba(0, 0, 0, 0.2);
+}
+
+
+.product {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    display: none;
+}
+
+.product.active {
+    display: inline-block;
+}
+
+.product .thumbnail {
+    width: 100%;
+    height: auto;
+}
+
+.product .product-options {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    padding: 5px 10px;
+    margin-right: 41px;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.product .product-options li:hover {
+    color: rgb(255 0 0 / 100%);
+    background-color: yellow;
+}
+
+
+i.fa-solid.fa-ellipsis-vertical.menu_my_product {
+    position: absolute;
+    z-index: 101;
+    right: 0;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    margin: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+i.fa-solid.fa-ellipsis-vertical.menu_my_product:hover {
+    background: rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+}
+
+
+.product a {
+    font-size: 14px;
+    color: #fff;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.product a {
+    padding: 5px;
+    font-size: 14px;
+    color: #ffffff;
+    margin-right: 5px;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.product span:hover i,
+.product span:hover a {
+    color: rgb(0, 187, 255);
+}
+
+.product span{
+    padding: 2px ;
+}
+
+.product span i{
+    font-weight: 17px;
+
+}
+
+
+.btn-booking {
+    font-family: 'Oswald', sans-serif;
+    border: 3px solid blue;
+    padding: 11px 25px;
+    font-size: 20px;
+    font-weight: 500;
+    background: darkblue;
+    color: white !important;
+}
+
+i.fa-solid.fa-list {
+    margin-right: 10px;
+}
+
+.btn-booking:hover {
+    background: rgb(5, 111, 156);
+    color: rgb(248, 0, 0);
+}
