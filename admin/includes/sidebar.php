@@ -4,18 +4,22 @@
 			<div class="sb-sidenav-menu">
 				<div class="nav">
 					<div class="sb-sidenav-menu-heading">Core</div>
-					<a class="nav-link" href="index.html">
+					<a class="nav-link" href="../home/index.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 						Dashboard
 					</a>
+					<?php if(checkPrivilege('../user/user_list.php')) { ?>
 					<a class="nav-link" href="../user/user_list.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-						User
+						Danh sách thành viên
 					</a>
-					<a class="nav-link" href="../user/user_list.php">
+					<?php } ?>
+					<?php if(checkPrivilege('../menu/menu_list.php')) { ?>
+					<a class="nav-link" href="../menu/menu_list.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
-						Role
+						Menu
 					</a>
+					<?php } ?>
 					<div class="sb-sidenav-menu-heading">Interface</div>
 					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
 						<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>

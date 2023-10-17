@@ -3,7 +3,7 @@
 	<?php
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
 			// Người dùng đã đăng nhập, hiển thị tên người dùng trên thẻ <a>
-			echo '<a class="navbar-brand ps-3" href="index.php">'.$_SESSION['username'].'</a>';
+			echo '<a class="navbar-brand ps-3" href="index.php">Xin chào '.$_SESSION['username'].'</a>';
 		} else {
 			header('Location: ../authen/login.php');
 		}
