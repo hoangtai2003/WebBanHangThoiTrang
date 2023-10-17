@@ -1,148 +1,147 @@
--- Tạo cơ sở dữ liệu
-CREATE DATABASE IF NOT EXISTS WebBanHangThoiTrang;
-
--- Sử dụng cơ sở dữ liệu
-USE WebBanHangThoiTrang;
-
--- Tạo bảng Category
-CREATE TABLE categorys (
-    CateId INT AUTO_INCREMENT PRIMARY KEY,
-    CateTitle NVARCHAR(150) NOT NULL,
-    CateDescription TEXT,
-    CateImage NVARCHAR(250),
-    CateCreateDate DATETIME NOT NULL,
-    CateModifiedDate DATETIME NOT NULL,
-    CateAlias NVARCHAR(150) NOT NULL
+CREATE TABLE IF NOT EXISTS `User` (
+  `UserId` int NOT NULL AUTO_INCREMENT,
+  `UserName` varchar(200) NOT NULL,
+  `UserPassword` varchar(200) NOT NULL,
+  `UserPhone` varchar(200) ,
+  `UserEmail` varchar(200) NOT NULL,
+  `UserRole` tinyint  DEFAULT 0,
+  `UserStatus` tinyint  DEFAULT 1,
+  `UserCreateDate` timestamp  DEFAULT CURRENT_TIMESTAMP,
+  `UserModifiedDate` timestamp  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`UserId`)
 );
 
--- Tạo bảng Comment
-CREATE TABLE comments (
-    CmtId INT AUTO_INCREMENT PRIMARY KEY,
-    CusId INT NOT NULL,
-    ProdId INT NOT NULL,
-    CmtTitle NVARCHAR(150) NOT NULL,
-    CmtDate DATETIME NOT NULL,
-    CmtDescription TEXT,
-    CmtStatus TINYINT NOT NULL DEFAULT 1,
-    FOREIGN KEY (CusId) REFERENCES Customer (CusId),
-    FOREIGN KEY (ProdId) REFERENCES Product (ProdId)
+ -- Bảng Role:
+ CREATE TABLE IF NOT EXISTS `Role` (
+  `RoleId` int NOT NULL AUTO_INCREMENT,
+  `RoleName` varchar(200) NOT NULL,
+  `RoleDescription` varchar(255) NOT NULL,
+  PRIMARY KEY (`RoleId`)
 );
 
--- Tạo bảng Customer
-CREATE TABLE customers (
-    CusId INT AUTO_INCREMENT PRIMARY KEY,
-    CusUser NVARCHAR(150) NOT NULL,
-    CusPass NVARCHAR(150) NOT NULL,
-    CusName NVARCHAR(150) NOT NULL,
-    CusPhone NVARCHAR(50) NOT NULL,
-    CusAddress TEXT NOT NULL,
-    CusEmail NVARCHAR(150) NOT NULL,
-    CusCreateDate DATETIME NOT NULL,
-    CusModifiedDate DATETIME NOT NULL,
-    CusIsActive TINYINT NOT NULL DEFAULT 1,
-    UNIQUE KEY (CusUser),
-    UNIQUE KEY (CusPhone)
+-- Bảng RoleUser:
+CREATE TABLE IF NOT EXISTS `RoleUser` (
+  `RoleUserId` int NOT NULL AUTO_INCREMENT,
+  `RoleId` int NOT NULL,
+  `UserId` int NOT NULL,
+  PRIMARY KEY (`RoleUserId`),
+  FOREIGN KEY (`RoleId`) REFERENCES `Role` (`RoleId`),
+  FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`)
+) ;
+
+
+-- Bảng Menu:
+CREATE TABLE `Menu` (
+  `MenuId` int NOT NULL AUTO_INCREMENT,
+  `MenuName` varchar(50) NOT NULL,
+  `MenuCreateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MenuModifiedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`MenuId`)
+) ;
+
+
+-- Bảng Customer:
+CREATE TABLE IF NOT EXISTS `Customer` (
+  `CusId` int NOT NULL AUTO_INCREMENT,
+  `CusUserName` varchar(100) NOT NULL,
+  `CusPassWord` varchar(150) not null,
+  `CusName` nvarchar(150) not null,
+  `CusEmail` varchar(250) NOT NULL,
+  `CusPhone` varchar(20) NOT NULL,
+  `CusAddress` varchar(250) NOT NULL,
+  `CusStatus` tinyint not null default 1,
+  `CusCreateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CusModifiedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`CusId`)
 );
 
--- Tạo bảng Menu
-CREATE TABLE menus (
-    MenuId INT AUTO_INCREMENT PRIMARY KEY,
-    MenuName NVARCHAR(50) NOT NULL,
-    MenuCreateDate DATETIME NOT NULL,
-    MenuModifiedDate DATETIME NOT NULL
+-- Bảng PaymentMethod
+CREATE TABLE IF NOT EXISTS `PaymentMethod` (
+  `PayId` int NOT NULL AUTO_INCREMENT,
+  `PayType` varchar(50) NOT NULL,
+  PRIMARY KEY (`PayId`)
+); 
+
+-- Bảng Category:
+CREATE TABLE IF NOT EXISTS `Category` (
+  `CateId` int NOT NULL AUTO_INCREMENT,
+  `CateName` varchar(150) NOT NULL,
+  `CateDescription` varchar(250) NOT NULL,
+  `CateImage` nvarchar(250) not null, 
+  `CateCreateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CateModifiedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `CateStatus` tinyint NOT NULL DEFAULT 1,
+  PRIMARY KEY (`CateId`)
 );
 
--- Tạo bảng Order
-CREATE TABLE orders (
-    OrderId INT AUTO_INCREMENT PRIMARY KEY,
-    OrderCode TEXT NOT NULL,
-    CusId INT NOT NULL,
-    PayId INT NOT NULL,
-    OrderTotalAmount DECIMAL(18, 2) NOT NULL,
-    OrderQuantity INT NOT NULL,
-    OrderCreateDate DATETIME NOT NULL,
-    OrderStatus TINYINT NOT NULL DEFAULT 0,
-    FOREIGN KEY (CusId) REFERENCES Customer (CusId),
-    FOREIGN KEY (PayId) REFERENCES PaymentMethod (PayId)
+-- Bảng product:
+CREATE TABLE IF NOT EXISTS `Product` (
+  `ProdId` int NOT NULL AUTO_INCREMENT,
+  `ProdName` varchar(250) NOT NULL,
+  `ProdDescription` varchar(4000) NOT NULL,
+  `ProdImage` varchar(250) NOT NULL,
+  `ProdPrice` decimal(18, 2) NOT NULL,
+  `ProdPriceSale` decimal(18, 2) not null,
+  `ProdQuantity` int NOT NULL,
+  `ProdIsSale` tinyint NOT NULL DEFAULT 0,
+  `ProdIsHot` tinyint NOT NULL DEFAULT 0,
+  `CatId` int NOT NULL,
+  `UserId` int NOT NULL,
+  `ProdViewCount` int not null,
+  `ProdCreateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ProdModifiedDate`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ProdId`),
+  FOREIGN KEY (`CatId`) REFERENCES `Category` (`CateId`),
+  FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`)
 );
 
--- Tạo bảng OrderDetail
-CREATE TABLE orderdetails (
-    OrderId INT NOT NULL,
-    ProdId INT NOT NULL,
-    OrdQuantity INT NOT NULL,
-    OrdPrice DECIMAL(18, 2) NOT NULL,
-    PRIMARY KEY (OrderId, ProdId),
-    FOREIGN KEY (OrderId) REFERENCES Order (OrderId),
-    FOREIGN KEY (ProdId) REFERENCES Product (ProdId)
+
+-- Bảng ProductImage:
+CREATE TABLE IF NOT EXISTS `ProductImage` (
+  `ProdImageId` int NOT NULL AUTO_INCREMENT,
+  `ProdId` int NOT NULL,
+  `Image` nvarchar(4000) NOT NULL,
+  `IsDefault` tinyint NOT NULL DEFAULT 1,
+  PRIMARY KEY (`ProdImageId`),
+  FOREIGN KEY (`ProdId`) REFERENCES `Product` (`ProdId`)
 );
 
--- Tạo bảng PaymentMethod
-CREATE TABLE paymentmethods (
-    PayId INT AUTO_INCREMENT PRIMARY KEY,
-    PayType NVARCHAR(50) NOT NULL
+
+-- Bảng Comment: 
+CREATE TABLE IF NOT EXISTS `Comment` (
+  `CmtId` int NOT NULL AUTO_INCREMENT,
+  `CusId` int NOT NULL,
+  `ProdId` int NOT NULL,
+  `CmtDescription` varchar(4000) NOT NULL,
+  `CmtCreateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CmtModifiedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  PRIMARY KEY (`CmtId`),
+  FOREIGN KEY (`CusId`) REFERENCES `Customer` (`CusId`),
+  FOREIGN KEY (`ProdId`) REFERENCES `Product` (`ProdId`)
 );
 
--- Tạo bảng Product
-CREATE TABLE products (
-    ProdId INT AUTO_INCREMENT PRIMARY KEY,
-    UserId INT NOT NULL,
-    ProdTitle NVARCHAR(250) NOT NULL,
-    ProdDescription TEXT,
-    ProdDetail TEXT,
-    ProdImage NVARCHAR(250),
-    ProdPrice DECIMAL(18, 2) NOT NULL,
-    ProdPriceSale DECIMAL(18, 2),
-    ProdQuantity INT NOT NULL,
-    ProdIsSale TINYINT NOT NULL DEFAULT 0,
-    ProdIsHot TINYINT NOT NULL DEFAULT 0,
-    CateId INT NOT NULL,
-    ProdCreateDate DATETIME NOT NULL,
-    ProdModifiedDate DATETIME NOT NULL,
-    ProdAlias NVARCHAR(250) NOT NULL,
-    ProdIsActive TINYINT NOT NULL DEFAULT 1,
-    ProdViewCount INT NOT NULL,
-    FOREIGN KEY (UserId) REFERENCES User (UserId),
-    FOREIGN KEY (CateId) REFERENCES Category (CateId)
+-- Bảng Order: 
+CREATE TABLE IF NOT EXISTS `Order` (
+  `OrderId` int NOT NULL AUTO_INCREMENT,
+   `OrderCode` nvarchar(4000) NOT NULL,
+  `CusId` int NOT NULL,
+  `PayId` int not null,
+  `OrderTotalPrice` decimal(18, 2) NOT NULL,
+  `OrderQuantity` int NOT NULL,
+  `OrderCreateDate` datetime NOT NULL,
+  `OrderStatus` tinyint NOT NULL DEFAULT 0,
+  PRIMARY KEY (`OrderId`),
+  foreign key (`PayId`) references `PaymentMethod` (`PayId`),
+  FOREIGN KEY (`CusId`) REFERENCES `Customer` (`CusId`)
 );
 
--- Tạo bảng ProductImage
-CREATE TABLE productimages (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    ProdId INT NOT NULL,
-    Image TEXT NOT NULL,
-    IsDefault TINYINT NOT NULL DEFAULT 1,
-    FOREIGN KEY (ProdId) REFERENCES Product (ProdId)
+-- Bảng OrderDetail:
+CREATE TABLE IF NOT EXISTS `OrderDetail` (
+  `OrderId` int NOT NULL,
+  `ProdId` int NOT NULL,
+  `OrdQuantity` int NOT NULL,
+  `OrdPrice` decimal(18, 2) NOT NULL,
+  PRIMARY KEY (`OrderId`, `ProdId`),
+  FOREIGN KEY (`OrderId`) REFERENCES `Order` (`OrderId`),
+  FOREIGN KEY (`ProdId`) REFERENCES `Product` (`ProdId`)
 );
-
--- Tạo bảng Role
-CREATE TABLE roles (
-    RoleId INT AUTO_INCREMENT PRIMARY KEY,
-    RoleName NVARCHAR(150) NOT NULL,
-    RoleDescription NVARCHAR(250)
-);
-
--- Tạo bảng RoleUser
-CREATE TABLE roleusers (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    UserId INT,
-    RoleId INT,
-    FOREIGN KEY (UserId) REFERENCES User (UserId),
-    FOREIGN KEY (RoleId) REFERENCES Role (RoleId)
-);
-
--- Tạo bảng User
-CREATE TABLE users (
-    UserId INT AUTO_INCREMENT PRIMARY KEY,
-    UserName NVARCHAR(50) NOT NULL,
-    UserPassword NVARCHAR(50) NOT NULL,
-    UserPhone NVARCHAR(50) NOT NULL,
-    UserEmail NVARCHAR(150),
-    UserCreateDate DATETIME NOT NULL,
-    UserModifiedDate DATETIME NOT NULL
-    UserStatus tinyint(1) NOT NULL
-);
-
--- Sử dụng cơ sở dữ liệu
-USE WebBanHangThoiTrang;
-
