@@ -16,7 +16,7 @@
             include('../../helpers/function.php'); 
             $regexResult = checkPrivilege();
             if (!$regexResult){
-                echo 'Bạn không có quyền';exit;
+                echo 'Bạn không có quyền';
             }
         ?>
         <?php include_once('../includes/navbar_top.php') ?>

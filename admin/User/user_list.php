@@ -55,7 +55,7 @@ session_start();
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td><a class="btn btn-info rounded-pill p-2">Phân quyền</a></td>
+                                                    <td><a href="role.php?UserId=<?=$row['UserId']?>" class="btn btn-info rounded-pill p-2">Phân quyền</a></td>
                                                     <?php if(checkPrivilege('user_edit.php?UserId=0')) { ?>
                                                         <td>
                                                             <a 
