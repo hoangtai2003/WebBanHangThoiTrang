@@ -4,33 +4,60 @@ session_start();
 include('../../config/config.php');
 include('../includes/header.php');
 include_once('../includes/navbar_top.php');
-include_once('../includes/sidebar.php')
+include_once('../includes/sidebar.php');
+require_once('../../config/config.php');
+$sql = "select * from Category";
+$result = $connection->query($sql) or die($connection->connect_error);
+
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Thêm Sản Phẩm Mới</title>
-   <link rel="stylesheet" href="./createProduct.css">
+    <link rel="stylesheet" href="./createProduct.css?v= <?php echo time(); ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
 </head>
 
 <body>
-<div class="container-new-product">
-        <form class="form-create-product" action="./createproductaction.php" method="post" enctype="multipart/form-data">
+
+    <div class="container-new-product">
+        <a href="../myProduct/myProduct.php" class="back-button">
+            <i class="fas fa-home"></i>
+        </a>
+        <form class="form-create-product" action="./createProductAction.php" method="post" enctype="multipart/form-data">
             <span>
                 <div class="form-container">
                     <h1>Tạo sản phẩm mới</h1>
                     <label for="product_type_input">Loại hàng:</label>
-                    <input type="text" id="product_type_input" placeholder="Sử dụng gợi ý sẽ dễ dang tiếp cận khách hàng hơn" name="product_type">
-                    <select id="product_type_select" onchange="updateInput()">
-                        <option value="">Gợi ý loại hàng</option>
-                        <?php # for ($i = 0; $i < count($category); $i++) { ?>
-                            <option value="Điện thoại thông minh">Điện thoại thông minh</option>
-                            <option value="Laptop, Máy tính cá nhân">Laptop, Máy tính cá nhân</option>
-                            <option value="Thiết bị gia dụng">Thiết bị gia dụng</option>
-                            <option value="<?php # echo $category[$i]["category"] ?>"><?php # echo $category[$i]["category"] ?></option>
-                        <?php # }   ?>
+                    <!-- <input type="text" id="product_type_input" placeholder="Sử dụng gợi ý sẽ dễ dang tiếp cận khách hàng hơn" name="product_type"> -->
+                    <select name="slCid" id="">
+                        <?php
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<option value="' . $row["CateId"] . '">' . $row["CateName"] . '</option>';
+                        }
+                        ?>
                     </select>
+                    <!-- <label for="product_sale_name">Tình trạng sale:</label>
+                    <select id="product_sale_select">
+                        <option value="">Chọn tình trạng sale</option>
+                        <option value="1">Đang sale</option>
+                        <option value="0">Hết sale</option>
+                    </select>
+                    <label for="product_hot_name">Tình trạng hot:</label>
+                    <select id="product_hot_select">
+                        <option value="">Chọn tình trạng hot</option>
+                        <option value="1">Đang hot</option>
+                        <option value="0">Hết hot</option>
+                    </select>
+                    <label for="product_status_name">Tình trạng status:</label>
+                    <select id="product_status_select">
+                        <option value="">Chọn tình trạng sản phẩm</option>
+                        <option value="1">Đang bán</option>
+                        <option value="0">Hết hàng</option>
+                    </select> -->
 
                     <script>
                         const updateInput = () => {
@@ -46,6 +73,10 @@ include_once('../includes/sidebar.php')
 
                     <label for="product_quantity">Số lượng:</label>
                     <input type="number" id="product_quantity" name="product_quantity">
+
+                    <!--                     
+                    <label for="product_view_quantity">Số lượt xem:</label>
+                    <input type="number" id="product_view_quantity" name="product_view_quantity"> -->
 
                     <div class="price-container">
                         <div class="price-input">
@@ -65,8 +96,8 @@ include_once('../includes/sidebar.php')
                     <label for="input-img" class="preview">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <span>Chọn tệp cho sản phẩm (<1MB JPEG/JPG/PNG)</span>
-                        <input type="file" name="img_post" hidden id="input-img" />
-                        <img alt="" class="img_preview">
+                                <input type="file" name="txtPimage" hidden id="input-img" />
+                                <img alt="" class="img_preview">
                     </label>
 
                 </div>
