@@ -5,6 +5,7 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $status = $_POST['rdstatus'];
         $password_hash = md5($password);
         if (strpos($name, ' ') !== false || strpos($email, ' ') !== false || strpos($password, ' ') !== false){
             $_SESSION['message'] = "Ký tự nhập vào không được chứa khoảng trắng!";
@@ -16,7 +17,7 @@
                 $_SESSION['message'] = "Already email Exists";
                 header("Location: user_add.php");
             } else {
-                $sql = "Insert into users(UserName, UserEmail, UserPassword) values ('$name', '$email', '$password_hash')";
+                $sql = "Insert into users(UserName, UserEmail, UserPassword, UserStatus) values ('$name', '$email', '$password_hash', '$status')";
                 $result = mysqli_query($connection, $sql);
                 $connection->close();
                 if ($result){

@@ -1,57 +1,85 @@
 <?php
-    session_start();
-    include('../../config/config.php');
-    include('../includes/header.php'); 
-    include_once('../includes/navbar_top.php');
-    include_once('../includes/sidebar.php');
+session_start();
+include('../../config/config.php');
+include('../includes/header.php');
+include_once('../includes/navbar_top.php');
+include_once('../includes/sidebar.php');
 ?>
-    <div class="container-fluid px-4">
-        <ol class="breadcrumb mt-5">
-        </ol>
-        <div class="row">
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mt-5">
+    </ol>
+    <div class="row">
         <?php include('../authen/message.php'); ?>
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Phân quyền quản trị</h4>
-                    </div>
-                    <div class="card-body">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Phân quyền quản trị</h4>
+                </div>
+                <div class="card-body">
+                    <?php
+                    if (!empty($_GET['action']) && $_GET['action'] == "save") {
+                        $data = $_POST;
+                        $insertString = "";
+                        $deleteOldRole = mysqli_query($connection, "Delete from role_user where user_id = " .$data['user_id']);
+                        foreach ($data['roles'] as $insertRole) {
+                            $insertString .= !empty($insertString) ? "," : "";
+                            $insertString .= "(NULL, " . $data['user_id'] . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
+                        }
+                        $insertRole = mysqli_query($connection, "INSERT INTO role_user (id, user_id, role_id, created_at, updated_at) VALUES" . $insertString);
+                        if($insertRole){
+                            $_SESSION['message'] = 'Phân quyền thành công';
+                        } else {
+                            $_SESSION['message'] = 'Phân quyền không thành công';
+                        }
+                    ?>
+                    <?php } else { ?>
                         <?php
-                            $sql_role = "select * from role";
-                            $result_role = mysqli_query($connection, $sql_role);
-                            $query_run_role = mysqli_fetch_all($result_role, MYSQLI_ASSOC);
-                            $sql_role_group = "select * from role_group order by role_group.position ASC";
-                            $result_role_group = mysqli_query($connection, $sql_role_group);
-                            $query_run_role_group = mysqli_fetch_all($result_role_group, MYSQLI_ASSOC);
-                            $connection->close();
+                        $result_role = mysqli_query($connection,  "select * from role");
+                        $query_run_role = mysqli_fetch_all($result_role, MYSQLI_ASSOC);
+
+                        $result_role_group = mysqli_query($connection, "select * from role_group order by role_group.position ASC");
+                        $query_run_role_group = mysqli_fetch_all($result_role_group, MYSQLI_ASSOC);
+
+                        $currentRole =  mysqli_query($connection,  "select * from role_user where user_id=". $_GET['UserId']);
+                        $currentRole_run =  mysqli_fetch_all($currentRole, MYSQLI_ASSOC);
+                        $currentRoleList = array();
+                        if(!empty($currentRole_run)){
+                            foreach($currentRole_run as $current){
+                                $currentRoleList[] = $current['role_id'];
+                            }
+                        }
+                        $connection->close();
                         ?>
                         <form action="?action=save" method="POST">
-                            <?php 
-                                foreach($query_run_role_group as $group){
+                            <input type="hidden" name="user_id" value="<?= $_GET['UserId'] ?>">
+                            <?php
+                            foreach ($query_run_role_group as $group) {
 
                             ?>
                                 <div class="form-group">
-                                    <h3><?=$group['name']?></h3>
-                                    <ul style="display: inline-flex;list-style:none;width:100%;">
-                                        <?php foreach($query_run_role as $role){ ?>
-                                        <?php if ($role['role_group_id'] == $group['id']){ ?> 
-                                        <li>
-                                            <input type="checkbox" value="<?=$role['id'] ?>" id="<?=$role['id'] ?>" name="role[]">
-                                            <label for="<?=$role['id'] ?>"><?=$role['name'] ?></label>
-                                        </li>
-                                        <?php } ?>
+                                    <h3><?= $group['name'] ?></h3>
+                                    <ul style="display: flex;list-style:none;width:100%;">
+                                        <?php foreach ($query_run_role as $role) { ?>
+                                            <?php if ($role['role_group_id'] == $group['id']) { ?>
+                                                <li style="float: left;width: 20%;">
+                                                    <input type="checkbox" 
+                                                        <?php if(in_array($role['id'], $currentRoleList)){ ?>                                                            
+                                                        checked="" <?php }?>
+                                                    value="<?= $role['id'] ?>" id="<?= $role['id'] ?>" name="roles[]">
+                                                    <label for="<?= $role['id'] ?>"><?= $role['name'] ?></label>
+                                                </li>
+                                            <?php } ?>
                                         <?php } ?>
                                     </ul>
                                 </div>
-                            <?php }?>
-                            <button type="submit" class="btn btn-primary mt-2">Gửi đi</button>
+                            <?php } ?>
+                            <button class="btn btn-primary mt-2">Gửi đi</button>
                         </form>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <?php include('../includes/footer.php');
 ?>
-    
-
