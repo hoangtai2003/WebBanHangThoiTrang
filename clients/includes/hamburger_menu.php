@@ -36,8 +36,8 @@
 						<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
 					</ul>
 				</li>
-				<li class="menu_item"><a href="#">home</a></li>
-				<li class="menu_item"><a href="categories.php">shop</a></li>
+				<li class="menu_item"><a href="../index/index.php">home</a></li>
+				<li class="menu_item"><a href="../categories/categories.php">shop</a></li>
 				<li class="menu_item"><a href="#">promotion</a></li>
 				<li class="menu_item"><a href="#">pages</a></li>
 				<li class="menu_item"><a href="#">blog</a></li>

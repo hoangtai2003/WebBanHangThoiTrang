@@ -30,7 +30,7 @@
 						<div class="product-item men">
 							<div class="product discount product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_1.png" alt="">
+									<img src="../assets/images/product_1.png" alt="">
 								</div>
 								<div class="favorite favorite_left"></div>
 								<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
@@ -47,7 +47,7 @@
 						<div class="product-item women">
 							<div class="product product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_2.png" alt="">
+									<img src="../assets/images/product_2.png" alt="">
 								</div>
 								<div class="favorite"></div>
 								<div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
@@ -64,7 +64,7 @@
 						<div class="product-item women">
 							<div class="product product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_3.png" alt="">
+									<img src="../assets/images/product_3.png" alt="">
 								</div>
 								<div class="favorite"></div>
 								<div class="product_info">
@@ -80,7 +80,7 @@
 						<div class="product-item accessories">
 							<div class="product product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_4.png" alt="">
+									<img src="../assets/images/product_4.png" alt="">
 								</div>
 								<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
 								<div class="favorite favorite_left"></div>
@@ -97,7 +97,7 @@
 						<div class="product-item women men">
 							<div class="product product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_5.png" alt="">
+									<img src="../assets/images/product_5.png" alt="">
 								</div>
 								<div class="favorite"></div>
 								<div class="product_info">
@@ -113,7 +113,7 @@
 						<div class="product-item accessories">
 							<div class="product discount product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_6.png" alt="">
+									<img src="../assets/images/product_6.png" alt="">
 								</div>
 								<div class="favorite favorite_left"></div>
 								<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
@@ -130,7 +130,7 @@
 						<div class="product-item women">
 							<div class="product product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_7.png" alt="">
+									<img src="../assets/images/product_7.png" alt="">
 								</div>
 								<div class="favorite"></div>
 								<div class="product_info">
@@ -146,7 +146,7 @@
 						<div class="product-item accessories">
 							<div class="product product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_8.png" alt="">
+									<img src="../assets/images/product_8.png" alt="">
 								</div>
 								<div class="favorite"></div>
 								<div class="product_info">
@@ -162,7 +162,7 @@
 						<div class="product-item men">
 							<div class="product product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_9.png" alt="">
+									<img src="../assets/images/product_9.png" alt="">
 								</div>
 								<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
 								<div class="favorite favorite_left"></div>
@@ -179,7 +179,7 @@
 						<div class="product-item men">
 							<div class="product product_filter">
 								<div class="product_image">
-									<img src="assets/images/product_10.png" alt="">
+									<img src="../assets/images/product_10.png" alt="">
 								</div>
 								<div class="favorite"></div>
 								<div class="product_info">

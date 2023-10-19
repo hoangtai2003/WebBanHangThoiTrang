@@ -6,14 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="assets/styles/bootstrap4/bootstrap.min.css">
-<link href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" type="text/css" href="assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="assets/styles/categories_styles.css">
-<link rel="stylesheet" type="text/css" href="assets/styles/categories_responsive.css">
+<link rel="stylesheet" type="text/css" href="../assets/styles/bootstrap4/bootstrap.min.css">
+<link href="../assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="../assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="../assets/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
 </head>
 
 <body>
@@ -21,12 +21,12 @@
 <div class="super_container">
 
 	<!-- Header -->
-    <?php include_once("includes/header.php") ?>
+    <?php include_once("../includes/header.php") ?>
 
 	<div class="fs_menu_overlay"></div>
 
 	<!-- Hamburger Menu -->
-    <?php include_once("includes/hamburger_menu.php") ?>
+    <?php include_once("../includes/hamburger_menu.php") ?>
 
 	<div class="container product_section_container">
 		<div class="row">
@@ -130,7 +130,7 @@
 									<div class="product-item men">
 										<div class="product discount product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_1.png" alt="">
+												<img src="../assets/images/product_1.png" alt="">
 											</div>
 											<div class="favorite favorite_left"></div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
@@ -147,7 +147,7 @@
 									<div class="product-item women">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_2.png" alt="">
+												<img src="../assets/images/product_2.png" alt="">
 											</div>
 											<div class="favorite"></div>
 											<div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
@@ -164,7 +164,7 @@
 									<div class="product-item women">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_3.png" alt="">
+												<img src="../assets/images/product_3.png" alt="">
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
@@ -180,7 +180,7 @@
 									<div class="product-item accessories">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_4.png" alt="">
+												<img src="../assets/images/product_4.png" alt="">
 											</div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
 											<div class="favorite favorite_left"></div>
@@ -197,7 +197,7 @@
 									<div class="product-item women men">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_5.png" alt="">
+												<img src="../assets/images/product_5.png" alt="">
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
@@ -213,7 +213,7 @@
 									<div class="product-item accessories">
 										<div class="product discount product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_6.png" alt="">
+												<img src="../assets/images/product_6.png" alt="">
 											</div>
 											<div class="favorite favorite_left"></div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
@@ -230,7 +230,7 @@
 									<div class="product-item women">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_7.png" alt="">
+												<img src="../assets/images/product_7.png" alt="">
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
@@ -246,7 +246,7 @@
 									<div class="product-item accessories">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_8.png" alt="">
+												<img src="../assets/images/product_8.png" alt="">
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
@@ -262,7 +262,7 @@
 									<div class="product-item men">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_9.png" alt="">
+												<img src="../assets/images/product_9.png" alt="">
 											</div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
 											<div class="favorite favorite_left"></div>
@@ -279,7 +279,7 @@
 									<div class="product-item men">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_10.png" alt="">
+												<img src="../assets/images/product_10.png" alt="">
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
@@ -295,7 +295,7 @@
 									<div class="product-item women men">
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_5.png" alt="">
+												<img src="../assets/images/product_5.png" alt="">
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
@@ -311,7 +311,7 @@
 									<div class="product-item accessories">
 										<div class="product discount product_filter">
 											<div class="product_image">
-												<img src="assets/images/product_6.png" alt="">
+												<img src="../assets/images/product_6.png" alt="">
 											</div>
 											<div class="favorite favorite_left"></div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
@@ -365,24 +365,24 @@
 	</div>
 
 	<!-- Benefit -->
-    <?php include_once("includes/benefit.php") ?>
+    <?php include_once("../includes/benefit.php") ?>
 
 	<!-- Newsletter -->
-    <?php include_once("includes/newsletter.php") ?>
+    <?php include_once("../includes/newsletter.php") ?>
 
 	<!-- Footer -->
-    <?php include_once("includes/footer.php") ?>
+    <?php include_once("../includes/footer.php") ?>
 
 </div>
 
-<script src="assets/js/jquery-3.2.1.min.js"></script>
-<script src="assets/styles/bootstrap4/popper.js"></script>
-<script src="assets/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="assets/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="assets/plugins/easing/easing.js"></script>
-<script src="assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-<script src="assets/js/categories_custom.js"></script>
+<script src="../assets/js/jquery-3.2.1.min.js"></script>
+<script src="../assets/styles/bootstrap4/popper.js"></script>
+<script src="../assets/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="../assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="../assets/plugins/easing/easing.js"></script>
+<script src="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="../assets/js/categories_custom.js"></script>
 </body>
 
 </html>

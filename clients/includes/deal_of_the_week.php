@@ -5,7 +5,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-6">
 					<div class="deal_ofthe_week_img">
-						<img src="assets/images/deal_ofthe_week.png" alt="">
+						<img src="../assets/images/deal_ofthe_week.png" alt="">
 					</div>
 				</div>
 				<div class="col-lg-6 text-right deal_ofthe_week_col">

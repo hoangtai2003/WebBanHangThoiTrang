@@ -6,15 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="assets/styles/bootstrap4/bootstrap.min.css">
-<link href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" href="assets/plugins/themify-icons/themify-icons.css">
-<link rel="stylesheet" type="text/css" href="assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="assets/styles/single_styles.css">
-<link rel="stylesheet" type="text/css" href="assets/styles/single_responsive.css">
+<link rel="stylesheet" type="text/css" href="../assets/styles/bootstrap4/bootstrap.min.css">
+<link href="../assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="../assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="../assets/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" href="../assets/plugins/themify-icons/themify-icons.css">
+<link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="../assets/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="../assets/styles/single_responsive.css">
 </head>
 
 <body>
@@ -22,12 +22,12 @@
 <div class="super_container">
 
 	<!-- Header -->
-    <?php include_once("includes/header.php") ?>
+    <?php include_once("../includes/header.php") ?>
 
 	<div class="fs_menu_overlay"></div>
 
 	<!-- Hamburger Menu -->
-    <?php include_once("includes/hamburger_menu.php") ?>
+    <?php include_once("../includes/hamburger_menu.php") ?>
 
 	<div class="container single_product_container">
 		<div class="row">
@@ -53,15 +53,15 @@
 						<div class="col-lg-3 thumbnails_col order-lg-1 order-2">
 							<div class="single_product_thumbnails">
 								<ul>
-									<li><img src="assets/images/single_1_thumb.jpg" alt="" data-image="assets/images/single_1.jpg"></li>
-									<li class="active"><img src="assets/images/single_2_thumb.jpg" alt="" data-image="assets/images/single_2.jpg"></li>
-									<li><img src="assets/images/single_3_thumb.jpg" alt="" data-image="assets/images/single_3.jpg"></li>
+									<li><img src="../assets/images/single_1_thumb.jpg" alt="" data-image="../assets/images/single_1.jpg"></li>
+									<li class="active"><img src="../assets/images/single_2_thumb.jpg" alt="" data-image="../assets/images/single_2.jpg"></li>
+									<li><img src="../assets/images/single_3_thumb.jpg" alt="" data-image="../assets/images/single_3.jpg"></li>
 								</ul>
 							</div>
 						</div>
 						<div class="col-lg-9 image_col order-lg-2 order-1">
 							<div class="single_product_image">
-								<div class="single_product_image_background" style="background-image:url(assets/images/single_2.jpg)"></div>
+								<div class="single_product_image_background" style="background-image:url(../assets/images/single_2.jpg)"></div>
 							</div>
 						</div>
 					</div>
@@ -231,24 +231,24 @@
 	</div>
 
 	<!-- Benefit -->
-    <?php include_once("includes/benefit.php") ?>
+    <?php include_once("../includes/benefit.php") ?>
 
 	<!-- Newsletter -->
-    <?php include_once("includes/newsletter.php") ?>
+    <?php include_once("../includes/newsletter.php") ?>
 
 	<!-- Footer -->
-    <?php include_once("includes/footer.php") ?>
+    <?php include_once("../includes/footer.php") ?>
 
 </div>
 
-<script src="assets/js/jquery-3.2.1.min.js"></script>
-<script src="assets/styles/bootstrap4/popper.js"></script>
-<script src="assets/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="assets/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="assets/plugins/easing/easing.js"></script>
-<script src="assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-<script src="assets/js/single_custom.js"></script>
+<script src="../assets/js/jquery-3.2.1.min.js"></script>
+<script src="../assets/styles/bootstrap4/popper.js"></script>
+<script src="../assets/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="../assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="../assets/plugins/easing/easing.js"></script>
+<script src="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="../assets/js/single_custom.js"></script>
 </body>
 
 </html>

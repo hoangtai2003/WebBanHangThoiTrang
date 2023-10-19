@@ -68,8 +68,8 @@
                 </div>
                 <nav class="navbar">
                     <ul class="navbar_menu">
-                        <li><a href="#">home</a></li>
-                        <li><a href="../../clients/categories.php">shop</a></li>
+                        <li><a href="../index/index.php">home</a></li>
+                        <li><a href="../categories/categories.php">shop</a></li>
                         <li><a href="#">promotion</a></li>
                         <li><a href="#">pages</a></li>
                         <li><a href="#">blog</a></li>
@@ -79,7 +79,7 @@
                         <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                         <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                         <li class="checkout">
-                            <a href="cart/cart_view.php">
+                            <a href="../cart/cart_view.php">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 <span id="checkout_items" class="checkout_items">2</span>
                             </a>
