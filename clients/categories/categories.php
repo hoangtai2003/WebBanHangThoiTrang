@@ -135,7 +135,7 @@
 											<div class="favorite favorite_left"></div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Fujifilm X100T 16 MP Digital Camera (Silver)</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Fujifilm X100T 16 MP Digital Camera (Silver)</a></h6>
 												<div class="product_price">$520.00<span>$590.00</span></div>
 											</div>
 										</div>
@@ -152,7 +152,7 @@
 											<div class="favorite"></div>
 											<div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Samsung CF591 Series Curved 27-Inch FHD Monitor</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Samsung CF591 Series Curved 27-Inch FHD Monitor</a></h6>
 												<div class="product_price">$610.00</div>
 											</div>
 										</div>
@@ -168,7 +168,7 @@
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Blue Yeti USB Microphone Blackout Edition</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Blue Yeti USB Microphone Blackout Edition</a></h6>
 												<div class="product_price">$120.00</div>
 											</div>
 										</div>
@@ -185,7 +185,7 @@
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
 											<div class="favorite favorite_left"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">DYMO LabelWriter 450 Turbo Thermal Label Printer</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">DYMO LabelWriter 450 Turbo Thermal Label Printer</a></h6>
 												<div class="product_price">$410.00</div>
 											</div>
 										</div>
@@ -201,7 +201,7 @@
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Pryma Headphones, Rose Gold & Grey</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Pryma Headphones, Rose Gold & Grey</a></h6>
 												<div class="product_price">$180.00</div>
 											</div>
 										</div>
@@ -218,7 +218,7 @@
 											<div class="favorite favorite_left"></div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Fujifilm X100T 16 MP Digital Camera (Silver)</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Fujifilm X100T 16 MP Digital Camera (Silver)</a></h6>
 												<div class="product_price">$520.00<span>$590.00</span></div>
 											</div>
 										</div>
@@ -234,7 +234,7 @@
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Samsung CF591 Series Curved 27-Inch FHD Monitor</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Samsung CF591 Series Curved 27-Inch FHD Monitor</a></h6>
 												<div class="product_price">$610.00</div>
 											</div>
 										</div>
@@ -250,7 +250,7 @@
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Blue Yeti USB Microphone Blackout Edition</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Blue Yeti USB Microphone Blackout Edition</a></h6>
 												<div class="product_price">$120.00</div>
 											</div>
 										</div>
@@ -267,7 +267,7 @@
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
 											<div class="favorite favorite_left"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">DYMO LabelWriter 450 Turbo Thermal Label Printer</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">DYMO LabelWriter 450 Turbo Thermal Label Printer</a></h6>
 												<div class="product_price">$410.00</div>
 											</div>
 										</div>
@@ -283,7 +283,7 @@
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Pryma Headphones, Rose Gold & Grey</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Pryma Headphones, Rose Gold & Grey</a></h6>
 												<div class="product_price">$180.00</div>
 											</div>
 										</div>
@@ -299,7 +299,7 @@
 											</div>
 											<div class="favorite"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Pryma Headphones, Rose Gold & Grey</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Pryma Headphones, Rose Gold & Grey</a></h6>
 												<div class="product_price">$180.00</div>
 											</div>
 										</div>
@@ -316,7 +316,7 @@
 											<div class="favorite favorite_left"></div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="singleproduct.php">Fujifilm X100T 16 MP Digital Camera (Silver)</a></h6>
+												<h6 class="product_name"><a href="../singleproduct/singleproduct.php">Fujifilm X100T 16 MP Digital Camera (Silver)</a></h6>
 												<div class="product_price">$520.00<span>$590.00</span></div>
 											</div>
 										</div>
