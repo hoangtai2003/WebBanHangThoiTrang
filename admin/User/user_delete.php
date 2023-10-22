@@ -6,7 +6,7 @@
         $result = mysqli_query($connection, $sql);
         $connection->close();
         if($result){
-            $_SESSION['message'] = "Delete Successfully";
+            $_SESSION['message'] = "Xóa thành công";
             header('Location: user_list.php');
             exit(0);
         } 

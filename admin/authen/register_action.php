@@ -11,22 +11,22 @@
             $sql = "SELECT UserName, UserEmail from users where  UserEmail = '$email' or UserName ='$name'";
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
-                $_SESSION['message'] = "Already email Exists";
+                $_SESSION['message'] = "Tên hoặc Email đã tồn tại";
                 header("Location: register.php");
             } else {
                 $user_query = "INSERT INTO users (UserName, UserEmail, UserPassword) values('$name', '$email', '$password_hash')";
                 $user_query_run = mysqli_query($connection,$user_query);
                 if ($user_query_run)
                 {
-                    $_SESSION['message'] = "Regitered Successfully";
+                    $_SESSION['message'] = "Đăng ký thành công";
                     header("Location: login.php");
                 } else {
-                    $_SESSION['message'] = "Something went wrong";
+                    $_SESSION['message'] = "Đã xảy ra sự cố";
                     header("Location: register.php");
                 }
             }
         } else {
-            $_SESSION['message'] = 'Password and ConfirmPassword does not Match';
+            $_SESSION['message'] = 'Password và ConfirmPasword không khớp';
             header("Location: register.php");
         }
         $connection->close();
