@@ -7,11 +7,13 @@
         $password = $_POST['password'];
         $password_hash = md5($password);
 
-        $sql = "select UserName, UserPassword from users where BINARY UserName = '".$name."' and UserPassword = '".$password_hash."'";
+        $sql = "select * from user where BINARY UserName = '".$name."' and UserPassword = '".$password_hash."'";
         $result = $connection->query($sql) or die ($connection->error);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
+            $UserId = $row["UserId"];
+            $_SESSION['UserId'] = $UserId;
             $username = $row['UserName'];
             $connection->close();
             $_SESSION['loggedin'] = true;//đăng nhập thành công

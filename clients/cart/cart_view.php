@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,8 +46,63 @@
 
 				<!-- Main Content -->
 
-				<div class="main_content">
-
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+                    	        <tr class="text-center">
+									<th>STT</th>
+                    	            <th>Mã</th>
+                    	            <th>Tên sản phẩm</th>
+                    	            <th>Hình ảnh</th>
+									<th>Giá</th>
+                    	            <th>Số lượng</th>
+                    	            <th>Thành tiền</th>
+                    	            <th>Xóa</th>
+                    	        </tr>
+                    	    </thead>
+							<?php
+								if(isset($_SESSION["cart"])){
+									$i = 0;
+									$tongtien = 0;
+									foreach($_SESSION["cart"] as $cart_item){
+										$thanhtien = $cart_item['quantity'] * $cart_item['price'];
+										$tongtien += $thanhtien;
+										$i++;
+							?>
+							<tbody>
+								<tr class="text-center">
+									<th><?php echo $i ?></th>
+									<td><?php echo $cart_item['id'] ?></td>
+									<td><?php echo $cart_item['name'] ?></td>
+									<td><img src="../../images/<?php echo $cart_item['image'] ?>" width="60"></td>
+									<td><?php echo number_format($cart_item['price'], 0, ',', '.') ?></td>
+									<td>
+										<a href="../cart/add_cart.php?sub=<?php echo $cart_item['id'] ?>"><i class="fa fa-minus" aria-hidden="true"></i></a>
+										<?php echo $cart_item['quantity'] ?>
+										<a href="../cart/add_cart.php?add=<?php echo $cart_item['id'] ?>"><i class="fa fa-plus" aria-hidden="true"></i></a>
+									</td>
+									<td><?php echo number_format($thanhtien, 0, ',', '.') ?></td>
+									<td><a onclick="return confirm('Bạn có chắc muốn xóa sản phẩm <?php echo $cart_item['name'] ?> khỏi giỏ hàng không?')" href="../cart/add_cart.php?delete=<?php echo $cart_item['id'] ?>" class="btn btn-sm btn-danger">Xóa</a></td>
+								</tr>
+							</tbody>
+							<?php
+									}
+									?>
+									<tr>
+										<th colspan="6" class="text-right">Tổng tiền:</th>
+										<th class="text-center"><?php echo number_format($tongtien, 0, ',', '.') ?></th>
+										<th class="text-center"><a onclick="return confirm('Bạn có chắc muốn xóa toàn bộ sản phẩm trong giỏ hàng không?')" href="../cart/add_cart.php?deleteAll=1" class="btn btn-sm btn-danger">Xóa tất cả</a></th>
+									</tr>
+									<?php
+								}else{
+							?>
+								<tr><td colspan="8">Không có sản phẩm nào trong giỏ hàng</td></tr>
+							<?php
+								}
+							?>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

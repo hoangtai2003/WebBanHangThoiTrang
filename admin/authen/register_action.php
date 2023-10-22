@@ -16,14 +16,14 @@
         else{
             if(filter_var($email, FILTER_VALIDATE_EMAIL)){
                 if ($password === $confirm_password){
-                    $sql = "SELECT UserName, UserEmail from users where UserName = '".$name."' or UserEmail = '".$email."'";
+                    $sql = "SELECT UserName, UserEmail from user where UserName = '".$name."' or UserEmail = '".$email."'";
                     $result = $connection->query($sql) or die ($connection->error);
                     if ($result->num_rows > 0){
                         $_SESSION['message'] = "Already UserName or Email Exists";
                         header("Location: register.php");
                         exit();
                     } else {
-                        $user_query = "INSERT INTO users (UserName, UserEmail, UserPassword) values('".$name."','". $email."','" .$password_hash."')";
+                        $user_query = "INSERT INTO user (UserName, UserEmail, UserPassword) values('".$name."','". $email."','" .$password_hash."')";
                         $user_query_run = $connection->query($user_query);
                         $connection->close();
                         if ($user_query_run)
@@ -49,6 +49,7 @@
                 exit();
             }
         }
+        $connection->close();
     } else {
         header("Location: register.php");
         exit();
@@ -59,4 +60,5 @@
         $data = htmlspecialchars($data);
         return $data;
     }
+    
 ?>

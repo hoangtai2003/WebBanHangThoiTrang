@@ -11,7 +11,7 @@
             header("Location: user_edit.php?UserId=$user_id");
         }
         else{
-            $sql = "SELECT UserName, UserEmail from users where  (UserEmail = '$email' or UserName ='$name') and UserId != '$user_id'";
+            $sql = "SELECT UserName, UserEmail from user where  (UserEmail = '$email' or UserName ='$name') and UserId != '$user_id'";
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
                 $_SESSION['message'] = "Already Username or Email Exists";

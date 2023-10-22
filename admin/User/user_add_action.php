@@ -12,7 +12,7 @@
             exit();
         }
         else{
-            $sql = "SELECT UserName, UserEmail from users where  UserEmail = '$email' or UserName ='$name'";
+            $sql = "SELECT UserName, UserEmail from user where  UserEmail = '$email' or UserName ='$name'";
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
                 $_SESSION['message'] = "Already Username or Email Exists";
@@ -20,7 +20,7 @@
                 exit();
             } else {
                 if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-                    $sql = "Insert into users(UserName, UserEmail, UserPassword) values('$name', '$email', '$password_hash')";
+                    $sql = "Insert into user(UserName, UserEmail, UserPassword) values('$name', '$email', '$password_hash')";
                     $result = mysqli_query($connection, $sql);
                     $connection->close();
                     if ($result){

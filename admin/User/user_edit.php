@@ -4,7 +4,7 @@ session_start();
     include('../../config/config.php');
     if(isset($_GET['UserId'])){
         $user_id = $_GET['UserId'];
-        $sql = "Select * from users where UserId = '$user_id'";
+        $sql = "Select * from user where UserId = '$user_id'";
         $result = $connection->query($sql);
         if($result->num_rows == 0){
             $_SESSION['message'] = "Không tồn tại User!";

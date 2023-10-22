@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if(!isset($_SESSION['message_change'])){
+        $_SESSION['message_change'] = "";
+    }
     if(!isset($_SESSION['loggedin'])){
         header('Location: login.php');
     }
@@ -26,7 +29,6 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Change Password</h3></div>
                                     <div class="card-body">
-                                        <?php include('message.php') ?>
                                         <form method="post" action="change_password_action.php">
                                             <div class="form-floating mb-3">
                                                 <input required class="form-control" name="old_password"  type="password" placeholder="Old Password" />
@@ -40,9 +42,10 @@
                                                 <input required class="form-control" name="cnew_password"  type="password" placeholder="New Confirm Password" />
                                                 <label for="inputPassword">New Confirm Password</label>
                                             </div>
+                                            <font color=red><?php echo $_SESSION['message_change'];?></font>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <button type="submit" class="btn btn-primary btn-block" name="change_btn">Save</button>
-                                                <a href="../home/index.php" class="btn btn-primary">Home</a>
+                                                <a href="../../admin/index.php" class="btn btn-primary">Home</a>
                                             </div>
                                         </form>
                                     </div>
@@ -71,3 +74,6 @@
         <script src="./../assets/js/scripts.js"></script>
     </body>
 </html>
+<?php
+    unset($_SESSION['message_change']);
+?>

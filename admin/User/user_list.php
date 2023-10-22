@@ -30,7 +30,7 @@ session_start();
                             </thead>
                             <tbody>
                                 <?php
-                                    $sql = "Select * from users";
+                                    $sql = "Select * from user";
                                     $result = mysqli_query($connection,$sql);
                                     if (mysqli_fetch_array($result) > 0){
                                         foreach($result as $row){
