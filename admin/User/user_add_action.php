@@ -7,6 +7,7 @@
         $password = $_POST['password'];
         $status = $_POST['rdstatus'];
         $password_hash = md5($password);
+        // strpos: Tìm vị trí xuất hiện đầu tiên của chuỗi con trong chuỗi
         if (strpos($name, ' ') !== false || strpos($email, ' ') !== false || strpos($password, ' ') !== false){
             $_SESSION['message'] = "Ký tự nhập vào không được chứa khoảng trắng!";
             header("Location: user_add.php");
