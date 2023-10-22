@@ -15,9 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ext = pathinfo($_FILES["txtPimage"]["name"], PATHINFO_EXTENSION);
             $pimage = uniqid() . '.' . $ext;
             move_uploaded_file($tmp_name, "../../images/" . $pimage);
-            $sqlinsert = "insert into Product(ProdName, ProdDescription, ProdImage, ProdPrice, ProdPriceSale, ProdQuantity, CatId, UserId) values('" . $pname . "','" . $pdesc . "','" . $pimage . "'," . $pprice . "," . $ppricesale . "," . $pquantity . ",".$CateId.",". $userid . ")";
+            $sqlinsert = "insert into Product(ProdName, ProdDescription, ProdImage, ProdPrice, ProdPriceSale, ProdQuantity, CateId, UserId) values('" . $pname . "','" . $pdesc . "','" . $pimage . "'," . $pprice . "," . $ppricesale . "," . $pquantity . ",".$CateId.",". $userid . ")";
             $connection->query($sqlinsert) or die($connection->connect_error);
             echo "Thêm sản phẩm thành công";
+            header("Location: ../myProduct/myProduct.php");
         }
     }
 }

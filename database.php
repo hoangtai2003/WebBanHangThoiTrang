@@ -85,13 +85,13 @@ CREATE TABLE IF NOT EXISTS `Product` (
   `ProdQuantity` int NOT NULL,
   `ProdIsSale` tinyint NOT NULL DEFAULT 0,
   `ProdIsHot` tinyint NOT NULL DEFAULT 0,
-  `CatId` int NOT NULL,
+  `CateId` int NOT NULL,
   `UserId` int NOT NULL,
   `ProdViewCount` int not null,
   `ProdCreateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ProdModifiedDate`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ProdId`),
-  FOREIGN KEY (`CatId`) REFERENCES `Category` (`CateId`),
+  FOREIGN KEY (`CateId`) REFERENCES `Category` (`CateId`),
   FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`)
 );
 

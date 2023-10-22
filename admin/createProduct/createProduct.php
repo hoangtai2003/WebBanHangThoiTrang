@@ -12,7 +12,6 @@ $result = $connection->query($sql) or die($connection->connect_error);
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Thêm Sản Phẩm Mới</title>
     <link rel="stylesheet" href="./createProduct.css?v= <?php echo time(); ?>">
@@ -20,9 +19,7 @@ $result = $connection->query($sql) or die($connection->connect_error);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 
 </head>
-
 <body>
-
     <div class="container-new-product">
         <a href="../myProduct/myProduct.php" class="back-button">
             <i class="fas fa-home"></i>
@@ -32,7 +29,6 @@ $result = $connection->query($sql) or die($connection->connect_error);
                 <div class="form-container">
                     <h1>Tạo sản phẩm mới</h1>
                     <label for="product_type_input">Loại hàng:</label>
-                    <!-- <input type="text" id="product_type_input" placeholder="Sử dụng gợi ý sẽ dễ dang tiếp cận khách hàng hơn" name="product_type"> -->
                     <select name="slCid" id="">
                         <?php
                         while ($row = $result->fetch_assoc()) {
@@ -58,7 +54,6 @@ $result = $connection->query($sql) or die($connection->connect_error);
                         <option value="1">Đang bán</option>
                         <option value="0">Hết hàng</option>
                     </select> -->
-
                     <script>
                         const updateInput = () => {
                             var select = document.getElementById("product_type_select");
@@ -67,17 +62,11 @@ $result = $connection->query($sql) or die($connection->connect_error);
                         }
                     </script>
 
-
                     <label for="product_name">Tên sản phẩm:</label>
                     <input type="text" placeholder="Tên sản phẩm không quá 255 kí tự" id="product_name" name="product_name">
 
                     <label for="product_quantity">Số lượng:</label>
                     <input type="number" id="product_quantity" name="product_quantity">
-
-                    <!--                     
-                    <label for="product_view_quantity">Số lượt xem:</label>
-                    <input type="number" id="product_view_quantity" name="product_view_quantity"> -->
-
                     <div class="price-container">
                         <div class="price-input">
                             <label for="product_price">Giá gốc:</label>
@@ -88,10 +77,7 @@ $result = $connection->query($sql) or die($connection->connect_error);
                             <input type="number" placeholder="Giá sản phẩm không vượt quá 1 tỷ đồng" id="product_sale_price" name="product_sale_price">
                         </div>
                     </div>
-
                 </div>
-
-
                 <div class="upload-container">
                     <label for="input-img" class="preview">
                         <i class="fas fa-cloud-upload-alt"></i>
@@ -99,7 +85,6 @@ $result = $connection->query($sql) or die($connection->connect_error);
                                 <input type="file" name="txtPimage" hidden id="input-img" />
                                 <img alt="" class="img_preview">
                     </label>
-
                 </div>
             </span>
 
@@ -113,8 +98,6 @@ $result = $connection->query($sql) or die($connection->connect_error);
         inputImg.addEventListener('input', (e) => {
             let file = e.target.files[0]
             if (!file) return
-            // let img = document.createElement('img')
-            // img.className = "img_preview"
             document.querySelector(".img_preview").src = URL.createObjectURL(file)
             document.querySelector("#avt_link_img").value = inputImg.value.substring(inputImg.value.lastIndexOf('\\') + 1);
             document.querySelector('.preview').appendChild(img)

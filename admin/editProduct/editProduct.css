@@ -13,7 +13,6 @@ img.img_preview {
     width: inherit;
     position: absolute;
 }
-
 form.form-create-product {
     width: 100%;
 }
@@ -100,7 +99,7 @@ input[type="number"] {
 }
 
 .upload-container {
-    width: 50%;
+    width: 40%;
     padding: 20px;
     background-color: #625dd3;
     border-radius: 5px;
