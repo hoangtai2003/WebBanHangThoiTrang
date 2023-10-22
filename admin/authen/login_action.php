@@ -24,7 +24,7 @@
             header('Location: ../home/index.php');
             exit(0);
         }else {
-            $_SESSION['message'] = "Invalid Email or Password";
+            $_SESSION['message'] = "Email hoặc Password không hợp lệ";
             header('Location: login.php');
             exit(0);
         }

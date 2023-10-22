@@ -14,7 +14,7 @@
             $sql = "SELECT UserName, UserEmail from users where  (UserEmail = '$email' or UserName ='$name') and UserId != '$user_id'";
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
-                $_SESSION['message'] = "Already Username or Email Exists";
+                $_SESSION['message'] = "Email hoặc tên đã tồn tại";
                 header("Location: user_edit.php?UserId=$user_id");
             } 
             else{
@@ -22,11 +22,11 @@
                 $result = mysqli_query($connection, $sql) or die($connection->error);
                 $connection->close();
                 if ($result){
-                    $_SESSION['message'] = "Updated Successfully";
+                    $_SESSION['message'] = "Cập nhật thành công";
                     header('Location: user_list.php');
                     exit(0);
                 } else {
-                    $_SESSION['message'] = "Something went wrong";
+                    $_SESSION['message'] = "Đã xảy ra sự cố";
                     header('Location: user_list.php');
                     exit(0);
                 }
