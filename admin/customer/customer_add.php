@@ -23,11 +23,11 @@ include_once('../includes/sidebar.php')
                         </div>
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label>Tên khách hàng</label>
-                            <input type="text" name="CusName" class="form-control">
+                            <input required type="text" name="CusName" class="form-control">
                         </div>
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label>Mã khách hàng</label>
-                            <input type="text" class="form-control" name="CusCode">
+                            <input required type="text" class="form-control" name="CusCode">
                         </div>
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label>Phone number</label>
@@ -35,7 +35,7 @@ include_once('../includes/sidebar.php')
                         </div>
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label>Email khách hàng</label>
-                            <input type="email" class="form-control" name="CusEmail">
+                            <input required type="email" class="form-control" name="CusEmail">
                         </div>
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label>Địa chỉ khách hàng</label>
@@ -60,7 +60,7 @@ include_once('../includes/sidebar.php')
                                 <label class="form-check-label" for="rdGender2">Khác</label>
                             </div>
                         </div>
-                        <button name="add_customer" class="btn btn-primary mt-2">Thêm</button>
+                        <button name="add_customer" class="btn btn-primary mt-2">Gửi đi</button>
                         <a href="customer_list.php" class="btn btn-danger mt-2">Quay lại</a>
                     </form>
                 </div>
