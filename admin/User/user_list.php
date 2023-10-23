@@ -27,14 +27,20 @@ include_once('../includes/sidebar.php');
                             <th>Tên</th>
                             <th>Email</th>
                             <th>Trạng thái</th>
-                            <th>Phân quyền</th>
-                            <th>Sửa</th>
-                            <th>Xóa</th>
+                            <?php if (checkPrivilege('role.php?UserId=0')) { ?>
+                                <th>Phân quyền</th>
+                            <?php } ?>
+                            <?php if (checkPrivilege('user_edit.php?UserId=0')) { ?>
+                                <th>Sửa</th>
+                            <?php } ?>
+                            <?php if (checkPrivilege('user_delete.php?UserId=0')) { ?>
+                                <th>Xóa</th>
+                            <?php } ?>
                         </tr>
                         <?php
                         $sql = "Select * from users";
                         $result = mysqli_query($connection, $sql);
-                        if (mysqli_fetch_assoc($result) > 0) {
+                        if (mysqli_num_rows($result) > 0) {
                             foreach ($result as $row) {
                         ?>
                                 <tr>
