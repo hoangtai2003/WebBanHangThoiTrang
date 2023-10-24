@@ -1,3 +1,5 @@
+<!-- Footer -->
+
 <footer class="footer">
 		<div class="container">
 			<div class="row">
@@ -30,14 +32,4 @@
 				</div>
 			</div>
 		</div>
-</footer>
-<script src="assets/js/jquery-3.2.1.min.js"></script>
-<script src="assets/js/bootstrap4/popper.js"></script>
-<script src="assets/js/bootstrap4/bootstrap.min.js"></script>
-<script src="assets/js/isotope.pkgd.min.js"></script>
-<script src="assets/js/owl.carousel.js"></script>
-<script src="assets/js/easing.js"></script>
-<script src="assets/js/custom.js"></script>
-</body>
-
-</html>
+	</footer>

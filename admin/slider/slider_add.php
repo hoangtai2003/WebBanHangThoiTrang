@@ -17,7 +17,7 @@ include_once('../includes/sidebar.php')
                     <h4>Thêm slider</h4>
                 </div>
                 <div class="card-body">
-                    <form action="slider_add_action.php" method="POST">
+                    <form action="slider_add_action.php" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <input hidden type="text" name="slider_id" class="form-control">
                         </div>
@@ -30,7 +30,7 @@ include_once('../includes/sidebar.php')
                             <textarea class="form-control" rows="5" cols="90" name="sldescription"> </textarea>
                         </div>
                         <div class="form-group">
-                            <label>Chọn hình ảnh</label>
+                            <label>Hình ảnh</label>
                             <input type="file" class="form-control" name="fimage">
                         </div>
                         <button name="add_slider" class="btn btn-primary mt-2">Gửi đi</button>
