@@ -49,7 +49,5 @@ if (isset($_POST['update_slider'])) {
             exit(0);
         }
     }
-
-    // Rest of your code
 }
 ?>

@@ -1,9 +1,6 @@
 <!-- Header -->
 
 <header class="header trans_300">
-
-<!-- Top Navigation -->
-
 <div class="top_nav">
     <div class="container">
         <div class="row">
@@ -13,9 +10,6 @@
             <div class="col-md-6 text-right">
                 <div class="top_nav_right">
                     <ul class="top_nav_menu">
-
-                        <!-- Currency / Language / My Account -->
-
                         <li class="currency">
                             <a href="#">
                                 usd
@@ -46,8 +40,8 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="account_selection">
-                                <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-                                <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
+                                <li><a href="../authen/login.php"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
+                                <li><a href="../authen/register.php"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -73,7 +67,7 @@
                         <li><a href="#">promotion</a></li>
                         <li><a href="#">pages</a></li>
                         <li><a href="#">blog</a></li>
-                        <li><a href="contact.html">contact</a></li>
+                        <li><a href="../../contact.php">contact</a></li>
                     </ul>
                     <ul class="navbar_user">
                         <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>

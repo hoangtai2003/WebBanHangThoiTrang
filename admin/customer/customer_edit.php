@@ -34,8 +34,8 @@ include_once('../includes/sidebar.php')
                                 <input type="text" name="CusName" class="form-control" value="<?= $customer['CusName'] ?>">
                             </div>
                             <div class="form-group" style="margin-bottom: 15px;">
-                                <label>Mã khách hàng</label>
-                                <input type="text" class="form-control" name="CusCode" value=<?= $customer['CusCode'] ?>>
+                                <label>Tên người dùng</label>
+                                <input type="text" class="form-control" name="CusUserName" value=<?= $customer['CusUserName'] ?>>
                             </div>
                             <div class="form-group" style="margin-bottom: 15px;">
                                 <label>Phone number</label>

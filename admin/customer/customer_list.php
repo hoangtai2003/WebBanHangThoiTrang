@@ -25,7 +25,7 @@ include_once('../includes/sidebar.php');
                         <tr>
                             <th>ID</th>
                             <th>Tên khách hàng</th>
-                            <th>Mã khách hàng</th>
+                            <th>Tên người dùng</th>
                             <th>Số điện thoại</th>
                             <th>Email</th>
                             <th>Địa chỉ khách hàng</th>
@@ -47,7 +47,7 @@ include_once('../includes/sidebar.php');
                                 <tr>
                                     <th scope="row"><?= $row['CusId']; ?></th>
                                     <td><?= $row['CusName']; ?></td>
-                                    <td><?= $row['CusCode']; ?></td>
+                                    <td><?= $row['CusUserName']; ?></td>
                                     <td><?= $row['CusPhone']; ?></td>
                                     <td><?= $row['CusEmail']; ?></td>
                                     <td><?= $row['CusAddress']; ?></td>
@@ -64,7 +64,7 @@ include_once('../includes/sidebar.php');
                                         <td>
                                             <a 
                                                 href="customer_delete.php?CusId=<?php echo $row["CusId"]; ?>" 
-                                                onclick="return confirm('Are you sure delete <?= $row['CusCode']; ?>?');" 
+                                                onclick="return confirm('Are you sure delete <?= $row['CusUserName']; ?>?');" 
                                                 class="btn btn-danger" 
                                                 value="<?= $row['CusId']; ?>"><i class="fa-solid fa-trash" 
                                                 style="margin-right: 5px;"></i>Xóa

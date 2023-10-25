@@ -26,8 +26,8 @@ include_once('../includes/sidebar.php')
                             <input required type="text" name="CusName" class="form-control">
                         </div>
                         <div class="form-group" style="margin-bottom: 15px;">
-                            <label>Mã khách hàng</label>
-                            <input required type="text" class="form-control" name="CusCode">
+                            <label>Tên người dùng</label>
+                            <input required type="text" class="form-control" name="CusUserName">
                         </div>
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label>Phone number</label>
