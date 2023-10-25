@@ -25,7 +25,7 @@ include_once('../includes/sidebar.php')
                         if (mysqli_num_rows($result) > 0) {
                             foreach ($result as $slider) {
                     ?>
-                        <form action="slider_edit_action.php" method="POST">
+                        <form action="slider_edit_action.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <input hidden type="text" name="slider_id" class="form-control" value="<?=$slider['slid'] ?>">
                             </div>
@@ -39,7 +39,8 @@ include_once('../includes/sidebar.php')
                             </div>
                             <div class="form-group">
                                 <label>Hình ảnh</label>
-                                <input type="file" class="form-control" name="image" value="<?= $slider['slimage']?>">
+                                <input type="file" class="form-control" name="fimage">
+                                <input type="hidden" name="current_image" value="<?= $slider['slimage'] ?>">
                                 <img style="margin-top: 10px;" src="../../images/<?=$slider['slimage'] ?>" width="660">
                             </div>                          
                             <button name="update_slider" class="btn btn-primary mt-2">Cập nhật</button>
