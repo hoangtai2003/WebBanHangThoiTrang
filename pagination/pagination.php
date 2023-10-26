@@ -10,9 +10,11 @@
     <?php } ?>
 
     <?php for ($num = 1; $num <= $totalPage; $num++){ ?>
-      <li class="page-item <?= $num == $current_page ? 'active' : '' ?>" >
-        <a class="page-link" href="?per_page=<?= $item_per_page ?>&page=<?= $num ?>"><?= $num ?></a>
-      </li>
+      <?php if ($num > $current_page - 3 && $num < $current_page + 3){?>
+        <li class="page-item <?= $num == $current_page ? 'active' : '' ?>" >
+            <a class="page-link" href="?per_page=<?= $item_per_page ?>&page=<?= $num ?>"><?= $num ?></a>
+        </li>
+        <?php }?>  
     <?php } ?>
         
     <?php if ($current_page < $totalPage){ ?>
