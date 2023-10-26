@@ -72,8 +72,7 @@ include_once('../includes/sidebar.php');
                                         <td>
                                             <a 
                                                 href="customer_delete.php?CusId=<?php echo $row["CusId"]; ?>" 
-                                                onclick="return confirm('Are you sure delete <?= $row['CusUserName']; ?>?');" 
-                                                class="btn btn-danger" 
+                                                class="btn btn-danger action_delete" 
                                                 value="<?= $row['CusId']; ?>"><i class="fa-solid fa-trash" 
                                                 style="margin-right: 5px;"></i>Xóa
                                             </a>

@@ -80,9 +80,8 @@ include_once('../includes/sidebar.php');
                                     <?php if (checkPrivilege('user_delete.php?UserId=0')) { ?>
                                         <td>
                                             <a 
-                                                href="user_delete.php?UserId=<?php echo $row["UserId"]; ?>" 
-                                                onclick="return confirm('Are you sure delete <?= $row['UserName']; ?>?');" 
-                                                class="btn btn-danger" 
+                                                href="user_delete.php?UserId=<?=$row["UserId"]; ?>" 
+                                                class="btn btn-danger action_delete" 
                                                 value="<?= $row['UserId']; ?>"><i class="fa-solid fa-trash" 
                                                 style="margin-right: 5px;"></i>Xóa
                                             </a>

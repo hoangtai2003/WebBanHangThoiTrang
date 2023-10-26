@@ -56,8 +56,7 @@ include_once('../includes/sidebar.php');
                                         <td>
                                             <a 
                                                 href="slider_delete.php?slid=<?php echo $row["slid"]; ?>" 
-                                                onclick="return confirm('Are you sure delete <?= $row['slid']; ?>?');" 
-                                                class="btn btn-danger" 
+                                                class="btn btn-danger action_delete" 
                                                 value="<?= $row['slid']; ?>"><i class="fa-solid fa-trash" 
                                                 style="margin-right: 5px;"></i>Xóa
                                             </a>
