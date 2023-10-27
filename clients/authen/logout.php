@@ -1,7 +1,8 @@
 <?php
     session_start();
     unset($_SESSION['cus_loggedin']);
-    $_SESSION['message'] = 'Đăng xuất thành công';
-    header('Location: ./login.php');
+    unset($_SESSION['cart_inserted']);
+    unset($_SESSION['cart']);
+    header('Location: ../index/index.php');
     exit(0);
 ?>

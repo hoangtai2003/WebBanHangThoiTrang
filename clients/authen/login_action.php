@@ -12,6 +12,8 @@
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
+            $cusid = $row["CusId"];
+            $_SESSION['cusid'] = $cusid; //lưu id khách hàng
             $name = $row['CusName'];
             $_SESSION['name'] = $name;//lưu tên khách hàng
             $email = $row['CusEmail'];
