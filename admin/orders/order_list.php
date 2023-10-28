@@ -45,11 +45,7 @@ session_start();
                                                     <td>
                                                         <?php
                                                             if($row['OrderPayment'] == 'tienmat'){
-                                                                echo "Tiền mặt";
-                                                            } else if ($row['OrderPayment'] == 'chuyenkhoan'){
-                                                                echo "Chuyển khoản";
-                                                            } else if ($row['OrderPayment'] == 'vnpay'){
-                                                                echo "VNPay";
+                                                                echo "Thanh toán khi nhận hàng";
                                                             }
                                                         ?>
                                                     </td>

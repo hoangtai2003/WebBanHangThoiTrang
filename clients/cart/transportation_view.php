@@ -106,21 +106,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
                                 <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault1" value="tienmat" checked>
                                 <img src="../../images/cod.jpg" height="32" width="50">
                                 <label class="form-check-label" for="flexRadioDefault1">
-                                    Tiền mặt
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault2" value="chuyenkhoan">
-                                <img src="../../images/bank.jpg" height="32" width="50">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    Chuyển khoản
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault2" value="vnpay">
-                                <img src="../../images/vnpay.png" height="50" width="50">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    VNPay
+                                    Thanh toán khi nhận hàng
                                 </label>
                             </div>
                             <input type="submit" value="Đặt hàng" name="redirect" class="btn btn-sm btn-primary">

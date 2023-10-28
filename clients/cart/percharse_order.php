@@ -74,7 +74,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
                                                         echo '<b style="color: green;">Chờ xác nhận</b>';
                                                         ?>
                                                         <form action="./percharse_order_action.php?orderid=<?php echo $row_get_order['OrderId'] ?>" method="post" class="mt-3">
-                                                        <input type="submit" name="huydonhang" value="Hủy đơn hàng" class="btn btn-sm btn-danger">
+                                                        <input type="submit" onclick='return confirm("Bạn có chắc muốn hủy đơn hàng: <?php echo $row_get_order["OrderCode"] ?>")' name="huydonhang" value="Hủy đơn hàng" class="btn btn-sm btn-danger">
                                                         </form>
                                                         <?php
                                                     } else if ($row_get_order['OrderStatus']==1){
