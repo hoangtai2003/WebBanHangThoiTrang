@@ -21,22 +21,36 @@ include_once('../includes/sidebar.php');
                 </div>
                 <div class="card-body">
                     <form method="POST"></form>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên</th>
-                            <th>Email</th>
-                            <th>Trạng thái</th>
-                            <th>Phân quyền</th>
-                            <th>Sửa</th>
-                            <th>Xóa</th>
-                        </tr>
-                        <?php
-                        $sql = "Select * from users";
-                        $result = mysqli_query($connection, $sql);
-                        if (mysqli_fetch_assoc($result) > 0) {
-                            foreach ($result as $row) {
-                        ?>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên</th>
+                                <th>Email</th>
+                                <th>Trạng thái</th>
+                                <?php if (checkPrivilege('role.php?UserId=0')) { ?>
+                                    <th>Phân quyền</th>
+                                <?php } ?>
+                                <?php if (checkPrivilege('user_edit.php?UserId=0')) { ?>
+                                    <th>Sửa</th>
+                                <?php } ?>
+                                <?php if (checkPrivilege('user_delete.php?UserId=0')) { ?>
+                                    <th>Xóa</th>
+                                <?php } ?>
+                            </tr>
+                            <?php
+                                $item_per_page =!empty($_GET['per_page'])?$_GET['per_page']:4;
+                                $current_page = !empty($_GET['page'])?$_GET['page']:1;
+                                // offset  = (page - 1) * per_page
+                                $offset = ($current_page - 1) * $item_per_page;
+                                $sql = "Select * from users order by UserId asc limit ".$item_per_page." offset ".$offset." ";
+                                $result = mysqli_query($connection, $sql);
+                                $totalRecords = mysqli_query($connection, "select * from users");
+                                $totalRecords = $totalRecords->num_rows;
+                                // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+                                $totalPage = ceil($totalRecords / $item_per_page);
+                            if (mysqli_num_rows($result) > 0) {
+                                foreach ($result as $row) {
+                            ?>
                                 <tr>
                                     <th scope="row"><?= $row['UserId']; ?></th>
                                     <td><?= $row['UserName']; ?></td>
@@ -66,20 +80,20 @@ include_once('../includes/sidebar.php');
                                     <?php if (checkPrivilege('user_delete.php?UserId=0')) { ?>
                                         <td>
                                             <a 
-                                                href="user_delete.php?UserId=<?php echo $row["UserId"]; ?>" 
-                                                onclick="return confirm('Are you sure delete <?= $row['UserName']; ?>?');" 
-                                                class="btn btn-danger" 
+                                                href="user_delete.php?UserId=<?=$row["UserId"]; ?>" 
+                                                class="btn btn-danger action_delete" 
                                                 value="<?= $row['UserId']; ?>"><i class="fa-solid fa-trash" 
                                                 style="margin-right: 5px;"></i>Xóa
                                             </a>
                                         </td>
                                     <?php } ?>
                                 </tr>
-                        <?php
+                            <?php
+                                }
                             }
-                        }
-                        ?>
-                    </table>
+                            ?>
+                        </table>
+                        <?php include("../../pagination/pagination.php") ?>
                     </form>
                 </div>
             </div>
