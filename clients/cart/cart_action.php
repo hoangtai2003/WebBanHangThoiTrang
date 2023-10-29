@@ -23,7 +23,7 @@ if (isset($_GET['cartItem']) && $_GET['cartItem'] == 'cart_item') {
     }
 }
 //thêm giỏ hàng
-if (isset($_POST['themgiohang'])) {
+if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang') {
     // unset($_SESSION['cart']);
     $productId = $_GET['productId'];
     // $soluong = 1;

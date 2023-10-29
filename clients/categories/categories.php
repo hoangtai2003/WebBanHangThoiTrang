@@ -140,7 +140,7 @@ require_once('../../config/config.php')
 										if ($result->num_rows > 0) {
 											while ($row = $result->fetch_assoc()) {
 										?>
-											<form method="post" action="../cart/cart_action.php?productId=<?php echo $row['ProdId'] ?>">
+											<!-- <form method="post" action="../cart/cart_action.php?productId=<?php echo $row['ProdId'] ?>"> -->
 												<div class="product-item women">
 													<div class="product product_filter">
 														<div class="product_image">
@@ -153,9 +153,10 @@ require_once('../../config/config.php')
 															<div class="product_price"><?php echo $row["ProdPrice"]?></div>
 														</div>
 													</div>
-													<div><input class="red_button add_to_cart_button" type="submit" name="themgiohang" value="Add To Cart"></div>
+													<!-- <div><input class="red_button add_to_cart_button" type="submit" name="themgiohang" value="Add To Cart"></div> -->
+													<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
 												</div>
-											</form>
+											<!-- </form> -->
 										<?php
 
 											}
