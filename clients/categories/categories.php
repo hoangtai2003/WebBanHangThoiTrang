@@ -140,23 +140,20 @@ require_once('../../config/config.php')
 										if ($result->num_rows > 0) {
 											while ($row = $result->fetch_assoc()) {
 										?>
-											<!-- <form method="post" action="../cart/cart_action.php?productId=<?php echo $row['ProdId'] ?>"> -->
-												<div class="product-item women">
-													<div class="product product_filter">
-														<div class="product_image">
-															<img src="../../images/<?php echo $row["ProdImage"];?>" alt="">
-														</div>
-														<div class="favorite"></div>
-														<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
-														<div class="product_info">
-															<h6 class="product_name"><a href="../singleproduct/singleproduct.php"><?php echo $row["ProdName"] ?></a></h6>
-															<div class="product_price"><?php echo $row["ProdPrice"]?></div>
-														</div>
+											<div class="product-item women">
+												<div class="product product_filter">
+													<div class="product_image">
+														<img src="../../images/<?php echo $row["ProdImage"];?>" alt="">
 													</div>
-													<!-- <div><input class="red_button add_to_cart_button" type="submit" name="themgiohang" value="Add To Cart"></div> -->
-													<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+													<div class="favorite"></div>
+													<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
+													<div class="product_info">
+														<h6 class="product_name"><a href="../singleproduct/singleproduct.php"><?php echo $row["ProdName"] ?></a></h6>
+														<div class="product_price"><?php echo $row["ProdPrice"]?></div>
+													</div>
 												</div>
-											<!-- </form> -->
+												<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+											</div>
 										<?php
 
 											}
