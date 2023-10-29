@@ -20,12 +20,29 @@
 						Quản lý khách hàng
 					</a>
 					<?php } ?>
+					<a class="nav-link" href="../menu/menu_view.php">
+						<div class="sb-nav-link-icon"><i class="fas fa-id-badge"></i></div>
+						Menu
+					</a>
+					<a class="nav-link" href="../category/mycategory.php">
+						<div class="sb-nav-link-icon"><i class="fas fa-id-badge"></i></div>
+						Danh mục sản phẩm
+					</a>
+					<a class="nav-link" href="../Product/myProduct.php">
+						<div class="sb-nav-link-icon"><i class="fas fa-id-badge"></i></div>
+						Quản lý sản phẩm
+					</a>
+					<a class="nav-link" href="../orders/order_list.php">
+						<div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
+						Orders
+					</a>
 					<?php if(checkPrivilege('../slider/slider_list.php')) { ?>
 					<a class="nav-link" href="../slider/slider_list.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-sliders"></i></div>
 						Slider
 					</a>
 					<?php } ?>
+
 				</div>
 			</div>
 		</nav>

@@ -42,9 +42,9 @@ include_once('../includes/sidebar.php');
                                 $current_page = !empty($_GET['page'])?$_GET['page']:1;
                                 // offset  = (page - 1) * per_page
                                 $offset = ($current_page - 1) * $item_per_page;
-                                $sql = "Select * from users order by UserId asc limit ".$item_per_page." offset ".$offset." ";
+                                $sql = "Select * from user order by UserId asc limit ".$item_per_page." offset ".$offset." ";
                                 $result = mysqli_query($connection, $sql);
-                                $totalRecords = mysqli_query($connection, "select * from users");
+                                $totalRecords = mysqli_query($connection, "select * from user");
                                 $totalRecords = $totalRecords->num_rows;
                                 // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
                                 $totalPage = ceil($totalRecords / $item_per_page);

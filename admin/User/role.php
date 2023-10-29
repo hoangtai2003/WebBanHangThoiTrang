@@ -20,17 +20,12 @@ include_once('../includes/sidebar.php');
                     if (!empty($_GET['action']) && $_GET['action'] == "save") {
                         $data = $_POST;
                         $insertString = "";
-                        $deleteOldRole = mysqli_query($connection, "Delete from role_user where user_id = " .$data['user_id']);
+                        $deleteOldRole = mysqli_query($connection, "Delete from roleuser where UserId = " .$data['UserId']);
                         foreach ($data['roles'] as $insertRole) {
                             $insertString .= !empty($insertString) ? "," : "";
-                            $insertString .= "(NULL, " . $data['user_id'] . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
+                            $insertString .= "(NULL, " . $data['UserId'] . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
                         }
-                        $insertRole = mysqli_query($connection, "INSERT INTO role_user (id, user_id, role_id, created_at, updated_at) VALUES" . $insertString);
-                        if($insertRole){
-                            $_SESSION['message'] = 'Phân quyền thành công';
-                        } else {
-                            $_SESSION['message'] = 'Phân quyền không thành công';
-                        }
+                        $insertRole = mysqli_query($connection, "INSERT INTO roleuser (id, UserId, RoleId, created_at, updated_at) VALUES " . $insertString);
                     ?>
                     <?php } else { ?>
                         <?php
@@ -40,18 +35,18 @@ include_once('../includes/sidebar.php');
                         $result_role_group = mysqli_query($connection, "select * from role_group order by role_group.position ASC");
                         $query_run_role_group = mysqli_fetch_all($result_role_group, MYSQLI_ASSOC);
 
-                        $currentRole =  mysqli_query($connection,  "select * from role_user where user_id=". $_GET['UserId']);
+                        $currentRole =  mysqli_query($connection,  "select * from roleuser where UserId=". $_GET['UserId']);
                         $currentRole_run =  mysqli_fetch_all($currentRole, MYSQLI_ASSOC);
                         $currentRoleList = array();
                         if(!empty($currentRole_run)){
                             foreach($currentRole_run as $current){
-                                $currentRoleList[] = $current['role_id'];
+                                $currentRoleList[] = $current['RoleId'];
                             }
                         }
                         $connection->close();
                         ?>
                         <form action="?action=save" method="POST">
-                            <input type="hidden" name="user_id" value="<?= $_GET['UserId'] ?>">
+                            <input type="hidden" name="UserId" value="<?= $_GET['UserId'] ?>">
                             <?php
                             foreach ($query_run_role_group as $group) {
 

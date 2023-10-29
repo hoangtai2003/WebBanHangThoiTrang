@@ -5,13 +5,15 @@
         $name = $_POST['name'];
         $password = $_POST['password'];
         $password_hash = md5($password);
-        $sql = "Select * from users where UserName = '$name' and UserPassword = '$password_hash'  LIMIT 1";
+        $sql = "Select * from user where UserName = '$name' and UserPassword = '$password_hash'  LIMIT 1";
         $result =mysqli_query($connection,$sql) or die ($connection->error);
         if ($row = mysqli_fetch_assoc($result)){
+            $UserId = $row['UserId'];
+            $_SESSION['UserId'] = $UserId;
             $_SESSION['loggedin'] = true;//đăng nhập thành công
             $_SESSION['username'] = $name;
             $user = $row;
-            $query = "SELECT * FROM role_user INNER JOIN role on role_user.role_id = role.id where role_user.user_id =" .$user['UserId'];
+            $query = "SELECT * FROM roleuser INNER JOIN role on roleuser.RoleId = role.id where roleuser.UserId =" .$user['UserId'];
             $query_run = mysqli_query($connection, $query);
             $result = mysqli_fetch_all($query_run, MYSQLI_ASSOC);
             if (!empty($result)){

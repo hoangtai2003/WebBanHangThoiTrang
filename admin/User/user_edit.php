@@ -19,7 +19,7 @@ include_once('../includes/sidebar.php')
                     <?php
                     if (isset($_GET['UserId'])) {
                         $user_id = $_GET['UserId'];
-                        $sql = "Select * from users where UserId = '$user_id'";
+                        $sql = "Select * from user where UserId = '$user_id'";
                         $result = mysqli_query($connection, $sql);
                         $connection->close();
                         if (mysqli_num_rows($result) > 0) {
