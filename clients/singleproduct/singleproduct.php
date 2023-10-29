@@ -186,6 +186,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 								<li class="tab active" data-active-tab="tab_1"><span>Description</span></li>
 								<li class="tab" data-active-tab="tab_3"><span>Reviews (2)</span></li>
 							</ul>
+							aaa
 						</div>
 					</div>
 				</div>
