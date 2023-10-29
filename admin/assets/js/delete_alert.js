@@ -2,8 +2,8 @@ $('.action_delete').on('click', function(e){
     e.preventDefault();
     const href = $(this).attr('href')
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Warning',
+        text: "Are you sure you want to delete this item?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
