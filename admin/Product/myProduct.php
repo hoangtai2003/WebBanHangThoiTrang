@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +7,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./myProduct.css">
+    <!-- <link rel="stylesheet" href="./myProduct.css"> -->
     <title>Document</title>
 </head>
 
@@ -19,7 +17,6 @@ session_start();
     include('../includes/header.php');
     include_once('../includes/navbar_top.php');
     include_once('../includes/sidebar.php');
-    require_once('../../config/config.php');
 
     ?>
     <!-- container-product -->
@@ -34,7 +31,7 @@ session_start();
                 <div class="card">
                     <div class="card-header">
                         <h4>List Product</h4>
-                        <a href="../createProduct/createProduct.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Add product</a>
+                        <a href="./createProduct.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Add product</a>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -54,7 +51,7 @@ session_start();
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "Select a.*, b.CateName from product a inner join Category b on a.CateId = b.CateId";
+                                $sql = "Select a.*, b.CateName from product a inner join Categories b on a.CateId = b.CateId";
                                 $result = mysqli_query($connection, $sql);
                                 if (mysqli_fetch_array($result) > 0) {
                                     foreach ($result as $Prod) {
@@ -62,15 +59,15 @@ session_start();
                                         <tr>
                                             <td><?= $Prod['ProdId']; ?></td>
                                             <td><?= $Prod['ProdName']; ?></td>
-                                            <td style="width: 150px"><img style="width: 150px;" src="../../images/<?= $Prod['ProdImage']; ?>" alt=""></td>
+                                            <td style="max-width: 150px"><img style="width: 100%;" src="../../images/<?= $Prod['ProdImage']; ?>" alt=""></td>
                                             <td><?= $Prod['ProdPrice']; ?></td>
                                             <td><?= $Prod['ProdPriceSale']; ?></td>
                                             <td>0</td>
                                             <td>0</td>
                                             <td><?= $Prod['CateName']; ?></td>
-                                            <td><a href="../editProduct/editProduct.php?ProdId=<?=$Prod['ProdId'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit</a></td>
+                                            <td><a href="./editProduct.php?ProdId=<?= $Prod['ProdId'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit</a></td>
                                             <td>
-                                                <form action="../deleteProduct/deleteProductAction.php?ProdId=<?=$Prod['ProdId']?>" method="POST">
+                                                <form action="./deleteProductAction.php?ProdId=<?= $Prod['ProdId'] ?>" method="POST">
                                                     <button type="submit" onclick="return confirm('Are you sure delete <?= $Prod['ProdName']; ?>?');" name="product_delete" class="btn btn-danger" value="<?= $Prod['ProdId']; ?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Delete
                                                     </button>
                                                 </form>
@@ -88,6 +85,9 @@ session_start();
         </div>
     </div>
 
+    <?php
+    include_once('../includes/footer.php')
+    ?>
 </body>
 
 </html>

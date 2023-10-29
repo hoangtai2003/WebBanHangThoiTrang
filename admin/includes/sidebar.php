@@ -12,7 +12,7 @@
 						<div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
 						User
 					</a>
-					<a class="nav-link" href="../myProduct/myProduct.php">
+					<a class="nav-link" href="../Product/myProduct.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
 						Product
 					</a>
