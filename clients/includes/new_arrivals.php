@@ -46,7 +46,7 @@
 									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
 									<div class="product_info">
 										<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row["ProdId"]?>"><?php echo $row["ProdName"] ?></a></h6>
-										<div class="product_price"><?php echo $row["ProdPrice"] ?><span><?php echo $row["ProdPriceSale"] ?></span></div>
+										<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?><span><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?></span></div>
 									</div>
 								</div>
 								<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
