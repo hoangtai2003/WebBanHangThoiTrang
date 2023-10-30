@@ -21,7 +21,7 @@
 					</a>
 					<?php } ?>
 					<a class="nav-link" href="../menu/menu_view.php">
-						<div class="sb-nav-link-icon"><i class="fas fa-id-badge"></i></div>
+						<div class="sb-nav-link-icon"><i class="fas fa-bars"></i></div>
 						Menu
 					</a>
 					<a class="nav-link" href="../category/mycategory.php">
