@@ -49,7 +49,7 @@
 										<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?><span><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?></span></div>
 									</div>
 								</div>
-								<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+								<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
 							</div>
 
 					<?php
