@@ -33,9 +33,7 @@
             <tr>
                 <th>MenuID</th>
                 <th>MenuName</th>
-                <th>MenuCreateDate</th>
-                <th>MenuModifiedDate</th>
-                <th>Link:</th>
+                <th>Link</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -48,8 +46,6 @@
 
             <td><?php echo $row["MenuId"];?></td>
             <td><?php echo $row["MenuName"];?></td>
-            <td><?php echo $row["MenuCreateDate"];?></td>
-            <td><?php echo $row["MenuModifiedDate"];?></td>
             <td><?php echo $row["MenuLink"];?></td>
             <td>
                 <a class="btn btn-success" href="menu_edit.php?MenuId=<?php echo $row["MenuId"];?>"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit</a>
