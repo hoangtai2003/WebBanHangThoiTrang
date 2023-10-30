@@ -10,16 +10,16 @@ require_once('../../config/config.php');
     <!-- container-category-->
     <div class="container-fluid px-4">
         <ol class="breadcrumb mt-5">
-            <li class="breadcrumb-item active">category</li>
-            <li class="breadcrumb-item active">My Category</li>
+            <li class="breadcrumb-item active">Danh mục</li>
+            <li class="breadcrumb-item active">Danh sách danh mục</li>
         </ol>
         <div class="Prod">
             <?php include('../authen/message.php'); ?>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>List Category</h4>
-                        <a href="./createCategory.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Add category</a>
+                        <h4>Danh sách danh mục</h4>
+                        <a href="./createCategory.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm danh mục</a>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -45,10 +45,10 @@ require_once('../../config/config.php');
                                             <td style="width: 150px"><img style="width: 150px;" src="../../images/<?= $row['CateImage']; ?>" alt=""></td>
                                             <td><?= $row['CateDescription']; ?></td>
                                             <td><?= $row['CateStatus']; ?></td>
-                                            <td><a href="editCategory.php?CateId=<?=$row['CateId'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit</a></td>
+                                            <td><a href="editCategory.php?CateId=<?=$row['CateId'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa</a></td>
                                             <td>
                                                 <form action="deleteCategoryAction.php?CateId=<?=$row['CateId']?>" method="POST">
-                                                    <button type="submit" onclick="return confirm('Are you sure delete <?= $row['CateName']; ?>?');" name="category_delete" class="btn btn-danger" value="<?= $row['CateId']; ?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Delete
+                                                    <button type="submit" onclick="return confirm('Are you sure delete <?= $row['CateName']; ?>?');" name="category_delete" class="btn btn-danger" value="<?= $row['CateId']; ?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Xóa
                                                     </button>
                                                 </form>
                                             </td>

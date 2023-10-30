@@ -28,11 +28,11 @@
 				<div class="card-body">
 					<form method=POST action="menu_edit_action.php?MenuId=<?php echo $menuid;?>">
 						<div class="form-group" style="margin-bottom: 15px;">
-							<label>Menu Name</label>
+							<label>Tên Menu</label>
 							<input type="text" name="txtMenuname" class="form-control" value="<?= $row['MenuName'] ?>">
 						</div>
 						<div class="form-group" style="margin-bottom: 15px;">
-							<label>Menu Link</label>
+							<label>Link</label>
 							<input type="text" name="txtMenuLink" class="form-control" value="<?= $row['MenuLink'] ?>">
 						</div>
 						<button name="update_menu" class="btn btn-primary mt-2">Cập nhật</button>

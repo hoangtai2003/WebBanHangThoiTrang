@@ -8,23 +8,23 @@
 ?>
 <div class="container-fluid px-4">
 	<ol class="breadcrumb mt-5">
-		<li class="breadcrumb-item active">User</li>
-		<li class="breadcrumb-item active">Add</li>
+		<li class="breadcrumb-item active">Menu</li>
+		<li class="breadcrumb-item active">Thêm Menu</li>
 	</ol>
 	<div class="row">
 		<div class="col-md-6">
 				<div class="card">
 					<div class="card-header">
-						<h4 >Add new menu</h4>
+						<h4 >Thêm Menu</h4>
 					</div>
 					<div class="card-body">
 						<form method=POST action="menu_add_action.php">
 							<div class="form-group" style="margin-bottom: 15px;">
-								<label>Menu Name</label>
+								<label>Tên Menu</label>
 								<input type="text" name="txtMenuname" class="form-control" value="">
 							</div>
 							<div class="form-group" style="margin-bottom: 15px;">
-								<label>Menu Link</label>
+								<label>Link</label>
 								<input type="text" name="txtMenuLink" class="form-control" value="">
 							</div>
 							<button name="add_menu" class="btn btn-primary mt-2">Gửi đi</button>

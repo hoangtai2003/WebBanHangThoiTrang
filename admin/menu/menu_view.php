@@ -15,24 +15,24 @@
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
         <li class="breadcrumb-item active">Menu</li>
-        <li class="breadcrumb-item active">Fix</li>
+        <li class="breadcrumb-item active">Danh sách Menu</li>
     </ol>   
     <div class="row">
         <?php include('../authen/message.php'); ?>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>List Menu</h4>
-                    <a href="menu_add.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Add new menu</a>
+                    <h4>Danh sách Menu</h4>
+                    <a href="menu_add.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm Menu</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr>
-                            <th>MenuID</th>
-                            <th>MenuName</th>
+                            <th>Id</th>
+                            <th>Tên Menu</th>
                             <th>Link</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Sửa</th>
+                            <th>Xóa</th>
                         </tr>
                             <?php 
                             while($row= $result->fetch_assoc()){
@@ -42,11 +42,11 @@
                         <td><?php echo $row["MenuName"];?></td>
                         <td><?php echo $row["MenuLink"];?></td>
                         <td>
-                            <a class="btn btn-success" href="menu_edit.php?MenuId=<?php echo $row["MenuId"];?>"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit</a>
+                            <a class="btn btn-success" href="menu_edit.php?MenuId=<?php echo $row["MenuId"];?>"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa</a>
                         </td>
 
                         <td>
-                            <a class="btn btn-danger"  onclick="return confirm('Are you sure to delete <?php echo $row["MenuId"]; ?> ?');" href="menu_delete.php?MenuId=<?php echo $row["MenuId"];?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Delete</a>
+                            <a class="btn btn-danger"  onclick="return confirm('Are you sure to delete <?php echo $row["MenuId"]; ?> ?');" href="menu_delete.php?MenuId=<?php echo $row["MenuId"];?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Xóa</a>
                         </td>
                         
                         </tr>

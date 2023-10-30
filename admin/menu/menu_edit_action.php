@@ -20,7 +20,7 @@
 						where MenuId = '$menuid' ";
 		$connection->query($sql_update) or die($connection->error);
 		
-		$_SESSION["menu_error"]="Update success!";
+		$_SESSION["menu_error"]="Cập nhật thành công!";
 		header("Location:menu_view.php");
 		$connection->close();
 	}

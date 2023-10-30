@@ -8,6 +8,8 @@ include_once('../includes/sidebar.php')
 ?>
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
+        <li class="breadcrumb-item active">Danh mục</li>
+        <li class="breadcrumb-item active">Thêm danh mục</li>
     </ol>
     <div class="row">
         <?php include('../authen/message.php'); ?>
