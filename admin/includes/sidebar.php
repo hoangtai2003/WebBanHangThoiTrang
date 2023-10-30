@@ -20,29 +20,36 @@
 						Quản lý khách hàng
 					</a>
 					<?php } ?>
+					<?php if(checkPrivilege('../menu/menu_view.php')) { ?>
 					<a class="nav-link" href="../menu/menu_view.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-bars"></i></div>
 						Menu
 					</a>
-					<a class="nav-link" href="../category/mycategory.php">
+					<?php } ?>
+					<?php if(checkPrivilege('../category/myCategory.php')) { ?>
+					<a class="nav-link" href="../category/myCategory.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-cloud"></i></div>
 						Danh mục sản phẩm
 					</a>
+					<?php } ?>
+					<?php if(checkPrivilege('../Product/myProduct.php')) { ?>
 					<a class="nav-link" href="../Product/myProduct.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-shirt"></i></div>
 						Quản lý sản phẩm
 					</a>
+					<?php } ?>
+					<?php if(checkPrivilege('../orders/order_list.php')) { ?>
 					<a class="nav-link" href="../orders/order_list.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
 						Orders
 					</a>
+					<?php } ?>
 					<?php if(checkPrivilege('../slider/slider_list.php')) { ?>
 					<a class="nav-link" href="../slider/slider_list.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-sliders"></i></div>
 						Slider
 					</a>
 					<?php } ?>
-
 				</div>
 			</div>
 		</nav>

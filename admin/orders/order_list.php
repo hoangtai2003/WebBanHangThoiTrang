@@ -26,7 +26,9 @@ session_start();
                                     <th scope="col">Số điện thoại</th>
                                     <th scope="col">Phương thức thanh toán</th>
                                     <th scope="col">Tình trạng</th>
+                                    <?php if (checkPrivilege('order_detail.php?orderid=0')) { ?>
                                     <th scope="col">Thông tin</th>
+                                    <?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,8 +64,14 @@ session_start();
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td><a href="./order_detail.php?orderid=<?php echo $row['OrderId'] ?>" class="btn btn-sm btn-success">Xem chi tiết</a></td>
-                                                    
+                                                    <?php if (checkPrivilege('order_detail.php?orderid=0')) { ?>
+                                                    <td>
+                                                        <a 
+                                                            href="./order_detail.php?orderid=<?php echo $row['OrderId'] ?>" 
+                                                            class="btn btn-sm btn-success">Xem chi tiết
+                                                        </a>
+                                                    </td> 
+                                                    <?php }?>
                                                 </tr>
                                             <?php
                                         }

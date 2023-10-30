@@ -17,7 +17,13 @@ session_start();
                 <div class="card">
                     <div class="card-header">
                         <h4>Danh sách sản phẩm</h4>
-                        <a href="./createProduct.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm sản phẩm</a>
+                        <?php if (checkPrivilege('createProduct.php')) { ?>
+                        <a 
+                            href="./createProduct.php" 
+                            class="btn btn-primary float-end">
+                            <i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm sản phẩm
+                        </a>
+                        <?php }?>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -31,8 +37,12 @@ session_start();
                                     <th scope="col">Tồn kho</th>
                                     <th scope="col">Đã bán</th>
                                     <th scope="col">Loại danh mục</th>
+                                    <?php if (checkPrivilege('editProduct.php?ProdId=0')) { ?>
                                     <th scope="col">Sửa</th>
+                                    <?php }?>
+                                    <?php if (checkPrivilege('deleteProductAction.php?ProdId=0')) { ?>
                                     <th scope="col">Xóa</th>
+                                    <?php }?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,13 +61,25 @@ session_start();
                                             <td>0</td>
                                             <td>0</td>
                                             <td><?= $Prod['CateName']; ?></td>
-                                            <td><a href="./editProduct.php?ProdId=<?= $Prod['ProdId'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa</a></td>
+                                            <?php if (checkPrivilege('editProduct.php?ProdId=0')) { ?>
                                             <td>
-                                                <form action="./deleteProductAction.php?ProdId=<?= $Prod['ProdId'] ?>" method="POST">
-                                                    <button type="submit" onclick="return confirm('Are you sure delete <?= $Prod['ProdName']; ?>?');" name="product_delete" class="btn btn-danger" value="<?= $Prod['ProdId']; ?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Xóa
-                                                    </button>
-                                                </form>
+                                                <a 
+                                                    href="./editProduct.php?ProdId=<?= $Prod['ProdId'] ?>" 
+                                                    class="btn btn-success">
+                                                    <i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa
+                                                </a>
                                             </td>
+                                            <?php } ?>
+                                            <?php if (checkPrivilege('deleteProductAction.php?ProdId=0')) { ?>
+                                            <td>
+                                                <a 
+                                                    href="deleteProductAction.php?ProdId=<?php echo $row["ProdId"];?>"
+                                                    class="btn btn-danger action_delete" 
+                                                    value="<?= $row['ProdId']; ?>"><i class="fa-solid fa-trash" 
+                                                    style="margin-right: 5px;"></i>Xóa
+                                                </a>
+                                            </td>
+                                            <?php } ?>
                                         </tr>
                                 <?php
                                     }

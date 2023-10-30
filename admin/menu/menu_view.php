@@ -10,8 +10,6 @@
     include("../../config/config.php");
     $result= $connection->query("select * from menu ");
 ?>
-
-
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
         <li class="breadcrumb-item active">Menu</li>
@@ -23,7 +21,13 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Danh sách Menu</h4>
-                    <a href="menu_add.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm Menu</a>
+                    <?php if (checkPrivilege('menu_add.php')) { ?>
+                    <a 
+                        href="menu_add.php" 
+                        class="btn btn-primary float-end">
+                        <i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm Menu
+                    </a>
+                    <?php } ?>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered">
@@ -31,8 +35,13 @@
                             <th>Id</th>
                             <th>Tên Menu</th>
                             <th>Link</th>
+                            <?php if (checkPrivilege('menu_edit.php?MenuId=0')) { ?>
                             <th>Sửa</th>
+                            <?php } ?>
+                            <?php if (checkPrivilege('menu_delete.php?MenuId=0')) { ?>
                             <th>Xóa</th>
+                            <?php } ?>
+
                         </tr>
                             <?php 
                             while($row= $result->fetch_assoc()){
@@ -41,14 +50,25 @@
                         <td><?php echo $row["MenuId"];?></td>
                         <td><?php echo $row["MenuName"];?></td>
                         <td><?php echo $row["MenuLink"];?></td>
+                        <?php if (checkPrivilege('menu_edit.php?MenuId=0')) { ?>
                         <td>
-                            <a class="btn btn-success" href="menu_edit.php?MenuId=<?php echo $row["MenuId"];?>"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa</a>
+                            <a 
+                                class="btn btn-success" 
+                                href="menu_edit.php?MenuId=<?php echo $row["MenuId"];?>"><i 
+                                class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa
+                            </a>
                         </td>
-
-                        <td>
-                            <a class="btn btn-danger"  onclick="return confirm('Are you sure to delete <?php echo $row["MenuId"]; ?> ?');" href="menu_delete.php?MenuId=<?php echo $row["MenuId"];?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Xóa</a>
-                        </td>
-                        
+                        <?php } ?>
+                        <?php if (checkPrivilege('menu_delete.php?MenuId=0')) { ?>
+                            <td>
+                                <a 
+                                    href="menu_delete.php?MenuId=<?php echo $row["MenuId"];?>"
+                                    class="btn btn-danger action_delete" 
+                                    value="<?= $row['MenuId']; ?>"><i class="fa-solid fa-trash" 
+                                    style="margin-right: 5px;"></i>Xóa
+                                </a>
+                            </td>
+                        <?php } ?>
                         </tr>
                         <?php
                             }
@@ -62,4 +82,6 @@
 </div>
 <?php 
     unset($_SESSION["menu_error"]);
+    include_once('../includes/footer.php');
+?>
 
