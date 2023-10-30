@@ -29,8 +29,7 @@ include_once('../includes/sidebar.php');
                             <th>Số điện thoại</th>
                             <th>Email</th>
                             <th>Địa chỉ khách hàng</th>
-                            <th>Ngày Sinh</th>
-                            <th>Giới tính</th>
+                            <th>Trạng thái</th>
                             <?php if (checkPrivilege('customer_edit.php?CusId=0')) { ?>
                                 <th>Sửa</th>
                             <?php } ?>
@@ -43,9 +42,9 @@ include_once('../includes/sidebar.php');
                             $current_page = !empty($_GET['page'])?$_GET['page']:1;
                             // offset  = (page - 1) * per_page
                             $offset = ($current_page - 1) * $item_per_page;
-                            $sql = "Select * from customers order by CusId asc limit ".$item_per_page." offset ".$offset." ";
+                            $sql = "Select * from customer order by CusId asc limit ".$item_per_page." offset ".$offset." ";
                             $result = mysqli_query($connection, $sql);
-                            $totalRecords = mysqli_query($connection, "select * from customers");
+                            $totalRecords = mysqli_query($connection, "select * from customer");
                             $totalRecords = $totalRecords->num_rows;
                             // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
                             $totalPage = ceil($totalRecords / $item_per_page);
@@ -59,8 +58,7 @@ include_once('../includes/sidebar.php');
                                     <td><?= $row['CusPhone']; ?></td>
                                     <td><?= $row['CusEmail']; ?></td>
                                     <td><?= $row['CusAddress']; ?></td>
-                                    <td><?= $row['CusBirthday']; ?></td>
-                                    <td><?= $row['CusGender']; ?></td>
+                                    <td><?= $row['CusStatus']; ?></td>
                                     <?php if (checkPrivilege('customer_edit.php?CusId=0')) { ?>
                                         <td>
                                             <a href="customer_edit.php?CusId=<?= $row['CusId'] ?>" class="btn btn-success">
