@@ -17,5 +17,6 @@
         <script src="../assets/js/sweetalert2.all.min.js"></script>
         <script src="../assets/js/jquery-3.7.1.min.js"></script>
         <script src="../assets/js/delete_alert.js"></script>
+        <script src="../assets/js/show_image.js"></script>
     </body>
 </html>
