@@ -149,7 +149,7 @@ require_once('../../config/config.php')
 													<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
 													<div class="product_info">
 														<h6 class="product_name"><a href="../singleproduct/singleproduct.php"><?php echo $row["ProdName"] ?></a></h6>
-														<div class="product_price"><?php echo $row["ProdPrice"]?></div>
+														<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></div>
 													</div>
 												</div>
 												<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
