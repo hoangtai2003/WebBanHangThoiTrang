@@ -10,13 +10,13 @@
 					</a>
 					<?php if(checkPrivilege('../user/user_list.php')) { ?>
 					<a class="nav-link" href="../user/user_list.php">
-						<div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+						<div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
 						Quản lý  thành viên
 					</a>
 					<?php } ?>
 					<?php if(checkPrivilege('../customer/customer_list.php')) { ?>
 					<a class="nav-link" href="../customer/customer_list.php">
-						<div class="sb-nav-link-icon"><i class="fas fa-id-badge"></i></div>
+						<div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
 						Quản lý khách hàng
 					</a>
 					<?php } ?>
@@ -25,11 +25,11 @@
 						Menu
 					</a>
 					<a class="nav-link" href="../category/mycategory.php">
-						<div class="sb-nav-link-icon"><i class="fas fa-id-badge"></i></div>
+						<div class="sb-nav-link-icon"><i class="fas fa-cloud"></i></div>
 						Danh mục sản phẩm
 					</a>
 					<a class="nav-link" href="../Product/myProduct.php">
-						<div class="sb-nav-link-icon"><i class="fas fa-id-badge"></i></div>
+						<div class="sb-nav-link-icon"><i class="fas fa-shirt"></i></div>
 						Quản lý sản phẩm
 					</a>
 					<a class="nav-link" href="../orders/order_list.php">
