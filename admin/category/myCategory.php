@@ -46,7 +46,12 @@ require_once('../../config/config.php');
                         </thead>
                         <tbody>
                             <?php
-                            $result=$connection->query("select * from categories");
+                            include("../OffsetPagination/offset.php");
+                            $result = $connection->query("select * from categories order by CateId asc limit ".$item_per_page." offset ".$offset."");
+                            $totalRecords = mysqli_query($connection, "select * from categories");
+                            $totalRecords = $totalRecords->num_rows;
+                            // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+                            $totalPage = ceil($totalRecords / $item_per_page);
                             while ($row = $result->fetch_assoc()){
                                 ?>
                                     <tr>
@@ -77,10 +82,10 @@ require_once('../../config/config.php');
                                     </tr>
                             <?php
                                 }
-                            
                             ?>
                         </tbody>
                     </table>
+                    <?php include("../../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>

@@ -47,8 +47,13 @@ session_start();
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "Select a.*, b.CateName from product a inner join categories b on a.CateId = b.CateId";
+                                include("../OffsetPagination/offset.php");
+                                $sql = "Select a.*, b.CateName from product a inner join categories b on a.CateId = b.CateId order by ProdId asc limit ".$item_per_page." offset ".$offset."";
                                 $result = mysqli_query($connection, $sql);
+                                $totalRecords = mysqli_query($connection, "select * from product");
+                                $totalRecords = $totalRecords->num_rows;
+                                // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+                                $totalPage = ceil($totalRecords / $item_per_page);
                                 if (mysqli_fetch_array($result) > 0) {
                                     foreach ($result as $Prod) {
                                 ?>
@@ -87,6 +92,7 @@ session_start();
                                 ?>
                             </tbody>
                         </table>
+                        <?php include("../../pagination/pagination.php") ?>
                     </div>
                 </div>
             </div>

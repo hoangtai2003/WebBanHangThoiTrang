@@ -8,6 +8,8 @@ include_once('../includes/sidebar.php');
 ?>
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
+        <li class="breadcrumb-item active">User</li>
+        <li class="breadcrumb-item active">Danh sách thành viên</li>
     </ol>
     <div class="row">
         <?php include('../authen/message.php'); ?>
@@ -37,10 +39,7 @@ include_once('../includes/sidebar.php');
                             <?php } ?>
                         </tr>
                         <?php
-                            $item_per_page =!empty($_GET['per_page'])?$_GET['per_page']:4;
-                            $current_page = !empty($_GET['page'])?$_GET['page']:1;
-                            // offset  = (page - 1) * per_page
-                            $offset = ($current_page - 1) * $item_per_page;
+                            include("../OffsetPagination/offset.php");
                             $sql = "Select * from user order by UserId asc limit ".$item_per_page." offset ".$offset." ";
                             $result = mysqli_query($connection, $sql);
                             $totalRecords = mysqli_query($connection, "select * from user");

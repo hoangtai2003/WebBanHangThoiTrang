@@ -8,6 +8,8 @@ include_once('../includes/sidebar.php');
 ?>
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
+        <li class="breadcrumb-item active">Khách hàng</li>
+        <li class="breadcrumb-item active">Danh sách khách hàng</li>
     </ol>
     <div class="row">
         <?php include('../authen/message.php'); ?>
@@ -30,18 +32,12 @@ include_once('../includes/sidebar.php');
                             <th>Email</th>
                             <th>Địa chỉ khách hàng</th>
                             <th>Trạng thái</th>
-                            <?php if (checkPrivilege('customer_edit.php?CusId=0')) { ?>
-                                <th>Sửa</th>
-                            <?php } ?>
                             <?php if (checkPrivilege('customer_delete.php?CusId=0')) { ?>
                                 <th>Xóa</th>
                             <?php } ?>
                         </tr>
                         <?php
-                            $item_per_page =!empty($_GET['per_page'])?$_GET['per_page']:4;
-                            $current_page = !empty($_GET['page'])?$_GET['page']:1;
-                            // offset  = (page - 1) * per_page
-                            $offset = ($current_page - 1) * $item_per_page;
+                            include("../OffsetPagination/offset.php");
                             $sql = "Select * from customer order by CusId asc limit ".$item_per_page." offset ".$offset." ";
                             $result = mysqli_query($connection, $sql);
                             $totalRecords = mysqli_query($connection, "select * from customer");
@@ -59,13 +55,6 @@ include_once('../includes/sidebar.php');
                                     <td><?= $row['CusEmail']; ?></td>
                                     <td><?= $row['CusAddress']; ?></td>
                                     <td><?= $row['CusStatus']; ?></td>
-                                    <?php if (checkPrivilege('customer_edit.php?CusId=0')) { ?>
-                                        <td>
-                                            <a href="customer_edit.php?CusId=<?= $row['CusId'] ?>" class="btn btn-success">
-                                                <i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa
-                                            </a>
-                                        </td>
-                                    <?php } ?>
                                     <?php if (checkPrivilege('customer_delete.php?CusId=0')) { ?>
                                         <td>
                                             <a 

@@ -8,13 +8,15 @@ include_once('../includes/sidebar.php')
 ?>
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
+        <li class="breadcrumb-item active">User</li>
+        <li class="breadcrumb-item active">Thêm thành viên</li>
     </ol>
     <div class="row">
         <?php include('../authen/message.php'); ?>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4>Thêm nhân viên</h4>
+                    <h4>Thêm thành viên</h4>
                 </div>
                 <div class="card-body">
                     <form action="user_add_action.php" method="POST">

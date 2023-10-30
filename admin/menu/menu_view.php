@@ -8,7 +8,6 @@
     include_once('../includes/navbar_top.php');
     include_once('../includes/sidebar.php');
     include("../../config/config.php");
-    $result= $connection->query("select * from menu ");
 ?>
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
@@ -43,7 +42,13 @@
                             <?php } ?>
 
                         </tr>
-                            <?php 
+                            <?php
+                            include("../OffsetPagination/offset.php");
+                            $result= $connection->query("select * from menu order by MenuId asc limit ".$item_per_page." offset ".$offset."");
+                            $totalRecords = mysqli_query($connection, "select * from menu");
+                            $totalRecords = $totalRecords->num_rows;
+                            // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+                            $totalPage = ceil($totalRecords / $item_per_page);
                             while($row= $result->fetch_assoc()){
                                 ?>
                         <tr>
@@ -75,6 +80,7 @@
                             $connection->close();
                         ?>
                     </table>
+                    <?php include("../../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>
