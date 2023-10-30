@@ -10,7 +10,7 @@ if ($CateId > 0) {
     
     if ($stmt->execute()) {
         echo "Danh mục đã được xóa thành công.";
-        header("Location: ./myCategory.php");
+        header("Location: myCategory.php");
     } else {
         echo "Lỗi khi xóa danh mục: " . $stmt->error;
     }
