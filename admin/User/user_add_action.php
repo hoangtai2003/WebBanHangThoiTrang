@@ -12,13 +12,13 @@
             $_SESSION['message'] = "Ký tự nhập vào không được chứa khoảng trắng!";
             header("Location: user_add.php");
         } else {
-            $sql = "SELECT UserName, UserEmail from users where  UserEmail = '$email' or UserName ='$name'";
+            $sql = "SELECT UserName, UserEmail from user where  UserEmail = '$email' or UserName ='$name'";
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
                 $_SESSION['message'] = "Tên hoặc Email đã tồn tại";
                 header("Location: user_add.php");
             } else {
-                $sql = "Insert into users(UserName, UserEmail, UserPassword, UserStatus) values ('$name', '$email', '$password_hash', '$status')";
+                $sql = "Insert into user(UserName, UserEmail, UserPassword, UserStatus) values ('$name', '$email', '$password_hash', '$status')";
                 $result = mysqli_query($connection, $sql);
                 $connection->close();
                 if ($result){
