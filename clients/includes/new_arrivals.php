@@ -17,9 +17,22 @@
 				<div class="new_arrivals_sorting">
 					<ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
 						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
-						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
+						<?php
+							$sql_cate = "SELECT * FROM categories";
+							$result_cate = $connection->query($sql_cate);
+							if( $result_cate->num_rows > 0){
+								while($row = $result_cate->fetch_assoc()){
+									$catename = $row["CateName"];
+									$catenameReplace = preg_replace('/[^a-zA-Z0-9]/', '', $catename);
+									?>
+									<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".<?php echo strtolower($catenameReplace) ?>"><?php echo $catename ?></li>
+									<?php
+								}
+							}
+						?>
+						<!-- <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".womens">women's</li>
 						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
-						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">men's</li>
+						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".mens">men's</li> -->
 					</ul>
 				</div>
 			</div>
@@ -30,14 +43,16 @@
 
 					<!-- Product 1 -->
 					<?php
-					$sql = "SELECT * from product ";
+					$sql = "SELECT product.*, categories.CateName from product join categories on product.CateId = categories.CateId";
 
 					$result = $connection->query($sql);
 
 					if ($result->num_rows > 0) {
 						while ($row = $result->fetch_assoc()) {
+							$catename = $row["CateName"];
+							$catenameReplace = preg_replace('/[^a-zA-Z0-9]/', '', $catename);
 					?>
-							<div class="product-item men">
+							<div class="product-item <?php echo strtolower($catenameReplace) ?>">
 								<div class="product discount product_filter">
 									<div class="product_image">
 										<img src="../../images/<?php echo $row["ProdImage"] ?>" alt="">
