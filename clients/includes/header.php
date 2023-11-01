@@ -50,7 +50,8 @@
                                     if(isset($_SESSION['cus_loggedin']) && $_SESSION['cus_loggedin'] == true){
                                 ?>
                                     <li><a href="../cart/percharse_order.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Đơn mua</a></li>
-                                    <li><a href="../authen/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>  
+                                    <li><a href="../authen/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
+                                    <li><a href="../information/profile.php"><i class="fa fa-user"></i>Tài khoản</a></li>  
                                 <?php
                                     }else{
                                 ?>
@@ -91,7 +92,6 @@
                     </ul>
                     <ul class="navbar_user">
                         <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                         <li class="checkout">
                             <a href="../cart/cart_view.php">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>

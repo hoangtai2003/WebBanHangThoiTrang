@@ -47,26 +47,35 @@ include_once('../includes/sidebar.php');
                         ?>
                         <form action="?action=save" method="POST">
                             <input type="hidden" name="UserId" value="<?= $_GET['UserId'] ?>">
+                            
                             <?php
                             foreach ($query_run_role_group as $group) {
-
                             ?>
-                                <div class="form-group">
-                                    <h3><?= $group['name'] ?></h3>
-                                    <ul style="display: flex;list-style:none;width:100%;">
-                                        <?php foreach ($query_run_role as $role) { ?>
-                                            <?php if ($role['role_group_id'] == $group['id']) { ?>
-                                                <li style="float: left;width: 20%;">
-                                                    <input type="checkbox" 
-                                                        <?php if(in_array($role['id'], $currentRoleList)){ ?>                                                            
-                                                        checked="" <?php }?>
-                                                    value="<?= $role['id'] ?>" id="<?= $role['id'] ?>" name="roles[]">
-                                                    <label for="<?= $role['id'] ?>"><?= $role['name'] ?></label>
-                                                </li>
+                            <div class="col-md-12">
+                                <div class="card mb-3 col-md-12">
+                                    <div class="card-header" style="background: #3de4e4;">
+                                        <label>
+                                            <input type="checkbox" class="checkbox_all">
+                                            <b style="font-weight: 500; font-size: 25px;"><?= $group['name'] ?></b>
+                                        </label>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul style="display: flex;list-style:none;width:100%;">
+                                            <?php foreach ($query_run_role as $role) { ?>
+                                                <?php if ($role['role_group_id'] == $group['id']) { ?>
+                                                    <li style="float: left;width: 20%;font-size:18px;">
+                                                        <input type="checkbox" 
+                                                            <?php if(in_array($role['id'], $currentRoleList)){ ?>                                                            
+                                                            checked="" <?php }?>
+                                                        value="<?= $role['id'] ?>" id="<?= $role['id'] ?>" name="roles[]" class="checkbox_children">
+                                                        <label for="<?= $role['id'] ?>"><?= $role['name'] ?></label>
+                                                    </li>
+                                                <?php } ?>
                                             <?php } ?>
-                                        <?php } ?>
-                                    </ul>
+                                        </ul>
+                                    </div>
                                 </div>
+                            </div>
                             <?php } ?>
                             <button class="btn btn-primary mt-2">Gửi đi</button>
                         </form>

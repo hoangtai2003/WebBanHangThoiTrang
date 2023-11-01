@@ -18,5 +18,6 @@
         <script src="../assets/js/jquery-3.7.1.min.js"></script>
         <script src="../assets/js/delete_alert.js"></script>
         <script src="../assets/js/show_image.js"></script>
+        <script src="../assets/js/checkbox.js"></script>
     </body>
 </html>
