@@ -1,9 +1,12 @@
 <?php
 session_start();
-unset($_SESSION["cart"]);
+// unset($_SESSION["cart"]);
 require("../../config/config.php");
 if (!isset($_SESSION["cus_loggedin"])) {
     header("Location: ../authen/login.php");
+}
+if(!isset($_SESSION["cart"])) {
+    header("Location: ./cart_view.php");
 }
 ?>
 <!DOCTYPE html>
@@ -219,41 +222,6 @@ if (!isset($_SESSION["cus_loggedin"])) {
                                     </tr>
                                 </thead>
                                 <?php
-                                if (isset($_SESSION['cusid'])) {
-                                    $cusid = $_SESSION['cusid'];
-                                    //lấy thông tin bảng cart
-                                    $sql_get_cart = "SELECT * FROM cart WHERE CusId = '" . $cusid . "'";
-                                    $result_get_cart = $connection->query($sql_get_cart);
-                                    if ($result_get_cart->num_rows > 0) {
-                                        $row_get_cart = $result_get_cart->fetch_assoc();
-                                        $cartid = $row_get_cart['CartId'];
-
-                                        //lấy thông tin chi tiết giỏ hàng từ bảng cartdetail dựa trên cartid
-                                        $sql_get_cart_detail = "SELECT * FROM cartdetail WHERE CartId = '" . $cartid . "'";
-                                        $result_get_cart_detail = $connection->query($sql_get_cart_detail);
-
-                                        while ($row_get_cart_detail = $result_get_cart_detail->fetch_assoc()) {
-                                            //lấy thông tin sản phẩm từ bảng product dựa trên prodid
-                                            $prodid = $row_get_cart_detail['ProdId'];
-                                            $quantity = $row_get_cart_detail['Quantity'];
-
-                                            $sql_get_product = "SELECT * FROM product WHERE ProdId = '" . $prodid . "'";
-                                            $result_get_product = $connection->query($sql_get_product);
-
-                                            if ($result_get_product->num_rows > 0) {
-                                                $row_get_product = $result_get_product->fetch_assoc();
-
-                                                $_SESSION['cart'][] = array(
-                                                    'id' => $row_get_product['ProdId'],
-                                                    'name' => $row_get_product['ProdName'],
-                                                    'image' => $row_get_product['ProdImage'],
-                                                    'price' => $row_get_product['ProdPrice'],
-                                                    'quantity' => $quantity
-                                                );
-                                            }
-                                        }
-                                    }
-                                }
                                 if (isset($_SESSION["cart"])) {
                                     $i = 0;
                                     $tongtien = 0;
@@ -282,10 +250,6 @@ if (!isset($_SESSION["cus_loggedin"])) {
                                         <th colspan="6" class="text-right">Tổng tiền:</th>
                                         <th class="text-center"><?php echo number_format($tongtien, 0, ',', '.') ?></th>
                                     </tr>
-                                    <!-- <tr>
-										<th colspan="7"></th>	
-										<th class="text-center"><a href="./order_action.php" class="btn btn-sm btn-success">Đặt hàng</a></th>
-									</tr> -->
                                 <?php
                                 }
                                 ?>
