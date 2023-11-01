@@ -17,16 +17,25 @@ include_once('../includes/sidebar.php');
                 </div>
                 <div class="card-body">
                     <?php
-                    if (!empty($_GET['action']) && $_GET['action'] == "save") {
-                        $data = $_POST;
+                    if (!empty($_GET['action']) && $_GET['action'] == "save") {      
+                        $userId = $_POST['UserId'];
+                        $roles = $_POST['roles'];
                         $insertString = "";
-                        $deleteOldRole = mysqli_query($connection, "Delete from roleuser where UserId = " .$data['UserId']);
-                        foreach ($data['roles'] as $insertRole) {
+                        $deleteOldRole = mysqli_query($connection, "Delete from roleuser where UserId = " .$userId);
+                        foreach ($roles as $insertRole) {
                             $insertString .= !empty($insertString) ? "," : "";
-                            $insertString .= "(NULL, " . $data['UserId'] . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
+                            $insertString .= "(NULL, " . $userId . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
                         }
-                        $insertRole = mysqli_query($connection, "INSERT INTO roleuser (id, UserId, RoleId, created_at, updated_at) VALUES " . $insertString);
+                        $resultRole = mysqli_query($connection, "INSERT INTO roleuser (id, UserId, RoleId, created_at, updated_at) VALUES " . $insertString);
+                        if(!$resultRole){
+                            $error = "Phân quyền không thành công. Xin mời thử lại";
+                        } 
                     ?>
+                    <?php if(!empty($error)){ ?>
+                        <p><?php echo $error; ?></p>
+                    <?php } else { ?>
+                        Phân quyền thành công . <a href="user_list.php">Quay lại danh sách thành viên</a>
+                    <?php } ?>
                     <?php } else { ?>
                         <?php
                         $result_role = mysqli_query($connection,  "select * from role");
@@ -49,13 +58,14 @@ include_once('../includes/sidebar.php');
                             <input type="hidden" name="UserId" value="<?= $_GET['UserId'] ?>">
                             
                             <?php
-                            foreach ($query_run_role_group as $group) {
+                            foreach ($query_run_role_group as $key => $group) {
                             ?>
                             <div class="col-md-12">
                                 <div class="card mb-3 col-md-12">
                                     <div class="card-header" style="background: #3de4e4;">
                                         <label>
-                                            <input type="checkbox" class="checkbox_all">
+                                            <input type="checkbox" class="<?='checkbox_wrapper_'.$key?>">
+                                            
                                             <b style="font-weight: 500; font-size: 25px;"><?= $group['name'] ?></b>
                                         </label>
                                     </div>
@@ -67,7 +77,7 @@ include_once('../includes/sidebar.php');
                                                         <input type="checkbox" 
                                                             <?php if(in_array($role['id'], $currentRoleList)){ ?>                                                            
                                                             checked="" <?php }?>
-                                                        value="<?= $role['id'] ?>" id="<?= $role['id'] ?>" name="roles[]" class="checkbox_children">
+                                                        value="<?= $role['id'] ?>" id="<?= $role['id'] ?>" name="roles[]" class="<?='checkbox_children_'.$key?>">
                                                         <label for="<?= $role['id'] ?>"><?= $role['name'] ?></label>
                                                     </li>
                                                 <?php } ?>
