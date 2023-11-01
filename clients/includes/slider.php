@@ -3,9 +3,8 @@
 	include_once('../../config/config.php');
 ?>
 <?php
-	$sql= "select * from sliders order by slid desc ";
+	$sql= "select * from sliders ";
 	$result = mysqli_query($connection, $sql);
-	$connection->close();
 	if(mysqli_num_rows($result) > 0){
 		foreach($result as $row){
 			?>

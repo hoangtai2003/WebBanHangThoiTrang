@@ -1,33 +1,81 @@
 <!-- New Arrivals -->
-
+<?php
+	// session_start();
+	require_once('../../config/config.php');
+?>
 <div class="new_arrivals">
-		<div class="container">
-			<div class="row">
-				<div class="col text-center">
-					<div class="section_title new_arrivals_title">
-						<h2>New Arrivals</h2>
-					</div>
+	<div class="container">
+		<div class="row">
+			<div class="col text-center">
+				<div class="section_title new_arrivals_title">
+					<h2>New Arrivals</h2>
 				</div>
 			</div>
-			<div class="row align-items-center">
-				<div class="col text-center">
-					<div class="new_arrivals_sorting">
-						<ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
-							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
-							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
-							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
-							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">men's</li>
-						</ul>
-					</div>
+		</div>
+		<div class="row align-items-center">
+			<div class="col text-center">
+				<div class="new_arrivals_sorting">
+					<ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
+						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
+						<?php
+							$sql_cate = "SELECT * FROM categories";
+							$result_cate = $connection->query($sql_cate);
+							if( $result_cate->num_rows > 0){
+								while($row = $result_cate->fetch_assoc()){
+									$catename = $row["CateName"];
+									$catenameReplace = preg_replace('/[^a-zA-Z0-9]/', '', $catename);
+									?>
+									<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".<?php echo strtolower($catenameReplace) ?>"><?php echo $catename ?></li>
+									<?php
+								}
+							}
+						?>
+						<!-- <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".womens">women's</li>
+						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
+						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".mens">men's</li> -->
+					</ul>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
 
-						<!-- Product 1 -->
+					<!-- Product 1 -->
+					<?php
+					$sql = "SELECT product.*, categories.CateName from product join categories on product.CateId = categories.CateId";
 
-						<div class="product-item men">
+					$result = $connection->query($sql);
+
+					if ($result->num_rows > 0) {
+						while ($row = $result->fetch_assoc()) {
+							$catename = $row["CateName"];
+							$catenameReplace = preg_replace('/[^a-zA-Z0-9]/', '', $catename);
+					?>
+							<div class="product-item <?php echo strtolower($catenameReplace) ?>">
+								<div class="product discount product_filter">
+									<div class="product_image">
+										<img src="../../images/<?php echo $row["ProdImage"] ?>" alt="">
+									</div>
+									<div class="favorite favorite_left"></div>
+									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
+									<div class="product_info">
+										<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row["ProdId"]?>"><?php echo $row["ProdName"] ?></a></h6>
+										<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?><span><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?></span></div>
+									</div>
+								</div>
+								<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+							</div>
+
+					<?php
+
+						}
+					} else {
+						echo "Không có sản phẩm nào";
+					}
+					$connection->close();
+					?>
+					<!-- <div class="product-item men">
 							<div class="product discount product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_1.png" alt="">
@@ -40,11 +88,11 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 2 -->
+					<!-- Product 2 -->
 
-						<div class="product-item women">
+					<!-- <div class="product-item women">
 							<div class="product product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_2.png" alt="">
@@ -57,11 +105,11 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 3 -->
+					<!-- Product 3 -->
 
-						<div class="product-item women">
+					<!-- <div class="product-item women">
 							<div class="product product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_3.png" alt="">
@@ -73,11 +121,11 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 4 -->
+					<!-- Product 4 -->
 
-						<div class="product-item accessories">
+					<!-- <div class="product-item accessories">
 							<div class="product product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_4.png" alt="">
@@ -90,11 +138,11 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 5 -->
+					<!-- Product 5 -->
 
-						<div class="product-item women men">
+					<!-- <div class="product-item women men">
 							<div class="product product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_5.png" alt="">
@@ -106,10 +154,10 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 6 -->
-
+					<!-- Product 6 -->
+					<!-- 
 						<div class="product-item accessories">
 							<div class="product discount product_filter">
 								<div class="product_image">
@@ -123,11 +171,11 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 7 -->
+					<!-- Product 7 -->
 
-						<div class="product-item women">
+					<!-- <div class="product-item women">
 							<div class="product product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_7.png" alt="">
@@ -139,11 +187,11 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 8 -->
+					<!-- Product 8 -->
 
-						<div class="product-item accessories">
+					<!-- <div class="product-item accessories">
 							<div class="product product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_8.png" alt="">
@@ -155,11 +203,11 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 9 -->
+					<!-- Product 9 -->
 
-						<div class="product-item men">
+					<!-- <div class="product-item men">
 							<div class="product product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_9.png" alt="">
@@ -172,11 +220,11 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
+						</div> -->
 
-						<!-- Product 10 -->
+					<!-- Product 10 -->
 
-						<div class="product-item men">
+					<!-- <div class="product-item men">
 							<div class="product product_filter">
 								<div class="product_image">
 									<img src="../assets/images/product_10.png" alt="">
@@ -188,9 +236,9 @@
 								</div>
 							</div>
 							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-						</div>
-					</div>
+						</div> -->
 				</div>
 			</div>
 		</div>
 	</div>
+</div>

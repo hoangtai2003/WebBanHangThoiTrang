@@ -11,14 +11,14 @@
             header("Location: user_edit.php?UserId=$user_id");
         }
         else{
-            $sql = "SELECT UserName, UserEmail from users where  (UserEmail = '$email' or UserName ='$name') and UserId != '$user_id'";
+            $sql = "SELECT UserName, UserEmail from user where  (UserEmail = '$email' or UserName ='$name') and UserId != '$user_id'";
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
                 $_SESSION['message'] = "Email hoặc tên đã tồn tại";
                 header("Location: user_edit.php?UserId=$user_id");
             } 
             else{
-                $sql = "Update users set UserName = '$name', UserEmail = '$email', UserStatus = '$status' where UserId = '$user_id'";
+                $sql = "Update user set UserName = '$name', UserEmail = '$email', UserStatus = '$status' where UserId = '$user_id'";
                 $result = mysqli_query($connection, $sql) or die($connection->error);
                 $connection->close();
                 if ($result){
