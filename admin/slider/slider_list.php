@@ -21,53 +21,59 @@ include_once('../includes/sidebar.php');
                 </div>
                 <div class="card-body">
                     <form method="POST"></form>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên</th>
-                            <th>Mô tả</th>
-                            <th>Hình ảnh</th>
-                            <?php if (checkPrivilege('slider_edit.php?slid=0')) { ?>
-                                <th>Sửa</th>
-                            <?php } ?>
-                            <?php if (checkPrivilege('slider_delete.php?slid=0')) { ?>
-                                <th>Xóa</th>
-                            <?php } ?>
-                        </tr>
-                        <?php
-                        $sql = "Select * from sliders";
-                        $result = mysqli_query($connection, $sql);
-                        if (mysqli_num_rows($result) > 0) {
-                            foreach ($result as $row) {
-                        ?>
-                                <tr>
-                                    <th scope="row"><?= $row['slid']; ?></th>
-                                    <td><?= $row['slname']; ?></td>
-                                    <td><?= $row['sldescription']; ?></td>
-                                    <td><img width=300 src="../../images/<?= $row["slimage"];?>"></td>
-                                    <?php if (checkPrivilege('slider_edit.php?slid=0')) { ?>
-                                        <td>
-                                            <a href="slider_edit.php?slid=<?= $row['slid'] ?>" class="btn btn-success">
-                                                <i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa
-                                            </a>
-                                        </td>
-                                    <?php } ?>
-                                    <?php if (checkPrivilege('slider_delete.php?slid=0')) { ?>
-                                        <td>
-                                            <a 
-                                                href="slider_delete.php?slid=<?php echo $row["slid"]; ?>" 
-                                                class="btn btn-danger action_delete" 
-                                                value="<?= $row['slid']; ?>"><i class="fa-solid fa-trash" 
-                                                style="margin-right: 5px;"></i>Xóa
-                                            </a>
-                                        </td>
-                                    <?php } ?>
-                                </tr>
-                        <?php
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên</th>
+                                <th>Mô tả</th>
+                                <th>Hình ảnh</th>
+                                <?php if (checkPrivilege('slider_edit.php?slid=0')) { ?>
+                                    <th>Sửa</th>
+                                <?php } ?>
+                                <?php if (checkPrivilege('slider_delete.php?slid=0')) { ?>
+                                    <th>Xóa</th>
+                                <?php } ?>
+                            </tr>
+                            <?php
+                            include("../OffsetPagination/offset.php");
+                            $sql = "Select * from sliders order by slid asc limit ".$item_per_page." offset ".$offset."";
+                            $result = mysqli_query($connection, $sql);
+                            $totalRecords = mysqli_query($connection, "select * from sliders");
+                            $totalRecords = $totalRecords->num_rows;
+                            // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+                            $totalPage = ceil($totalRecords / $item_per_page);
+                            if (mysqli_num_rows($result) > 0) {
+                                foreach ($result as $row) {
+                            ?>
+                                    <tr>
+                                        <th scope="row"><?= $row['slid']; ?></th>
+                                        <td><?= $row['slname']; ?></td>
+                                        <td><?= $row['sldescription']; ?></td>
+                                        <td><img width=300 src="../../images/<?= $row["slimage"];?>"></td>
+                                        <?php if (checkPrivilege('slider_edit.php?slid=0')) { ?>
+                                            <td>
+                                                <a href="slider_edit.php?slid=<?= $row['slid'] ?>" class="btn btn-success">
+                                                    <i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa
+                                                </a>
+                                            </td>
+                                        <?php } ?>
+                                        <?php if (checkPrivilege('slider_delete.php?slid=0')) { ?>
+                                            <td>
+                                                <a 
+                                                    href="slider_delete.php?slid=<?php echo $row["slid"]; ?>" 
+                                                    class="btn btn-danger action_delete" 
+                                                    value="<?= $row['slid']; ?>"><i class="fa-solid fa-trash" 
+                                                    style="margin-right: 5px;"></i>Xóa
+                                                </a>
+                                            </td>
+                                        <?php } ?>
+                                    </tr>
+                            <?php
+                                }
                             }
-                        }
-                        ?>
-                    </table>
+                            ?>
+                        </table>
+                    <?php include("../../pagination/pagination.php") ?>
                     </form>
                 </div>
             </div>
