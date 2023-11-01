@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../../config/config.php");
 if (!isset($_SESSION["cus_loggedin"])) {
     header("Location: ../authen/login.php");
 }
@@ -40,40 +41,46 @@ if (!isset($_SESSION["cus_loggedin"])) {
 					</ul>
                 </div>
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-md-12">
 						<h3>Hồ sơ của tôi</h3>
 							<?php
-							include("../../config/config.php");
-							$sql = "select * from customer";
-							$result = mysqli_query($connection, $sql);
+							if(isset($_GET['CusId'])){
+								$CusId = $_GET['CusId'];
+								$sql = "select * from customer where CusId = '$CusId'";
+								$result = mysqli_query($connection, $sql);
+							}
 							if(mysqli_num_rows($result) > 0){
 								$row = $result->fetch_assoc();
 							}
 							?>
+							<style>
+								.form-control{
+									color: black !important;
+								}
+							</style>
 							<form action="profile_action.php" method="post">
+								<input type="hidden" name="CusId" value="<?=$row['CusId']?>" >
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Tên đăng nhập</label>
-									<label style="margin-left: 16px;"><?=$row['CusUserName']?></label>
+									<label style="margin-left: 16px;width: 40%; font-size: 1rem;"><?=$row['CusUserName'] ?></label>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Tên</label>
-									<label style="margin-left: 77px;"><input type="text" name="txtName" class="form-control" value="<?=$row['CusName']?>"></label>
+									<label style="margin-left: 77px;width: 40%;"><input type="text" name="txtName" class="form-control" value="<?=$row['CusName']?>"></label>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Số điện thoại</label>
-									<label style="margin-left: 16px;"><input type="text" name="txtPhone" class="form-control" value="<?=$row['CusPhone']?>"></label>
+									<label style="margin-left: 16px;width: 40%;"><input type="text" name="txtPhone" class="form-control" value="<?=$row['CusPhone']?>"></label>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Email</label>
-									<label style="margin-left: 63px;"><input type="text" name="txtEmail" class="form-control" value="<?=$row['CusEmail']?>"></label>
-									
+									<label style="margin-left: 63px;width: 40%;"><input type="text" name="txtEmail" class="form-control" value="<?=$row['CusEmail']?>"></label>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Ngày sinh</label>
-									<label style="margin-left: 32px;"><input type="date" name="txtBirthday" class="form-control"></label>
+									<label style="margin-left: 32px;width: 40%;"><input type="date" name="txtBirthday" class="form-control"></label>
 								</div>
-
-								<button type="submit" name="cmd_add" class="btn btn-sm btn-primary">Lưu</button>
+								<button type="submit" name="cmd_add" class="btn btn-sm btn-danger">Lưu</button>
 							</form>
 					</div>
 				</div>

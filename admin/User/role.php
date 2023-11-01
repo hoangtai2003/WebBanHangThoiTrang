@@ -17,16 +17,25 @@ include_once('../includes/sidebar.php');
                 </div>
                 <div class="card-body">
                     <?php
-                    if (!empty($_GET['action']) && $_GET['action'] == "save") {
-                        $data = $_POST;
+                    if (!empty($_GET['action']) && $_GET['action'] == "save") {      
+                        $userId = $_POST['UserId'];
+                        $roles = $_POST['roles'];
                         $insertString = "";
-                        $deleteOldRole = mysqli_query($connection, "Delete from roleuser where UserId = " .$data['UserId']);
-                        foreach ($data['roles'] as $insertRole) {
+                        $deleteOldRole = mysqli_query($connection, "Delete from roleuser where UserId = " .$userId);
+                        foreach ($roles as $insertRole) {
                             $insertString .= !empty($insertString) ? "," : "";
-                            $insertString .= "(NULL, " . $data['UserId'] . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
+                            $insertString .= "(NULL, " . $userId . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
                         }
-                        $insertRole = mysqli_query($connection, "INSERT INTO roleuser (id, UserId, RoleId, created_at, updated_at) VALUES " . $insertString);
+                        $resultRole = mysqli_query($connection, "INSERT INTO roleuser (id, UserId, RoleId, created_at, updated_at) VALUES " . $insertString);
+                        if(!$resultRole){
+                            $error = "Phân quyền không thành công. Xin mời thử lại";
+                        } 
                     ?>
+                    <?php if(!empty($error)){ ?>
+                        <p><?php echo $error; ?></p>
+                    <?php } else { ?>
+                        Phân quyền thành công . <a href="user_list.php">Quay lại danh sách thành viên</a>
+                    <?php } ?>
                     <?php } else { ?>
                         <?php
                         $result_role = mysqli_query($connection,  "select * from role");
