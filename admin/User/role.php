@@ -58,13 +58,14 @@ include_once('../includes/sidebar.php');
                             <input type="hidden" name="UserId" value="<?= $_GET['UserId'] ?>">
                             
                             <?php
-                            foreach ($query_run_role_group as $group) {
+                            foreach ($query_run_role_group as $key => $group) {
                             ?>
                             <div class="col-md-12">
                                 <div class="card mb-3 col-md-12">
                                     <div class="card-header" style="background: #3de4e4;">
                                         <label>
-                                            <input type="checkbox" class="checkbox_all">
+                                            <input type="checkbox" class="<?='checkbox_wrapper_'.$key?>">
+                                            
                                             <b style="font-weight: 500; font-size: 25px;"><?= $group['name'] ?></b>
                                         </label>
                                     </div>
@@ -76,7 +77,7 @@ include_once('../includes/sidebar.php');
                                                         <input type="checkbox" 
                                                             <?php if(in_array($role['id'], $currentRoleList)){ ?>                                                            
                                                             checked="" <?php }?>
-                                                        value="<?= $role['id'] ?>" id="<?= $role['id'] ?>" name="roles[]" class="checkbox_children">
+                                                        value="<?= $role['id'] ?>" id="<?= $role['id'] ?>" name="roles[]" class="<?='checkbox_children_'.$key?>">
                                                         <label for="<?= $role['id'] ?>"><?= $role['name'] ?></label>
                                                     </li>
                                                 <?php } ?>

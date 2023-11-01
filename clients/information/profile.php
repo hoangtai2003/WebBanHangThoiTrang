@@ -44,13 +44,15 @@ if (!isset($_SESSION["cus_loggedin"])) {
 					<div class="col-md-12">
 						<h3>Hồ sơ của tôi</h3>
 							<?php
-							if(isset($_GET['CusId'])){
-								$CusId = $_GET['CusId'];
+							if(isset( $_SESSION['cusid'])){
+								$CusId = $_SESSION['cusid'];
 								$sql = "select * from customer where CusId = '$CusId'";
 								$result = mysqli_query($connection, $sql);
+								
 							}
 							if(mysqli_num_rows($result) > 0){
 								$row = $result->fetch_assoc();
+								
 							}
 							?>
 							<style>
