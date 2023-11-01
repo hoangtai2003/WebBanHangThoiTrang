@@ -23,6 +23,31 @@ if (!isset($_SESSION["cus_loggedin"])) {
     <link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
+    <style>
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Màu background với độ mờ 50% */
+      z-index: 9999; /* Đặt z-index để overlay hiển thị lên trên các phần tử khác */
+    }
+    
+    #popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 500px;
+      background-color: lightgray;
+      padding: 20px;
+      z-index: 10000; /* Đặt z-index để popup hiển thị lên trên overlay */
+    }
+  </style>
 </head>
 
 <body>
@@ -53,6 +78,8 @@ if (!isset($_SESSION["cus_loggedin"])) {
                     <?php include("../authen/message.php") ?>
 
                     <!-- Main Content -->
+
+
                     <?php
                     $cusid = $_SESSION['cusid'];
                     $sql_get_trans = "SELECT * FROM ship WHERE CusId = '" . $cusid . "' ORDER BY ShipId DESC LIMIT 1";
@@ -63,56 +90,118 @@ if (!isset($_SESSION["cus_loggedin"])) {
                         $phone = $row_get_trans['ShipPhone'];
                         $address = $row_get_trans['ShipAddress'];
                         $note = $row_get_trans['ShipNote'];
-                    } else {
+                    
+                    ?>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h3>Thông tin vận chuyển</h3>
+                                <div class="form-group">
+                                    <label for="">Họ và tên</label>
+                                    <p class="form-control"><?php echo $name ?></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Số điện thoại</label>
+                                    <p class="form-control"><?php echo $phone ?></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Địa chỉ</label>
+                                    <p class="form-control"><?php echo $address ?></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Ghi chú</label>
+                                    <p class="form-control"><?php echo $note ?></p>
+                                </div>
+                                <button onclick="showPopup()" class="btn btn-sm btn-primary">Thay đổi thông tin vận chuyển</button>
+                                <div id="overlay"></div>
+                                <br>
+                                <form action="./transportation_action.php" id="popup" method="POST">
+                                <div class="row">
+                                        <div class="col-md-12">
+                                            <h3>Thông tin vận chuyển</h3>
+                                            <div class="form-group">
+                                                <label for="">Họ và tên</label>
+                                                <input required type="text" name="txtname" class="form-control" value="<?php echo $name ?>" placeholder="Họ và tên">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Số điện thoại</label>
+                                                <input required type="text" name="txtphone" class="form-control" value="<?php echo $phone ?>" placeholder="Số điện thoại">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Địa chỉ</label>
+                                                <input required type="text" name="txtaddress" class="form-control" value="<?php echo $address ?>" placeholder="Địa chỉ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Ghi chú</label>
+                                                <input required type="text" name="txtnote" class="form-control" value="<?php echo $note ?>" placeholder="Ghi chú">
+                                            </div>
+                                        </div>
+                                </div>
+                                <input type="submit" name="cmdTransportation" value="Lưu thông tin vận chuyển" class="btn btn-sm btn-primary">
+                                <button type="button" onclick="hidePopup()" class="btn btn-sm btn-danger">Đóng</button>
+                                </form>
+                            </div>
+                            <style type="text/css">
+                                .col-md-4.payment .form-check{
+                                    margin: 18px;
+                                }
+                            </style>
+                            <div class="col-md-4 payment">
+                                <h3>Phương thức thanh toán</h3>
+                                <form action="./order_action.php" method="post">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault1" value="tienmat" checked>
+                                    <img src="../../images/cod.jpg" height="32" width="50">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Thanh toán khi nhận hàng
+                                    </label>
+                                </div>
+                                <input type="submit" value="Đặt hàng" name="redirect" class="btn btn-sm btn-primary">
+                                </form>
+                            </div>
+                        </div>
+                    
+                    <?php
+                    }
+                    else 
+                    {
                         $name = '';
                         $phone = '';
                         $address = '';
                         $note = '';
-                    }
+                    
                     ?>
+                    <button onclick="showPopup()" class="btn btn-sm btn-primary">Thêm thông tin vận chuyển</button>
+                    <div id="overlay"></div>
+                    <br>
+                    <form action="./transportation_action.php" id="popup" method="POST">
                     <div class="row">
-                        <div class="col-md-8">
-                            <h3>Thông tin vận chuyển</h3>
-                            <form action="transportation_action.php" method="post">
+                            <div class="col-md-12">
+                                <h3>Thông tin vận chuyển</h3>
                                 <div class="form-group">
                                     <label for="">Họ và tên</label>
-                                    <input required type="text" name="txtname" class="form-control" value="<?php echo $name ?>" placeholder="Họ và tên">
+                                    <input required type="text" name="txtname" class="form-control" placeholder="Họ và tên">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Số điện thoại</label>
-                                    <input required type="text" name="txtphone" class="form-control" value="<?php echo $phone ?>" placeholder="Số điện thoại">
+                                    <input required type="text" name="txtphone" class="form-control" placeholder="Số điện thoại">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Địa chỉ</label>
-                                    <input required type="text" name="txtaddress" class="form-control" value="<?php echo $address ?>" placeholder="Địa chỉ">
+                                    <input required type="text" name="txtaddress" class="form-control" placeholder="Địa chỉ">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Ghi chú</label>
-                                    <input required type="text" name="txtnote" class="form-control" value="<?php echo $note ?>" placeholder="Ghi chú">
+                                    <input required type="text" name="txtnote" class="form-control" placeholder="Ghi chú">
                                 </div>
-                                <button type="submit" name="cmd_add" class="btn btn-sm btn-primary">Lưu thông tin vận chuyển</button>
-                                
-                            </form>
-                        </div>
-                        <style type="text/css">
-                            .col-md-4.payment .form-check{
-                                margin: 18px;
-                            }
-                        </style>
-                        <div class="col-md-4 payment">
-                            <h3>Phương thức thanh toán</h3>
-                            <form action="./order_action.php" method="post">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault1" value="tienmat" checked>
-                                <img src="../../images/cod.jpg" height="32" width="50">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    Thanh toán khi nhận hàng
-                                </label>
                             </div>
-                            <input type="submit" value="Đặt hàng" name="redirect" class="btn btn-sm btn-primary">
-                            </form>
-                        </div>
                     </div>
+                    <input type="submit" name="cmdTransportation" value="Lưu thông tin vận chuyển" class="btn btn-sm btn-primary">
+                    <button type="button" onclick="hidePopup()" class="btn btn-sm btn-danger">Đóng</button>
+                    </form>
+                    <?php
+                    }
+                    ?>
+                    
 
                     <br>
                     <div class="row">
@@ -226,6 +315,21 @@ if (!isset($_SESSION["cus_loggedin"])) {
     <script src="../assets/plugins/easing/easing.js"></script>
     <script src="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
     <script src="../assets/js/categories_custom.js"></script>
+    <script>
+    function showPopup() {
+      var overlay = document.getElementById("overlay");
+      var popup = document.getElementById("popup");
+      overlay.style.display = "block";
+      popup.style.display = "block";
+    }
+
+    function hidePopup() {
+      var overlay = document.getElementById("overlay");
+      var popup = document.getElementById("popup");
+      overlay.style.display = "none";
+      popup.style.display = "none";
+    }
+  </script>
 </body>
 
 </html>
