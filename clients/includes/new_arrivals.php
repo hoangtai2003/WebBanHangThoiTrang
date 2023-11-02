@@ -271,10 +271,6 @@
 			$('body').on('click', '#cart_link', function(e){
 				e.preventDefault();
 				var quantity = 1;
-				var tQuantity = $('#quantity_value').text();
-				if(tQuantity != ''){
-					quantity =parseInt(tQuantity);
-				}
 				<?php
 					if(!isset($_SESSION['cus_loggedin'])){
 				?>
