@@ -11,6 +11,9 @@ $sqlProd = "SELECT * FROM product where ProdId = $ProdId";
 $product = mysqli_query($connection, $sqlProd);
 $dataProduct = mysqli_fetch_assoc($product);
 
+// $sqlIsSale = "SELECT ProdIsSale from product group by ProdIsSale";
+// $dataIsSale = mysqli_query($connection, $sqlIsSale);
+
 // lấy thông tin sanh mục
 $sqlCate = "SELECT * FROM categories";
 $category = mysqli_query($connection, $sqlCate);
@@ -77,6 +80,12 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdPriceSale'] ?>" name="ppricesale">
                             </div>
                             <div class="form-group">
+                                <label>Tình trạng sale</label>
+                                <br>
+                                <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 1) echo "checked"; ?> name="rdProdIsSale" value=1>Đang sale
+                                <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 0) echo "checked"; ?> name=rdProdIsSale value=0>Hết sale
+                            </div>
+                            <div class="form-group">
                                 <label>Ảnh sản phẩm</label>
                                 <br>
                                 <input type="file" name="pimage">
@@ -89,7 +98,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input type="file" name="pimages[]" multiple>
                                 <br>
                                 <div class="row">
-                                    <?php foreach ($imgProd as $key => $value) {?>
+                                    <?php foreach ($imgProd as $key => $value) { ?>
                                         <div class="col-md-4">
                                             <a href="">
                                                 <img src="../../images/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
