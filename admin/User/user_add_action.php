@@ -3,7 +3,7 @@
     include('../../config/config.php');
     if (isset($_POST['add_user'])){
         $name = $_POST['name'];
-        $email = $_POST['email'];
+        $email = test_input($_POST['email']);
         $password = $_POST['password'];
         $status = $_POST['rdstatus'];
         $password_hash = md5($password);

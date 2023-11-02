@@ -52,6 +52,8 @@
 							$catename = $row["CateName"];
 							$catenameReplace = preg_replace('/[^a-zA-Z0-9]/', '', $catename);
 					?>
+						<form action="" class="form-submit">
+							<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
 							<div class="product-item <?php echo strtolower($catenameReplace) ?>">
 								<div class="product discount product_filter">
 									<div class="product_image">
@@ -74,8 +76,9 @@
 										?>
 									</div>
 								</div>
-								<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+								<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>
 							</div>
+						</form>
 
 					<?php
 
@@ -252,3 +255,5 @@
 		</div>
 	</div>
 </div>
+
+<script src="../assets/js/shoppingcart.js"></script>
