@@ -58,10 +58,20 @@
 										<img src="../../images/<?php echo $row["ProdImage"] ?>" alt="">
 									</div>
 									<div class="favorite favorite_left"></div>
-									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
+									<!-- <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div> -->
 									<div class="product_info">
 										<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row["ProdId"]?>"><?php echo $row["ProdName"] ?></a></h6>
-										<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?><span><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?></span></div>
+										<?php
+											if($row['ProdIsSale'] == 1){												
+										?>
+											<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.')?><span><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></span></div>
+										<?php
+											} else if ($row['ProdIsSale'] == 0){
+										?>
+											<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></div>
+										<?php
+											}
+										?>
 									</div>
 								</div>
 								<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
