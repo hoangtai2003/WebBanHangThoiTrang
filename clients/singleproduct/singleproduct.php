@@ -328,6 +328,16 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			function load_cart_item_number(){
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartItem: "cart_item"},
+					success:function(response){
+						$("#checkout_items").html(response);
+					}
+				});
+			}
 			$('body').on('click', '#cart_link', function(e){
 				e.preventDefault();
 				var quantity = 1;
@@ -342,7 +352,8 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					method: 'get',
 					data: {cartadd: "themgiohang", productId: productId, quantity: quantity},
 					success:function(){
-						window.location.href = '../cart/cart_view.php';
+						alert("Thêm vào giỏ hàng thành công.");
+                		load_cart_item_number();
 					}
 				});
 			});
