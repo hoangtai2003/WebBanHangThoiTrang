@@ -34,7 +34,7 @@
                         header("Location: ./register.php");
                         exit();
                     } else {
-                        $user_query = "INSERT INTO Customer (CusEmail, CusPassword, CusPhone) values('". $email."','" .$password_hash."', '".$phone."')";
+                        $user_query = "INSERT INTO Customer (CusUserName, CusEmail, CusPassword, CusPhone) values('".$username."','". $email."','" .$password_hash."', '".$phone."')";
                         $user_query_run = $connection->query($user_query);
                         $connection->close();
                         if ($user_query_run)

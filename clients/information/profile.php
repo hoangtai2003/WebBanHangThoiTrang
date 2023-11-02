@@ -60,7 +60,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 								}
 								.form-check{
 									display: inline-block !important;
-									margin-left: 65px;
+									margin-left: 77px;
 								}
 								.form-check-label{
 									padding-left: 0 !important;
@@ -71,20 +71,30 @@ if (!isset($_SESSION["cus_loggedin"])) {
 							<form action="profile_edit_action.php" method="post">
 								<input type="hidden" name="CusId" value="<?=$row['CusId']?>" >
 								<div class="form-group">
-									<label style="opacity: 0.5; ">Tên đăng nhập</label>
-									<label style="margin-left: 16px;width: 40%; font-size: 1rem;"><?=$row['CusUserName'] ?></label>
+									<label style="opacity: 0.5;">Tên đăng nhập</label>
+									<?php
+										if ($row['ChangeUserName'] == 0) {
+											?>
+												<label style="margin-left: 16px;width: 40%; font-size: 1rem;"><input type="text" class="form-control" name="new_username" value="<?=$row['CusUserName']?>"></label>
+											<?php
+										} else {
+											?> 
+												<label style="margin-left: 16px; width: 40%; font-size: 1rem;"><?=$row['CusUserName'] ?> </label>
+											<?php
+										}
+									?>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Tên</label>
-									<label style="margin-left: 77px;width: 40%;"><input type="text" name="CusName" class="form-control" value="<?=$row['CusName']?>"></label>
+									<label style="margin-left: 95px;width: 40%;"><input type="text" name="CusName" class="form-control" value="<?=$row['CusName']?>"></label>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Số điện thoại</label>
-									<label style="margin-left: 16px;width: 40%;"><input type="text" name="CusPhone" class="form-control" value="<?=$row['CusPhone']?>"></label>
+									<label style="margin-left: 31px;width: 40%;"><input type="text" name="CusPhone" class="form-control" value="<?=$row['CusPhone']?>"></label>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Email</label>
-									<label style="margin-left: 63px;width: 40%;"><input type="text" name="CusEmail" class="form-control" value="<?=$row['CusEmail']?>"></label>
+									<label style="margin-left: 78px;width: 40%;"><input type="text" name="CusEmail" class="form-control" value="<?=$row['CusEmail']?>"></label>
 								</div>
 								<div class="form-group" style="margin-bottom: 15px;">
 									<label style="opacity: 0.5; ">Giới tính</label>
@@ -99,7 +109,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Ngày sinh</label>
-									<label style="margin-left: 32px;width: 40%;"><input type="date" name="CusBirthday" class="form-control" value="<?= $row['CusBirthday']?>"></label>
+									<label style="margin-left: 43px;width: 40%;"><input type="date" name="CusBirthday" class="form-control" value="<?= $row['CusBirthday']?>"></label>
 								</div>
 								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger">Lưu</button>
 							</form>
