@@ -89,7 +89,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 								<div class="form-group" style="margin-bottom: 15px;">
 									<label style="opacity: 0.5; ">Giới tính</label>
 									<div class="form-check">
-										<input class="form-check-input"  type="radio" name="CusGender" id="rdGender0" value=0 <?= $row['CusGender'] == 0 ? 'checked' : '' ?>>
+										<input class="form-check-input"  type="radio" name="CusGender" id="rdGender0" value=0 <?= $row['CusGender'] == 0  ? 'checked' : '' ?>>
 										<label class="form-check-label" for="rdGender0">Nam</label>
 									</div>
 									<div class="form-check">

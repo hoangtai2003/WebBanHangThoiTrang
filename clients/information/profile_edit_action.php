@@ -8,6 +8,8 @@ if (isset($_POST['update_customer'])){
     $email = $_POST['CusEmail'];
     $birthday = $_POST['CusBirthday'];
     $gender = $_POST['CusGender'];
+    if($_POST['change_username']){
+    }
     $sql = "SELECT CusEmail from customer where  (CusEmail = '$email') and CusId != '$cus_id'";
     $result = mysqli_query($connection,$sql) or die ($connection->error);
     if (mysqli_num_rows($result) > 0){
@@ -29,5 +31,4 @@ if (isset($_POST['update_customer'])){
         }
     }
 }
-?>
 ?>
