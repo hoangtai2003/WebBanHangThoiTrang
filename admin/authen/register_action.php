@@ -1,10 +1,10 @@
 <?php 
     session_start();
-    include ('../../config/config.php');
+    require_once ('../../config/config.php');
     if (isset($_POST['register_btn'])){
-        $name =  $_POST['name'];
-        $email =  $_POST['email'];
-        $password =  $_POST['password'];
+        $name = $_POST['name'];
+        $email = test_input($_POST['email']);
+        $password = $_POST['password'];
         $password_hash = md5($password);
         $confirm_password =  $_POST['cpassword'];
         if ($password == $confirm_password){
@@ -23,6 +23,7 @@
                 } else {
                     $_SESSION['message'] = "Đã xảy ra sự cố";
                     header("Location: register.php");
+                    exit();
                 }
             }
         } else {
@@ -32,6 +33,13 @@
         $connection->close();
     } else {
         header("Location: register.php");
+        exit();
+    }
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
     
 ?>

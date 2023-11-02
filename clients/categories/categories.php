@@ -140,6 +140,8 @@ require_once('../../config/config.php')
 										if ($result->num_rows > 0) {
 											while ($row = $result->fetch_assoc()) {
 										?>
+											<form action="" class="form-submit">
+											<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
 											<div class="product-item women">
 												<div class="product product_filter">
 													<div class="product_image">
@@ -162,8 +164,9 @@ require_once('../../config/config.php')
 														?>
 													</div>
 												</div>
-												<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+												<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>
 											</div>
+											</form>
 										<?php
 
 											}
@@ -224,6 +227,8 @@ require_once('../../config/config.php')
 		<?php include_once("../includes/footer.php") ?>
 
 	</div>
+
+	<script src="../assets/js/shoppingcart.js"></script>
 
 	<script src="../assets/js/jquery-3.2.1.min.js"></script>
 	<script src="../assets/styles/bootstrap4/popper.js"></script>
