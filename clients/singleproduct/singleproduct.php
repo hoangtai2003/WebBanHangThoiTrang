@@ -1,9 +1,21 @@
 <?php
 require_once('../../config/config.php');
 $ProdId = $_REQUEST['ProdId'];
+
 $sqlProd = "SELECT * FROM product where ProdId = $ProdId";
 $product = mysqli_query($connection, $sqlProd);
 $dataProduct = mysqli_fetch_assoc($product);
+
+if (!isset($_COOKIE['refreshed']) || $_COOKIE['refreshed'] === "false") {
+    // Update the view count for the product
+    $sqlViewCount = "UPDATE product SET ProdViewCount = ProdViewCount + 1 WHERE ProdId = $ProdId";
+    if ($connection->query($sqlViewCount) === TRUE) {
+        // Set a cookie to mark this product as viewed during this visit
+        setcookie('refreshed' , 'true', time() + 3600, '/');
+    }
+}
+
+
 $sqlImgProd = "select * from productimage where ProdId = $ProdId";
 $imgProd = mysqli_query($connection, $sqlImgProd);
 ?>
@@ -52,36 +64,6 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 			cursor: pointer;
 		}
 
-		/* .slider {
-			height: 100%;
-			display: flex;
-			flex-direction:
-				column;
-		} */
-
-		/* @media (max-width: 1024px) {
-			.slider {
-				flex-direction: row;
-			}
-			.single_product_thumbnails ul li {
-			height: 190px;
-		}
-			.slider-container .slick-prev {
-				left: -2%;
-				top: 50%;
-				z-index: 10;
-				transform: translateY(-50%);
-			}
-
-			.slider-container .slick-next {
-				right: 0%;
-				top: 50%;
-				z-index: 10;
-				transform: translateY(-50%);
-			}
-		} */
-
-		/* Thiết kế nút "Previous" và "Next" */
 	</style>
 </head>
 
@@ -143,7 +125,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					<div class="product_details">
 						<div class="product_details_title">
 							<h2><?php echo $dataProduct["ProdName"] ?></h2>
-							<p><?php echo $dataProduct["ProdDescription"] ?></p>
+							<span>Số lượt xem: </span><span><?php echo $dataProduct["ProdViewCount"] ?></span>
 						</div>
 						<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 							<span class="ti-truck"></span><span>free delivery</span>
