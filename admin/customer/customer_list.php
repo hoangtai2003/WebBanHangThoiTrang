@@ -58,11 +58,11 @@ include_once('../includes/sidebar.php');
                                     <td><?php
                                     if ($row['CusGender'] == 1) {
                                     ?>
-                                        <p>Nam</p>
+                                        <p>Nữ</p>
                                     <?php
                                     } else {
                                     ?>
-                                        <p>Nữ</p>
+                                        <p>Nam</p>
                                     <?php
                                     }
                                     ?>
