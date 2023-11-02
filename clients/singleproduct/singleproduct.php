@@ -148,8 +148,18 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 						<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 							<span class="ti-truck"></span><span>free delivery</span>
 						</div>
+						<?php
+							if($dataProduct['ProdIsSale'] == 1){
+						?>
 						<div class="original_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
 						<div class="product_price"><?php echo number_format($dataProduct["ProdPriceSale"], 0, ',', '.') ?></div>
+						<?php
+							} else if ($dataProduct['ProdIsSale'] == 0){
+						?>
+							<div class="product_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
+						<?php
+							}
+						?>
 						<ul class="star_rating">
 							<li><i class="fa fa-star" aria-hidden="true"></i></li>
 							<li><i class="fa fa-star" aria-hidden="true"></i></li>
