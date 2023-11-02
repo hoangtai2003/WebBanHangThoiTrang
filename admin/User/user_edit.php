@@ -66,11 +66,5 @@ include_once('../includes/sidebar.php')
 </div>
 
 <?php 
-        }
-        $connection->close();
-    }else{
-        $_SESSION['message'] = "Không tồn tại User!";
-        header('Location: user_list.php');
-    }
     include('../includes/footer.php');
 ?>
