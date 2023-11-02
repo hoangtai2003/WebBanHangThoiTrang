@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username = "root";
-    $password = "MyNewPass";
+    $password = "";
     $dbname = "webbanhangthoitrang";
     $connection =new mysqli($servername,$username,$password,$dbname);
     //hàm kiểm tra xem kết nối có đúng không:

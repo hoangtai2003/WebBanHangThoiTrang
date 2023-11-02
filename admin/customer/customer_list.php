@@ -30,7 +30,8 @@ include_once('../includes/sidebar.php');
                             <th>Tên người dùng</th>
                             <th>Số điện thoại</th>
                             <th>Email</th>
-                            <th>Địa chỉ khách hàng</th>
+                            <th>Ngày sinh</th>
+                            <th>Giới tính</th>
                             <th>Trạng thái</th>
                             <?php if (checkPrivilege('customer_delete.php?CusId=0')) { ?>
                                 <th>Xóa</th>
@@ -53,8 +54,31 @@ include_once('../includes/sidebar.php');
                                     <td><?= $row['CusUserName']; ?></td>
                                     <td><?= $row['CusPhone']; ?></td>
                                     <td><?= $row['CusEmail']; ?></td>
-                                    <td><?= $row['CusAddress']; ?></td>
-                                    <td><?= $row['CusStatus']; ?></td>
+                                    <td><?= $row['CusBirthday']?></td>
+                                    <td><?php
+                                    if ($row['CusGender'] == 1) {
+                                    ?>
+                                        <p>Nữ</p>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <p>Nam</p>
+                                    <?php
+                                    }
+                                    ?>
+                                    </td>
+                                    <td><?php
+                                    if ($row['CusStatus'] == 1) {
+                                    ?>
+                                        <span class="badge rounded-pill bg-success p-3">Hoạt động</span>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <span class="badge rounded-pill bg-success p-3">Ngừng hoạt động</span>
+                                    <?php
+                                    }
+                                    ?>
+                                    </td>
                                     <?php if (checkPrivilege('customer_delete.php?CusId=0')) { ?>
                                         <td>
                                             <a 

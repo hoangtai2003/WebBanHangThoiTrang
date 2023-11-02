@@ -175,7 +175,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 								<span id="quantity_value">1</span>
 								<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
 							</div>
-							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+							<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>
 							<div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
 						</div>
 					</div>
@@ -326,6 +326,30 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('body').on('click', '#cart_link', function(e){
+				e.preventDefault();
+				var quantity = 1;
+				var tQuantity = $('#quantity_value').text();
+				if(tQuantity != ''){
+					quantity =parseInt(tQuantity);
+				}
+				var productId = <?php echo $dataProduct['ProdId'] ?>
+
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartadd: "themgiohang", productId: productId, quantity: quantity},
+					success:function(){
+						window.location.href = '../cart/cart_view.php';
+					}
+				});
+			});
+		});
+
+</script>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 	<script>
 		// Kích hoạt Slick Slider
