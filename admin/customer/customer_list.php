@@ -30,7 +30,6 @@ include_once('../includes/sidebar.php');
                             <th>Tên người dùng</th>
                             <th>Số điện thoại</th>
                             <th>Email</th>
-                            <th>Địa chỉ khách hàng</th>
                             <th>Ngày sinh</th>
                             <th>Giới tính</th>
                             <th>Trạng thái</th>
@@ -55,7 +54,6 @@ include_once('../includes/sidebar.php');
                                     <td><?= $row['CusUserName']; ?></td>
                                     <td><?= $row['CusPhone']; ?></td>
                                     <td><?= $row['CusEmail']; ?></td>
-                                    <td><?= $row['CusAddress']; ?></td>
                                     <td><?= $row['CusBirthday']?></td>
                                     <td><?php
                                     if ($row['CusGender'] == 1) {
