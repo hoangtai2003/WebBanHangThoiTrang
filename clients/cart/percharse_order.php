@@ -126,7 +126,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 
                                                                 <tr class="text-center">
                                                                     <td><?php echo $row_get_product['ProdId'] ?></td>
-                                                                    <td><?php echo $row_get_product['ProdName'] ?></td>
+                                                                    <td><?php echo '<a href="../singleproduct/singleproduct.php?ProdId='.$row_get_product["ProdId"].'">'.$row_get_product['ProdName'].'</a>' ?></td>
                                                                     <td><img src="../../images/<?php echo $row_get_product['ProdImage'] ?>" width="60"></td>
                                                                     <td><?php echo number_format($row_get_order_detail['OrdPrice'], 0, ',', '.') ?></td>
                                                                     <td>

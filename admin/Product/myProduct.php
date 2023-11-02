@@ -37,6 +37,7 @@ session_start();
                                     <th scope="col">Tồn kho</th>
                                     <th scope="col">Đã bán</th>
                                     <th scope="col">Loại danh mục</th>
+                                    <th scope="col">Tình trạng sale</th>
                                     <?php if (checkPrivilege('editProduct.php?ProdId=0')) { ?>
                                     <th scope="col">Sửa</th>
                                     <?php }?>
@@ -66,6 +67,13 @@ session_start();
                                             <td>0</td>
                                             <td>0</td>
                                             <td><?= $Prod['CateName']; ?></td>
+                                            <td><?php 
+                                                if($Prod['ProdIsSale'] == 0) {
+                                                    echo "Hết sale";
+                                                } else if($Prod['ProdIsSale'] == 1) {
+                                                    echo "Đang sale";
+                                                }
+                                             ?></td>
                                             <?php if (checkPrivilege('editProduct.php?ProdId=0')) { ?>
                                             <td>
                                                 <a 

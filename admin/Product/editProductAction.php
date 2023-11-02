@@ -6,6 +6,7 @@ $pquantity = $_POST["pquantity"];
 $pprice = $_POST["pprice"];
 $ppricesale = $_POST["ppricesale"];
 $pdesc = $_POST["pdesc"];
+$pissale = $_POST["rdProdIsSale"];
 $CateId = $_POST["slCid"];
 
 
@@ -46,7 +47,7 @@ if (isset($_FILES['pimages'])) {
     }
 }
 
-$sqlupdate = "update Product set ProdName = '$pname', ProdDescription = '$pdesc', ProdImage = '$file_name', ProdPrice = '$pprice', ProdPriceSale = '$ppricesale', ProdQuantity = '$pquantity', CateId = '$CateId' where ProdId = $pid";
+$sqlupdate = "update Product set ProdName = '$pname', ProdDescription = '$pdesc', ProdImage = '$file_name', ProdPrice = '$pprice', ProdPriceSale = '$ppricesale', ProdQuantity = '$pquantity',ProdIsSale = '$pissale', CateId = '$CateId' where ProdId = $pid";
 $query = mysqli_query($connection, $sqlupdate);
 if ($query) {
     echo "Thêm sản phẩm thành công";
