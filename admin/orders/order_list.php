@@ -26,13 +26,20 @@ session_start();
                                     <th scope="col">Số điện thoại</th>
                                     <th scope="col">Phương thức thanh toán</th>
                                     <th scope="col">Tình trạng</th>
+                                    <?php if (checkPrivilege('order_detail.php?orderid=0')) { ?>
                                     <th scope="col">Thông tin</th>
+                                    <?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    $sql = "SELECT * FROM orders, customer WHERE orders.CusId = customer.CusId ORDER BY orders.OrderId DESC";
+                                    include("../OffsetPagination/offset.php");
+                                    $sql = "SELECT * FROM orders, customer WHERE orders.CusId = customer.CusId ORDER BY orders.OrderId asc limit ".$item_per_page." offset ".$offset."";
                                     $result = mysqli_query($connection,$sql);
+                                    $totalRecords = mysqli_query($connection, "select * from orders");
+                                    $totalRecords = $totalRecords->num_rows;
+                                    // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+                                    $totalPage = ceil($totalRecords / $item_per_page);
                                     if (mysqli_fetch_array($result) > 0){
                                         foreach($result as $row){
                                             ?>
@@ -62,8 +69,14 @@ session_start();
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td><a href="./order_detail.php?orderid=<?php echo $row['OrderId'] ?>" class="btn btn-sm btn-success">Xem chi tiết</a></td>
-                                                    
+                                                    <?php if (checkPrivilege('order_detail.php?orderid=0')) { ?>
+                                                    <td>
+                                                        <a 
+                                                            href="./order_detail.php?orderid=<?php echo $row['OrderId'] ?>" 
+                                                            class="btn btn-sm btn-success">Xem chi tiết
+                                                        </a>
+                                                    </td> 
+                                                    <?php }?>
                                                 </tr>
                                             <?php
                                         }
@@ -72,6 +85,7 @@ session_start();
                                 ?>
                             </tbody>
                         </table>
+                    <?php include("../../pagination/pagination.php") ?>
                     </div>
                 </div>
             </div>

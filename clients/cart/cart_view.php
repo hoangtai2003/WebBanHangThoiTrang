@@ -92,13 +92,25 @@
 											if ($result_get_product->num_rows > 0) {
 												$row_get_product = $result_get_product->fetch_assoc();
 												
-												$_SESSION['cart'][] = array(
-													'id' => $row_get_product['ProdId'],
-													'name' => $row_get_product['ProdName'],
-													'image' => $row_get_product['ProdImage'],
-													'price' => $row_get_product['ProdPrice'],
-													'quantity' => $quantity
-												);
+												if($row_get_product['ProdIsSale'] == 0){
+													$_SESSION['cart'][] = array(
+														'id' => $row_get_product['ProdId'],
+														'name' => $row_get_product['ProdName'],
+														'image' => $row_get_product['ProdImage'],
+														'price' => $row_get_product['ProdPrice'],
+														'quantity' => $quantity
+													);
+												}
+												else if ($row_get_product['ProdIsSale'] == 1){
+													$_SESSION['cart'][] = array(
+														'id' => $row_get_product['ProdId'],
+														'name' => $row_get_product['ProdName'],
+														'image' => $row_get_product['ProdImage'],
+														'price' => $row_get_product['ProdPriceSale'],
+														'quantity' => $quantity
+													);
+												}
+												
 											}
 										}
 									}
@@ -115,7 +127,7 @@
 								<tr class="text-center">
 									<th><?php echo $i ?></th>
 									<td><?php echo $cart_item['id'] ?></td>
-									<td><?php echo $cart_item['name'] ?></td>
+									<td><?php echo '<a href="../singleproduct/singleproduct.php?ProdId='.$cart_item['id'].'">'.$cart_item['name'].'</a>' ?></td>
 									<td><img src="../../images/<?php echo $cart_item['image'] ?>" width="60"></td>
 									<td><?php echo number_format($cart_item['price'], 0, ',', '.') ?></td>
 									<td>

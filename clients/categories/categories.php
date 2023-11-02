@@ -133,7 +133,7 @@ require_once('../../config/config.php')
 
 										<!-- Product 1 -->
 										<?php
-										$sql = "SELECT * from product ";
+										$sql = "SELECT * from product inner join categories on product.CateId = categories.CateId where categories.CateStatus = 1 and product.ProdStatus = 1 ";
 											
 										$result = $connection->query($sql);
 
@@ -148,8 +148,18 @@ require_once('../../config/config.php')
 													<div class="favorite"></div>
 													<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
 													<div class="product_info">
-														<h6 class="product_name"><a href="../singleproduct/singleproduct.php"><?php echo $row["ProdName"] ?></a></h6>
-														<div class="product_price"><?php echo $row["ProdPrice"]?></div>
+														<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+														<?php
+															if($row['ProdIsSale'] == 1){												
+														?>
+															<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.')?><span><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></span></div>
+														<?php
+															} else if ($row['ProdIsSale'] == 0){
+														?>
+															<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></div>
+														<?php
+															}
+														?>
 													</div>
 												</div>
 												<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>

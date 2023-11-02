@@ -6,48 +6,29 @@
         $email = test_input($_POST['email']);
         $password = $_POST['password'];
         $password_hash = md5($password);
-        $confirm_password = $_POST['cpassword'];
-
-        if (strpos($name, ' ') !== false || strpos($email, ' ') !== false || strpos($password, ' ') !== false){
-            $_SESSION['message'] = "Ký tự nhập vào không được chứa khoảng trắng!";
-            header("Location: register.php");
-            exit();
-        }
-        else{
-            if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-                if ($password === $confirm_password){
-                    $sql = "SELECT UserName, UserEmail from user where UserName = '".$name."' or UserEmail = '".$email."'";
-                    $result = $connection->query($sql) or die ($connection->error);
-                    if ($result->num_rows > 0){
-                        $_SESSION['message'] = "Already UserName or Email Exists";
-                        header("Location: register.php");
-                        exit();
-                    } else {
-                        $user_query = "INSERT INTO user (UserName, UserEmail, UserPassword) values('".$name."','". $email."','" .$password_hash."')";
-                        $user_query_run = $connection->query($user_query);
-                        $connection->close();
-                        if ($user_query_run)
-                        {
-                            $_SESSION['message'] = "Regitered Successfully";
-                            header("Location: login.php");
-                            exit();
-                        } else {
-                            $_SESSION['message'] = "Something went wrong";
-                            header( "Location: register.php");
-                            exit();
-                        }
-                    }
+        $confirm_password =  $_POST['cpassword'];
+        if ($password == $confirm_password){
+            $sql = "SELECT UserName, UserEmail from user where  UserEmail = '$email' or UserName ='$name'";
+            $result = mysqli_query($connection,$sql) or die ($connection->error);
+            if (mysqli_num_rows($result) > 0){
+                $_SESSION['message'] = "Tên hoặc Email đã tồn tại";
+                header("Location: register.php");
+            } else {
+                $user_query = "INSERT INTO user (UserName, UserEmail, UserPassword) values('$name', '$email', '$password_hash')";
+                $user_query_run = mysqli_query($connection,$user_query);
+                if ($user_query_run)
+                {
+                    $_SESSION['message'] = "Đăng ký thành công";
+                    header("Location: login.php");
                 } else {
-                    $_SESSION['message'] = 'Password and ConfirmPassword does not Match';
+                    $_SESSION['message'] = "Đã xảy ra sự cố";
                     header("Location: register.php");
                     exit();
                 }
             }
-            else{
-                $_SESSION['message'] = 'Email không hợp lệ';
-                header("Location: register.php");
-                exit();
-            }
+        } else {
+            $_SESSION['message'] = 'Password và ConfirmPasword không khớp';
+            header("Location: register.php");
         }
         $connection->close();
     } else {
