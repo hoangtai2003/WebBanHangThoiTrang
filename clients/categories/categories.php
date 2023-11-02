@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once('../../config/config.php');
+// require_once('./config/config.php');
+require_once('../../config/config.php')
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,14 +20,6 @@ require_once('../../config/config.php');
 	<link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
 	<link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
-	<style>
-		.product_image img {
-			object-fit: cover;
-			width: 100%;
-			min-height: 240px;
-			height: 240px;
-		}
-	</style>
 </head>
 
 <body>
@@ -140,31 +133,45 @@ require_once('../../config/config.php');
 
 										<!-- Product 1 -->
 										<?php
-										$sql = "Select * from Product";
-										$result = mysqli_query($connection, $sql);
-										if (mysqli_fetch_array($result) > 0) {
-											foreach ($result as $Prod) {
+										$sql = "SELECT * from product inner join categories on product.CateId = categories.CateId where categories.CateStatus = 1 and product.ProdStatus = 1 ";
+											
+										$result = $connection->query($sql);
+
+										if ($result->num_rows > 0) {
+											while ($row = $result->fetch_assoc()) {
 										?>
-												<div class="product-item women">
-													<div class="product product_filter">
-														<div class="product_image">
-															<img src="../../images/<?php echo $Prod["ProdImage"]; ?>" alt="">
-														</div>
-														<div class="favorite"></div>
-														<div class="product_info">
-															<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?= $Prod['ProdId'] ?>"><?php echo $Prod["ProdName"] ?></a></h6>
-															<div class="product_price"><?php echo $Prod["ProdPrice"] ?></div>
-														</div>
+											<div class="product-item women">
+												<div class="product product_filter">
+													<div class="product_image">
+														<img src="../../images/<?php echo $row["ProdImage"];?>" alt="">
 													</div>
-													<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+													<div class="favorite"></div>
+													<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
+													<div class="product_info">
+														<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+														<?php
+															if($row['ProdIsSale'] == 1){												
+														?>
+															<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.')?><span><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></span></div>
+														<?php
+															} else if ($row['ProdIsSale'] == 0){
+														?>
+															<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></div>
+														<?php
+															}
+														?>
+													</div>
 												</div>
-
+												<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+											</div>
 										<?php
+
 											}
+										} else {
+											echo "Không có sản phẩm nào";
 										}
+										$connection->close();
 										?>
-
-
 									</div>
 
 									<!-- Product Sorting -->
@@ -226,6 +233,7 @@ require_once('../../config/config.php');
 	<script src="../assets/plugins/easing/easing.js"></script>
 	<script src="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="../assets/js/categories_custom.js"></script>
+
 </body>
 
 </html>

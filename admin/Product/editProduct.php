@@ -11,6 +11,9 @@ $sqlProd = "SELECT * FROM product where ProdId = $ProdId";
 $product = mysqli_query($connection, $sqlProd);
 $dataProduct = mysqli_fetch_assoc($product);
 
+// $sqlIsSale = "SELECT ProdIsSale from product group by ProdIsSale";
+// $dataIsSale = mysqli_query($connection, $sqlIsSale);
+
 // lấy thông tin sanh mục
 $sqlCate = "SELECT * FROM categories";
 $category = mysqli_query($connection, $sqlCate);
@@ -32,15 +35,15 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 <body>
     <div class="container-fluid px-4">
         <ol class="breadcrumb mt-5">
-            <li class="breadcrumb-item active"><a style="text-decoration:none; color: var(--bs-breadcrumb-item-active-color);" href="./myProduct.php">Product</a></li>
-            <li class="breadcrumb-item active">Edit</li>
+            <li class="breadcrumb-item active">Sản phẩm</li>
+            <li class="breadcrumb-item active">Sửa sản phẩm</li>
         </ol>
         <div class="row">
             <?php include('../authen/message.php'); ?>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Edit Product</h4>
+                        <h4>Sửa sản phẩm</h4>
                     </div>
                     <div class="card-body">
                         <form action="./editProductAction.php?ProdId=<?php echo $ProdId ?>" method="POST" enctype="multipart/form-data">
@@ -77,6 +80,12 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdPriceSale'] ?>" name="ppricesale">
                             </div>
                             <div class="form-group">
+                                <label>Tình trạng sale</label>
+                                <br>
+                                <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 1) echo "checked"; ?> name="rdProdIsSale" value=1>Đang sale
+                                <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 0) echo "checked"; ?> name=rdProdIsSale value=0>Hết sale
+                            </div>
+                            <div class="form-group">
                                 <label>Ảnh sản phẩm</label>
                                 <br>
                                 <input type="file" name="pimage">
@@ -89,7 +98,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input type="file" name="pimages[]" multiple>
                                 <br>
                                 <div class="row">
-                                    <?php foreach ($imgProd as $key => $value) {?>
+                                    <?php foreach ($imgProd as $key => $value) { ?>
                                         <div class="col-md-4">
                                             <a href="">
                                                 <img src="../../images/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
@@ -102,7 +111,8 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <label>Mô tả</label>
                                 <textarea required type="password" class="form-control" name="pdesc"><?php echo $dataProduct['ProdDescription'] ?></textarea>
                             </div>
-                            <input name="add_product" value="sửa sản phẩm" type="submit" class="btn btn-primary mt-2">
+                            <input name="add_product" value="Cập nhật" type="submit" class="btn btn-primary mt-2">
+                            <a href="myProduct.php" class="btn btn-danger mt-2">Quay lại</a>
                         </form>
                     </div>
                 </div>

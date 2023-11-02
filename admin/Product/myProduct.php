@@ -1,37 +1,29 @@
 <?php
 session_start();
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="./myProduct.css"> -->
-    <title>Document</title>
-</head>
-
-<body>
-    <?php
     include('../../config/config.php');
     include('../includes/header.php');
     include_once('../includes/navbar_top.php');
     include_once('../includes/sidebar.php');
-
-    ?>
+?>
     <!-- container-product -->
     <div class="container-fluid px-4">
         <ol class="breadcrumb mt-5">
-            <li class="breadcrumb-item active">Product</li>
-            <li class="breadcrumb-item active">My product</li>
+            <li class="breadcrumb-item active">Sản phẩm</li>
+            <li class="breadcrumb-item active">Danh sách sản phẩm</li>
         </ol>
         <div class="Prod">
             <?php include('../authen/message.php'); ?>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>List Product</h4>
-                        <a href="./createProduct.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Add product</a>
+                        <h4>Danh sách sản phẩm</h4>
+                        <?php if (checkPrivilege('createProduct.php')) { ?>
+                        <a 
+                            href="./createProduct.php" 
+                            class="btn btn-primary float-end">
+                            <i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm sản phẩm
+                        </a>
+                        <?php }?>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -45,14 +37,24 @@ session_start();
                                     <th scope="col">Tồn kho</th>
                                     <th scope="col">Đã bán</th>
                                     <th scope="col">Loại danh mục</th>
-                                    <th scope="col">Edit</th>
-                                    <th scope="col">Delete</th>
+                                    <th scope="col">Tình trạng sale</th>
+                                    <?php if (checkPrivilege('editProduct.php?ProdId=0')) { ?>
+                                    <th scope="col">Sửa</th>
+                                    <?php }?>
+                                    <?php if (checkPrivilege('deleteProductAction.php?ProdId=0')) { ?>
+                                    <th scope="col">Xóa</th>
+                                    <?php }?>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "Select a.*, b.CateName from product a inner join Categories b on a.CateId = b.CateId";
+                                include("../OffsetPagination/offset.php");
+                                $sql = "Select a.*, b.CateName from product a inner join categories b on a.CateId = b.CateId order by ProdId asc limit ".$item_per_page." offset ".$offset."";
                                 $result = mysqli_query($connection, $sql);
+                                $totalRecords = mysqli_query($connection, "select * from product");
+                                $totalRecords = $totalRecords->num_rows;
+                                // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+                                $totalPage = ceil($totalRecords / $item_per_page);
                                 if (mysqli_fetch_array($result) > 0) {
                                     foreach ($result as $Prod) {
                                 ?>
@@ -65,13 +67,32 @@ session_start();
                                             <td>0</td>
                                             <td>0</td>
                                             <td><?= $Prod['CateName']; ?></td>
-                                            <td><a href="./editProduct.php?ProdId=<?= $Prod['ProdId'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Edit</a></td>
+                                            <td><?php 
+                                                if($Prod['ProdIsSale'] == 0) {
+                                                    echo "Hết sale";
+                                                } else if($Prod['ProdIsSale'] == 1) {
+                                                    echo "Đang sale";
+                                                }
+                                             ?></td>
+                                            <?php if (checkPrivilege('editProduct.php?ProdId=0')) { ?>
                                             <td>
-                                                <form action="./deleteProductAction.php?ProdId=<?= $Prod['ProdId'] ?>" method="POST">
-                                                    <button type="submit" onclick="return confirm('Are you sure delete <?= $Prod['ProdName']; ?>?');" name="product_delete" class="btn btn-danger" value="<?= $Prod['ProdId']; ?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Delete
-                                                    </button>
-                                                </form>
+                                                <a 
+                                                    href="./editProduct.php?ProdId=<?= $Prod['ProdId'] ?>" 
+                                                    class="btn btn-success">
+                                                    <i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa
+                                                </a>
                                             </td>
+                                            <?php } ?>
+                                            <?php if (checkPrivilege('deleteProductAction.php?ProdId=0')) { ?>
+                                            <td>
+                                                <a 
+                                                    href="deleteProductAction.php?ProdId=<?php echo $row["ProdId"];?>"
+                                                    class="btn btn-danger action_delete" 
+                                                    value="<?= $row['ProdId']; ?>"><i class="fa-solid fa-trash" 
+                                                    style="margin-right: 5px;"></i>Xóa
+                                                </a>
+                                            </td>
+                                            <?php } ?>
                                         </tr>
                                 <?php
                                     }
@@ -79,6 +100,7 @@ session_start();
                                 ?>
                             </tbody>
                         </table>
+                        <?php include("../../pagination/pagination.php") ?>
                     </div>
                 </div>
             </div>

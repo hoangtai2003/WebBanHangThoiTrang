@@ -17,15 +17,15 @@ $result = $connection->query($sql) or die($connection->connect_error);
 <body>
     <div class="container-fluid px-4">
         <ol class="breadcrumb mt-5">
-            <li class="breadcrumb-item active"><a style="text-decoration:none; color: var(--bs-breadcrumb-item-active-color);" href="./myProduct.php">Product</a></li>
-            <li class="breadcrumb-item active">Add</li>
+            <li class="breadcrumb-item active">Sản phẩm</li>
+            <li class="breadcrumb-item active">Thêm sản phẩm</li>
         </ol>
         <div class="row">
             <?php include('../authen/message.php'); ?>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Add Product</h4>
+                        <h4>Thêm sản phẩm</h4>
                     </div>
                     <div class="card-body">
                         <form action="./createProductAction.php" method="POST" enctype="multipart/form-data">
@@ -74,8 +74,8 @@ $result = $connection->query($sql) or die($connection->connect_error);
                                 <label>Mô tả</label>
                                 <textarea required type="password" class="form-control" name="pdesc"></textarea>
                             </div>
-
-                            <input name="add_product" value="thêm sản phẩm" type="submit" class="btn btn-primary mt-2">
+                            <input name="add_product" value="Gửi đi" type="submit" class="btn btn-primary mt-2">
+                            <a href="myProduct.php" class="btn btn-danger mt-2">Quay lại</a>
                         </form>
                     </div>
                 </div>
