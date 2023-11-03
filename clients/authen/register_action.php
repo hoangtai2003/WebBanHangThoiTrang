@@ -1,7 +1,7 @@
 <?php 
     session_start();
     require_once ('../../config/config.php');
-    function generateRandomUsername($length = 8) {
+    function generateRandomUsername($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $username = '';
         for ($i = 0; $i < $length; $i++) {
