@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../../config/config.php');
 $ProdId = $_REQUEST['ProdId'];
 $sqlProd = "SELECT * FROM product where ProdId = $ProdId";
@@ -345,6 +346,14 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 				if(tQuantity != ''){
 					quantity =parseInt(tQuantity);
 				}
+				<?php
+					if(!isset($_SESSION['cus_loggedin'])){
+				?>
+					window.location.href = '../authen/login.php';
+					return;
+				<?php
+					}
+				?>
 				var productId = <?php echo $dataProduct['ProdId'] ?>
 
 				$.ajax({
