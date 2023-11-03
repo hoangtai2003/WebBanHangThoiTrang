@@ -1,8 +1,8 @@
 <?php
     session_start();
-    // var_dump($_POST);
-    include('../../config/config.php');
-    if(isset($_POST['login_btn'])){
+    require_once('../../config/config.php');
+
+    if (isset($_POST['login_btn'])){
         $name = $_POST['name'];
         $password = $_POST['password'];
         $password_hash = md5($password);
@@ -31,7 +31,10 @@
             header('Location: login.php');
             exit(0);
         }
+        $connection->close();
+    } else {
+        header("Location: login.php");
+        exit();
     }
-
 
 ?>

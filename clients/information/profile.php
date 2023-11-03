@@ -40,6 +40,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 						<li class="active"><i class="fa fa-angle-right" aria-hidden="true"></i>Tài khoản của tôi</a></li>
 					</ul>
                 </div>
+				<?php include("../authen/message.php") ?>
 				<div class="row">
 					<div class="col-md-12">
 						<h3>Hồ sơ của tôi</h3>
@@ -48,41 +49,69 @@ if (!isset($_SESSION["cus_loggedin"])) {
 								$CusId = $_SESSION['cusid'];
 								$sql = "select * from customer where CusId = '$CusId'";
 								$result = mysqli_query($connection, $sql);
-								
 							}
 							if(mysqli_num_rows($result) > 0){
 								$row = $result->fetch_assoc();
-								
 							}
 							?>
 							<style>
 								.form-control{
 									color: black !important;
 								}
+								.form-check{
+									display: inline-block !important;
+									margin-left: 77px;
+								}
+								.form-check-label{
+									padding-left: 0 !important;
+									font-size: 1rem;
+									
+								}
 							</style>
-							<form action="profile_action.php" method="post">
+							<form action="profile_edit_action.php" method="post">
 								<input type="hidden" name="CusId" value="<?=$row['CusId']?>" >
 								<div class="form-group">
-									<label style="opacity: 0.5; ">Tên đăng nhập</label>
-									<label style="margin-left: 16px;width: 40%; font-size: 1rem;"><?=$row['CusUserName'] ?></label>
+									<label style="opacity: 0.5;">Tên đăng nhập</label>
+									<?php
+										if ($row['ChangeUserName'] == 0) {
+											?>
+												<label style="margin-left: 16px;width: 40%; font-size: 1rem;"><input type="text" class="form-control" name="new_username" value="<?=$row['CusUserName']?>"></label>
+											<?php
+										} else {
+											?> 
+												<label style="margin-left: 16px; width: 40%; font-size: 1rem;"><?=$row['CusUserName'] ?> </label>
+											<?php
+										}
+									?>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Tên</label>
-									<label style="margin-left: 77px;width: 40%;"><input type="text" name="txtName" class="form-control" value="<?=$row['CusName']?>"></label>
+									<label style="margin-left: 95px;width: 40%;"><input type="text" name="CusName" class="form-control" value="<?=$row['CusName']?>"></label>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Số điện thoại</label>
-									<label style="margin-left: 16px;width: 40%;"><input type="text" name="txtPhone" class="form-control" value="<?=$row['CusPhone']?>"></label>
+									<label style="margin-left: 31px;width: 40%;"><input type="text" name="CusPhone" class="form-control" value="<?=$row['CusPhone']?>"></label>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Email</label>
-									<label style="margin-left: 63px;width: 40%;"><input type="text" name="txtEmail" class="form-control" value="<?=$row['CusEmail']?>"></label>
+									<label style="margin-left: 78px;width: 40%;"><input type="text" name="CusEmail" class="form-control" value="<?=$row['CusEmail']?>"></label>
+								</div>
+								<div class="form-group" style="margin-bottom: 15px;">
+									<label style="opacity: 0.5; ">Giới tính</label>
+									<div class="form-check">
+										<input class="form-check-input"  type="radio" name="CusGender" id="rdGender0" value=0 <?= $row['CusGender'] == 0  ? 'checked' : '' ?>>
+										<label class="form-check-label" for="rdGender0">Nam</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="CusGender" id="rdGender1" value=1 <?= $row['CusGender'] == 1 ? 'checked' : '' ?>>
+										<label class="form-check-label" for="rdGender1">Nữ</label>
+									</div>
 								</div>
 								<div class="form-group">
 									<label style="opacity: 0.5; ">Ngày sinh</label>
-									<label style="margin-left: 32px;width: 40%;"><input type="date" name="txtBirthday" class="form-control"></label>
+									<label style="margin-left: 43px;width: 40%;"><input type="date" name="CusBirthday" class="form-control" value="<?= $row['CusBirthday']?>"></label>
 								</div>
-								<button type="submit" name="cmd_add" class="btn btn-sm btn-danger">Lưu</button>
+								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger">Lưu</button>
 							</form>
 					</div>
 				</div>

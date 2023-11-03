@@ -1,5 +1,5 @@
 <?php
-session_start();
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +23,7 @@ session_start();
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
-                                        
-                                       <?php include('message.php') ?>
+                                        <?php include('message.php') ?>
                                         <form action="register_action.php" method="POST">
                                             <div class="form-floating mb-3">
                                                 <input required class="form-control" type="text" name="name" placeholder="Enter your name" />
@@ -49,7 +48,7 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" href="login.php" name="register_btn">Create Account</button></div>
+                                                <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" name="register_btn">Create Account</button></div>
                                             </div>
                                         </form>
                                     </div>

@@ -31,8 +31,8 @@
                                         <?php include('message.php') ?>
                                         <form method="post" action="./login_action.php">
                                             <div class="form-floating mb-3">
-                                                <input required class="form-control" name="username"  type="text" placeholder="Tên đăng nhập" />
-                                                <label for="inputEmail">Tên đăng nhập</label>
+                                                <input required class="form-control" name="phone"  type="text" placeholder="Số điện thoại" />
+                                                <label for="inputEmail">Số điện thoại</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input required class="form-control" name="password"  type="password" placeholder="Mật khẩu" />
@@ -52,20 +52,6 @@
                         </div>
                     </div>
                 </main>
-            </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

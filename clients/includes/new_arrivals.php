@@ -52,6 +52,8 @@
 							$catename = $row["CateName"];
 							$catenameReplace = preg_replace('/[^a-zA-Z0-9]/', '', $catename);
 					?>
+						<form action="" class="form-submit">
+							<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
 							<div class="product-item <?php echo strtolower($catenameReplace) ?>">
 								<div class="product discount product_filter">
 									<div class="product_image">
@@ -74,8 +76,9 @@
 										?>
 									</div>
 								</div>
-								<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+								<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>
 							</div>
+						</form>
 
 					<?php
 
@@ -252,3 +255,42 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+		$(document).ready(function(e){
+			function load_cart_item_number(){
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartItem: "cart_item"},
+					success:function(response){
+						$("#checkout_items").html(response);
+					}
+				});
+			}
+			$('body').on('click', '#cart_link', function(e){
+				e.preventDefault();
+				var quantity = 1;
+				<?php
+					if(!isset($_SESSION['cus_loggedin'])){
+				?>
+					window.location.href = '../authen/login.php';
+					return;
+				<?php
+					}
+				?>
+				var $form = $(this).closest(".form-submit");
+				var productId = $form.find(".ProdId").val();
+
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartadd: "themgiohang", productId: productId, quantity: quantity},
+					success:function(){
+						alert("Thêm vào giỏ hàng thành công.");
+						load_cart_item_number();
+					}
+				});
+			});
+		});
+	</script>

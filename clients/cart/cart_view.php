@@ -127,7 +127,7 @@
 								<tr class="text-center">
 									<th><?php echo $i ?></th>
 									<td><?php echo $cart_item['id'] ?></td>
-									<td><?php echo $cart_item['name'] ?></td>
+									<td><?php echo '<a href="../singleproduct/singleproduct.php?ProdId='.$cart_item['id'].'">'.$cart_item['name'].'</a>' ?></td>
 									<td><img src="../../images/<?php echo $cart_item['image'] ?>" width="60"></td>
 									<td><?php echo number_format($cart_item['price'], 0, ',', '.') ?></td>
 									<td>

@@ -65,5 +65,6 @@ include_once('../includes/sidebar.php')
     </div>
 </div>
 
-<?php include('../includes/footer.php');
+<?php 
+    include('../includes/footer.php');
 ?>

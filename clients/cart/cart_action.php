@@ -22,38 +22,13 @@ if (isset($_GET['cartItem']) && $_GET['cartItem'] == 'cart_item') {
         }
     }
 }
+
 //thêm giỏ hàng
-if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang') {
-    // unset($_SESSION['cart']);
+if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang' && isset($_GET['quantity'])) {
+
     $productId = $_GET['productId'];
-    // $soluong = 1;
-    // $sql = "SELECT * FROM Product WHERE ProdId = '" . $productId . "' LIMIT 1";
-    // $result = mysqli_query($connection, $sql);
-    // $row = mysqli_fetch_array($result);
-    // if ($row) {
-    //     $new_product = array(array('id' => $productId, 'name' => $row['ProdName'], 'desc' => $row['ProdDescription'], 'image' => $row['ProdImage'], 'price' => $row['ProdPrice'], 'pricesale' => $row['ProdPriceSale'], 'quantity' => $soluong, 'cateid' => $row['CateId']));
-    //     //kiểm tra session giỏ hàng tồn tại
-    //     if (isset($_SESSION['cart'])) {
-    //         $found = false;
-    //         foreach ($_SESSION['cart'] as $cart_item) {
-    //             //nếu trùng
-    //             if ($cart_item['id'] == $productId) {
-    //                 $product[] = array('id' => $cart_item['id'], 'name' => $cart_item['name'], 'desc' => $cart_item['desc'], 'image' => $cart_item['image'], 'price' => $cart_item['price'], 'pricesale' => $cart_item['pricesale'], 'quantity' => $cart_item['quantity'] + 1, 'cateid' => $cart_item['cateid']);
-    //                 $found = true;
-    //             } else {
-    //                 //nếu không trùng
-    //                 $product[] = array('id' => $cart_item['id'], 'name' => $cart_item['name'], 'desc' => $cart_item['desc'], 'image' => $cart_item['image'], 'price' => $cart_item['price'], 'pricesale' => $cart_item['pricesale'], 'quantity' => $cart_item['quantity'], 'cateid' => $cart_item['cateid']);
-    //             }
-    //         }
-    //         if ($found == false) {
-    //             $_SESSION['cart'] = array_merge($product, $new_product);
-    //         } else {
-    //             $_SESSION['cart'] = $product;
-    //         }
-    //     } else {
-    //         $_SESSION['cart'] = $new_product;
-    //     }
-    // }
+    $quantity = isset($_GET['quantity']) ? $_GET['quantity'] : 1;
+
     if (isset($_SESSION['cusid'])) {
         $cusid = $_SESSION['cusid'];
         if (!isset($_SESSION['cart_inserted'])) {
@@ -80,15 +55,14 @@ if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang') {
 
         if ($result_check_cart_detail->num_rows > 0) {
             $row_check_cart_detail = $result_check_cart_detail->fetch_assoc();
-            $new_quantity = $row_check_cart_detail["Quantity"] + 1; // Tăng số lượng hiện có lên 1
+            $new_quantity = $row_check_cart_detail["Quantity"] + $quantity;
             $sql_update_cart = "UPDATE cartdetail SET Quantity = '" . $new_quantity . "' WHERE CartId = '" . $row_check_cart['CartId'] . "' AND ProdId = '" . $productId . "'";
             $connection->query($sql_update_cart);
         } else {
-            $sql_insert_cart_detail = "INSERT INTO cartdetail (CartId, ProdId, Quantity) VALUES ('" . $row_check_cart['CartId'] . "', '" . $productId . "', '1')";
+            $sql_insert_cart_detail = "INSERT INTO cartdetail (CartId, ProdId, Quantity) VALUES ('" . $row_check_cart['CartId'] . "', '" . $productId . "', '".$quantity."')";
             $connection->query($sql_insert_cart_detail);
         }
     }
-    header('Location: ./cart_view.php');
 }
 
 //xóa tất cả trong giỏ hàng
