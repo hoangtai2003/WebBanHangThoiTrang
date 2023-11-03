@@ -52,20 +52,33 @@
 							$catename = $row["CateName"];
 							$catenameReplace = preg_replace('/[^a-zA-Z0-9]/', '', $catename);
 					?>
+						<form action="" class="form-submit">
+							<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
 							<div class="product-item <?php echo strtolower($catenameReplace) ?>">
 								<div class="product discount product_filter">
 									<div class="product_image">
 										<img src="../../images/<?php echo $row["ProdImage"] ?>" alt="">
 									</div>
 									<div class="favorite favorite_left"></div>
-									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
+									<!-- <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div> -->
 									<div class="product_info">
 										<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row["ProdId"]?>"><?php echo $row["ProdName"] ?></a></h6>
-										<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?><span><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?></span></div>
+										<?php
+											if($row['ProdIsSale'] == 1){												
+										?>
+											<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.')?><span><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></span></div>
+										<?php
+											} else if ($row['ProdIsSale'] == 0){
+										?>
+											<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></div>
+										<?php
+											}
+										?>
 									</div>
 								</div>
-								<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+								<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>
 							</div>
+						</form>
 
 					<?php
 
@@ -242,3 +255,42 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+		$(document).ready(function(e){
+			function load_cart_item_number(){
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartItem: "cart_item"},
+					success:function(response){
+						$("#checkout_items").html(response);
+					}
+				});
+			}
+			$('body').on('click', '#cart_link', function(e){
+				e.preventDefault();
+				var quantity = 1;
+				<?php
+					if(!isset($_SESSION['cus_loggedin'])){
+				?>
+					window.location.href = '../authen/login.php';
+					return;
+				<?php
+					}
+				?>
+				var $form = $(this).closest(".form-submit");
+				var productId = $form.find(".ProdId").val();
+
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartadd: "themgiohang", productId: productId, quantity: quantity},
+					success:function(){
+						alert("Thêm vào giỏ hàng thành công.");
+						load_cart_item_number();
+					}
+				});
+			});
+		});
+	</script>

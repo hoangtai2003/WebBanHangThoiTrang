@@ -3,11 +3,11 @@
     require_once('../../config/config.php');
 
     if (isset($_POST['login_btn'])){
-        $username = $_POST['username'];
+        $phone = $_POST['phone'];
         $password = $_POST['password'];
         $password_hash = md5($password);
 
-        $sql = "select * from Customer where BINARY CusUserName = '".$username."' and CusPassword = '".$password_hash."'";
+        $sql = "select * from Customer where BINARY CusPhone = '".$phone."' and CusPassword = '".$password_hash."'";
         $result = $connection->query($sql) or die ($connection->error);
 
         if ($result->num_rows > 0) {

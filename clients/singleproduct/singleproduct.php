@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../../config/config.php');
 $ProdId = $_REQUEST['ProdId'];
 $sqlProd = "SELECT * FROM product where ProdId = $ProdId";
@@ -148,8 +149,18 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 						<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 							<span class="ti-truck"></span><span>free delivery</span>
 						</div>
-						<div class="original_price"><?php echo $dataProduct["ProdPrice"] ?></div>
-						<div class="product_price"><?php echo $dataProduct["ProdPriceSale"] ?></div>
+						<?php
+							if($dataProduct['ProdIsSale'] == 1){
+						?>
+						<div class="original_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
+						<div class="product_price"><?php echo number_format($dataProduct["ProdPriceSale"], 0, ',', '.') ?></div>
+						<?php
+							} else if ($dataProduct['ProdIsSale'] == 0){
+						?>
+							<div class="product_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
+						<?php
+							}
+						?>
 						<ul class="star_rating">
 							<li><i class="fa fa-star" aria-hidden="true"></i></li>
 							<li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -165,7 +176,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 								<span id="quantity_value">1</span>
 								<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
 							</div>
-							<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+							<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>
 							<div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
 						</div>
 					</div>
@@ -316,6 +327,49 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			function load_cart_item_number(){
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartItem: "cart_item"},
+					success:function(response){
+						$("#checkout_items").html(response);
+					}
+				});
+			}
+			$('body').on('click', '#cart_link', function(e){
+				e.preventDefault();
+				var quantity = 1;
+				var tQuantity = $('#quantity_value').text();
+				if(tQuantity != ''){
+					quantity =parseInt(tQuantity);
+				}
+				<?php
+					if(!isset($_SESSION['cus_loggedin'])){
+				?>
+					window.location.href = '../authen/login.php';
+					return;
+				<?php
+					}
+				?>
+				var productId = <?php echo $dataProduct['ProdId'] ?>
+
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartadd: "themgiohang", productId: productId, quantity: quantity},
+					success:function(){
+						alert("Thêm vào giỏ hàng thành công.");
+                		load_cart_item_number();
+					}
+				});
+			});
+		});
+
+</script>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 	<script>
 		// Kích hoạt Slick Slider

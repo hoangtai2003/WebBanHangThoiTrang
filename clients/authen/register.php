@@ -26,8 +26,8 @@
                                         <?php include('message.php') ?>
                                         <form action="./register_action.php" method="POST">
                                             <div class="form-floating mb-3">
-                                                <input required class="form-control" type="text" name="username" placeholder="Tên đăng nhập" />
-                                                <label>Tên đăng nhập</label>
+                                                <input required class="form-control" type="text" name="phone" placeholder="Số điện thoại" />
+                                                <label>Số điện thoại</label>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
@@ -44,20 +44,8 @@
                                                 </div>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input required class="form-control" type="text" name="name" placeholder="Họ và tên" />
-                                                <label>Họ và tên</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
                                                 <input required class="form-control" type="email" name="email" placeholder="name@example.com" />
                                                 <label>Email</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input required class="form-control" type="text" name="phone" placeholder="Số điện thoại" />
-                                                <label>Số điện thoại</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <textarea required class="form-control" name="address" cols="30" rows="10" placeholder="Địa chỉ"></textarea>
-                                                <label>Địa chỉ</label>
                                             </div>
                                             <div class="mt-4 mb-0">
                                                 <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" name="register_btn">Đăng ký</button></div>
@@ -72,20 +60,6 @@
                         </div>
                     </div>
                 </main>
-            </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

@@ -140,6 +140,8 @@ require_once('../../config/config.php')
 										if ($result->num_rows > 0) {
 											while ($row = $result->fetch_assoc()) {
 										?>
+											<form action="" class="form-submit">
+											<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
 											<div class="product-item women">
 												<div class="product product_filter">
 													<div class="product_image">
@@ -148,12 +150,23 @@ require_once('../../config/config.php')
 													<div class="favorite"></div>
 													<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
 													<div class="product_info">
-														<h6 class="product_name"><a href="../singleproduct/singleproduct.php"><?php echo $row["ProdName"] ?></a></h6>
-														<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></div>
+														<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+														<?php
+															if($row['ProdIsSale'] == 1){												
+														?>
+															<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.')?><span><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></span></div>
+														<?php
+															} else if ($row['ProdIsSale'] == 0){
+														?>
+															<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.')?></div>
+														<?php
+															}
+														?>
 													</div>
 												</div>
-												<div class="red_button add_to_cart_button"><a href="../cart/cart_action.php?cartadd=themgiohang&productId=<?php echo $row['ProdId'] ?>">add to cart</a></div>
+												<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>
 											</div>
+											</form>
 										<?php
 
 											}
@@ -214,6 +227,45 @@ require_once('../../config/config.php')
 		<?php include_once("../includes/footer.php") ?>
 
 	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(e){
+			function load_cart_item_number(){
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartItem: "cart_item"},
+					success:function(response){
+						$("#checkout_items").html(response);
+					}
+				});
+			}
+			$('body').on('click', '#cart_link', function(e){
+				e.preventDefault();
+				var quantity = 1;
+				<?php
+					if(!isset($_SESSION['cus_loggedin'])){
+				?>
+					window.location.href = '../authen/login.php';
+					return;
+				<?php
+					}
+				?>
+				var $form = $(this).closest(".form-submit");
+				var productId = $form.find(".ProdId").val();
+
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {cartadd: "themgiohang", productId: productId, quantity: quantity},
+					success:function(){
+						alert("Thêm vào giỏ hàng thành công.");
+						load_cart_item_number();
+					}
+				});
+			});
+		});
+	</script>
 
 	<script src="../assets/js/jquery-3.2.1.min.js"></script>
 	<script src="../assets/styles/bootstrap4/popper.js"></script>
