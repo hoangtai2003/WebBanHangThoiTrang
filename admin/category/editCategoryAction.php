@@ -8,7 +8,7 @@ if (isset($_POST['update_category'])) {
     $category_id = $_POST['category_id'];
     $CateName = $_POST['txtCateName'];
     $CateDescription = $_POST['taCatedesc'];
-    
+    $status = $_POST['rdstatus'];
     // $current_image = $slider['slimage']; // Hình ảnh hiện tại
 
     // Kiểm tra xem người dùng đã tải lên hình ảnh mới chưa
@@ -18,33 +18,38 @@ if (isset($_POST['update_category'])) {
         
         if (move_uploaded_file($_FILES['fimage']['tmp_name'], $file_path)) {
             // Cập nhật cơ sở dữ liệu với tên tệp mới
-            $sql = "UPDATE categories SET CateName = '$CateName', CateDescription = '$CateDescription', CateImage = '$file_name' WHERE CateId = '$category_id'";
+            $sql = "UPDATE categories SET CateImage = '$file_name' WHERE CateId = '$category_id'";
             $result = mysqli_query($connection, $sql) or die($connection->error);
             if ($result) {
                 $_SESSION['message'] = "Cập nhật thành công";
+                $_SESSION['message_type'] = 'success';
                 header('Location: myCategory.php');
                 exit(0);
             } else {
                 $_SESSION['message'] = "Đã xảy ra sự cố";
+                $_SESSION['message_type'] = 'error';
                 header('Location: myCategory.php');
                 exit(0);
             }
-        } else {
+        } else {    
             $_SESSION['message'] = "Không thể tải lên tệp hình ảnh mới.";
+            $_SESSION['message_type'] = 'error';
             $uploadOk = false;
             header("Location: myCategory.php");
         }
     } else {
         // Nếu không có hình ảnh mới, chỉ cập nhật tên và mô tả
-        $sql = "UPDATE categories SET CateName = '$CateName', CateDescription = '$CateDescription' WHERE CateId = '$category_id'";
+        $sql = "UPDATE categories SET CateName = '$CateName', CateDescription = '$CateDescription', CateStatus = '$status' WHERE CateId = '$category_id'";
         $result = mysqli_query($connection, $sql) or die($connection->error);
         $connection->close();
         if ($result) {
             $_SESSION['message'] = "Cập nhật thành công";
+            $_SESSION['message_type'] = 'success';
             header('Location: myCategory.php');
             exit(0);
         } else {
             $_SESSION['message'] = "Đã xảy ra sự cố";
+            $_SESSION['message_type'] = 'error';
             header('Location: myCategory.php');
             exit(0);
         }

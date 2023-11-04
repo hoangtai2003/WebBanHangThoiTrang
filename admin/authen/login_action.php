@@ -28,6 +28,7 @@
             exit(0);
         }else {
             $_SESSION['message'] = "Email hoặc Password không hợp lệ";
+            $_SESSION['message_type'] = 'error';
             header('Location: login.php');
             exit(0);
         }

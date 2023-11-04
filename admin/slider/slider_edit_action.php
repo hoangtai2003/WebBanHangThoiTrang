@@ -22,15 +22,18 @@ if (isset($_POST['update_slider'])) {
             $result = mysqli_query($connection, $sql) or die($connection->error);
             if ($result) {
                 $_SESSION['message'] = "Cập nhật thành công";
+                $_SESSION['message_type'] = 'success';
                 header('Location: slider_list.php');
                 exit(0);
             } else {
                 $_SESSION['message'] = "Đã xảy ra sự cố";
+                $_SESSION['message_type'] = 'error';
                 header('Location: slider_list.php');
                 exit(0);
             }
         } else {
             $_SESSION['message'] = "Không thể tải lên tệp hình ảnh mới.";
+            $_SESSION['message_type'] = 'error';
             $uploadOk = false;
             header("Location: slider_list.php");
         }
@@ -41,10 +44,12 @@ if (isset($_POST['update_slider'])) {
         $connection->close();
         if ($result) {
             $_SESSION['message'] = "Cập nhật thành công";
+            $_SESSION['message_type'] = 'success';
             header('Location: slider_list.php');
             exit(0);
         } else {
             $_SESSION['message'] = "Đã xảy ra sự cố";
+            $_SESSION['message_type'] = 'error';
             header('Location: slider_list.php');
             exit(0);
         }
