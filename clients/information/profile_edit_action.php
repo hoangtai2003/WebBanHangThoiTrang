@@ -10,7 +10,11 @@ if (isset($_POST['update_customer'])){
     $email = $_POST['CusEmail'];
     $birthday = $_POST['CusBirthday'];
     $gender = $_POST['CusGender'];
-
+    if (strlen($username) < 10 ){
+        $_SESSION['message'] = 'Tên đăng nhập phải có ít nhất 10 ký tự';
+        header("Location: profile.php");
+        exit(0);
+    }
     // Kiểm tra trong cơ sở dữ liệu xem tên đăng nhập đã được sửa hay chưa
     $check_username_sql = "SELECT ChangeUserName FROM customer WHERE CusId = '$cus_id'";
     $check_username_result = mysqli_query($connection, $check_username_sql);
