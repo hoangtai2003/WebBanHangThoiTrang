@@ -6,7 +6,7 @@
     if (isset($_POST['add_category'])){
         $Catename = $_POST['txtCatename'];
         $Catedescription = $_POST['taCatedesc'];
-
+        $status = $_POST['rdstatus'];
         $file_path = $target_dir.$_FILES['fimage']['name'];
         $file_name = $_FILES['fimage']['name'];
 
@@ -39,7 +39,7 @@
         }
         if ($uploadOk) {
             if (move_uploaded_file($_FILES['fimage']['tmp_name'], $file_path)) {
-                $sql = "INSERT INTO categories (CateName, CateDescription, CateImage) VALUES ('$Catename', '$Catedescription', '$file_name')";
+                $sql = "INSERT INTO categories (CateName, CateDescription, CateImage, CateStatus) VALUES ('$Catename', '$Catedescription', '$file_name', '$status')";
                 $result = mysqli_query($connection, $sql);
     
                 if ($result) {
