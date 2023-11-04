@@ -7,6 +7,7 @@
         $connection->close();
         if($result){
             $_SESSION['message'] = "Xóa thành công";
+            $_SESSION['message_type'] = 'success';
             header('Location: slider_list.php');
             exit(0);
         } 
