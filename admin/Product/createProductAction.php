@@ -15,7 +15,8 @@ if (isset($_POST['slCid'])) {
         if($file['type'] == 'image/jpeg' || $file['type'] == 'image/jpg' ||  $file['type'] == 'image/png') {
             move_uploaded_file($file['tmp_name'], '../../images/' . $file_name);
         } else {
-            echo"Không đúng định dạng";
+            $_SESSION['message'] = "Không đúng định dạng";
+            $_SESSION['message_type'] = 'error';
             $file_name = '';
         }
     }
@@ -33,10 +34,12 @@ if (isset($_POST['slCid'])) {
         mysqli_query($connection, "insert into productimage(ProdId, Image) values ('$ProdId', '$value') ");
     }
     if ($query) {
-        echo "Thêm sản phẩm thành công";
+        $_SESSION['message'] = "Thêm sản phẩm thành công";
+        $_SESSION['message_type'] = 'success';
         header("Location: ./myProduct.php");
     } else {
-        echo "Lỗi thêm sản phẩm";
+        $_SESSION['message'] = "Lỗi thêm sản phẩm";
+        $_SESSION['message_type'] = 'error';
     }
    
 }

@@ -12,6 +12,7 @@
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
                 $_SESSION['message'] = "Tên hoặc Email đã tồn tại";
+                $_SESSION['message_type'] = 'warning';
                 header("Location: register.php");
             } else {
                 $user_query = "INSERT INTO user (UserName, UserEmail, UserPassword) values('$name', '$email', '$password_hash')";
@@ -19,15 +20,18 @@
                 if ($user_query_run)
                 {
                     $_SESSION['message'] = "Đăng ký thành công";
+                    $_SESSION['message_type'] = 'success';
                     header("Location: login.php");
                 } else {
                     $_SESSION['message'] = "Đã xảy ra sự cố";
+                    $_SESSION['message_type'] = 'error';
                     header("Location: register.php");
                     exit();
                 }
             }
         } else {
             $_SESSION['message'] = 'Password và ConfirmPasword không khớp';
+            $_SESSION['message_type'] = 'error';
             header("Location: register.php");
         }
         $connection->close();
