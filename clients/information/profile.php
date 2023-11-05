@@ -57,7 +57,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 								$row = $result->fetch_assoc();
 							}
 							?>
-							<form action="profile_edit_action.php" method="post">
+							<form action="profile_edit_action.php" method="post"  id="profileForm">
 								<input type="hidden" name="CusId" value="<?=$row['CusId']?>" >
 								<div class="row">
 									<div class="col-md-8">
@@ -105,18 +105,39 @@ if (!isset($_SESSION["cus_loggedin"])) {
 									</div>
 									<div class="col-md-4">
 										<div>
-											<img class="select_photo" src="https://cf.shopee.vn/file/f3d514816a14f3baea3cbcdcb717b596_tn">
+											<img class="select_photo" style="width: 55%;height: 50%;" src="<?= $row['CusImage']?>">
 										</div>
 										<div class="form-control image">
+											
 											<label for="fileInput" aria-label="Chọn ảnh" style="margin: 8px;">Chọn Ảnh</label>
 											<input type="file" hidden id="fileInput" name="fimage">
 										</div>
 									</div>
 								</div>
-								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger p-2">Lưu</button>
+								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger p-2" id="saveButton" disabled>Lưu</button>
 							</form>
 					</div>
 				</div>
+				<?php
+					if(isset($_POST['update_customer'])){
+						$changesDetected = false;
+
+						if ($row['ChangeUserName'] == 0 && $_POST['new_username'] !== $row['CusUserName']) {
+							$changesDetected = true;
+						}
+						if ($changesDetected) {
+							?>
+								<script>document.getElementById("saveButton").removeAttribute("disabled");</script>
+							<?php
+							
+						} else {
+							?>
+								<script>document.getElementById("saveButton").setAttribute("disabled", "disabled");</script>
+							<?php
+							
+						}
+					}
+					?>
 			</div>
 		</div>
 	</div>
