@@ -3,7 +3,11 @@
     require("../../config/config.php");
     require("../../mail/sendmail.php");
     
-    $order_code = rand(0, 9999);
+    //tạo random mã đơn hàng
+    $customerInfo = $_SESSION['cusid'];
+    $current_time = time();
+    $order_code = ($customerInfo .'-'. $current_time);
+
     $cusid = $_SESSION['cusid'];
     $order_payment  = $_POST['payment'];
 
