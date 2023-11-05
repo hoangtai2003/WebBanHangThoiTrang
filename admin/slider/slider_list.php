@@ -49,7 +49,7 @@ include_once('../includes/sidebar.php');
                                         <th scope="row"><?= $row['slid']; ?></th>
                                         <td><?= $row['slname']; ?></td>
                                         <td><?= $row['sldescription']; ?></td>
-                                        <td><img width=300 src="../../images/<?= $row["slimage"];?>"></td>
+                                        <td><img width=300 src="../upload/<?= $row["slimage"];?>"></td>
                                         <?php if (checkPrivilege('slider_edit.php?slid=0')) { ?>
                                             <td>
                                                 <a href="slider_edit.php?slid=<?= $row['slid'] ?>" class="btn btn-success">
