@@ -1,6 +1,5 @@
 <!-- Header -->
 <?php
-session_start();
 include("../../config/config.php"); 
 ?>
 <header class="header trans_300">
@@ -63,7 +62,7 @@ include("../../config/config.php");
                             }
                         </style>
                         <li class="account">
-                            <a href="#"><img class="account_img" src="https://cf.shopee.vn/file/f3d514816a14f3baea3cbcdcb717b596_tn">
+                            <a href="#"><img class="account_img" src="<?= $row['CusImage']?>">
                                 <?= $row['CusUserName']?>
                             </a>
                             <ul class="account_selection">
