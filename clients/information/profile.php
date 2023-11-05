@@ -90,7 +90,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 										<div class="form-group" style="margin-bottom: 15px;">
 											<label class="profile_name">Giới tính</label>
 											<div class="form-check">
-												<input class="form-check-input"  type="radio" name="CusGender" id="rdGender0" value=0 <?= $row['CusGender'] == 0  ? 'checked' : '' ?>>
+												<input class="form-check-input" type="radio" name="CusGender" id="rdGender0" value=0 <?= $row['CusGender'] == 0  ? 'checked' : '' ?>>
 												<label class="form-check-label" for="rdGender0">Nam</label>
 											</div>
 											<div class="form-check">
@@ -108,9 +108,8 @@ if (!isset($_SESSION["cus_loggedin"])) {
 											<img class="select_photo" style="width: 55%;height: 50%;" src="<?= $row['CusImage']?>">
 										</div>
 										<div class="form-control image">
-											
 											<label for="fileInput" aria-label="Chọn ảnh" style="margin: 8px;">Chọn Ảnh</label>
-											<input type="file" hidden id="fileInput" name="fimage">
+											<input type="file" hidden id="fileInput" name="fimage" class="form-control">
 										</div>
 									</div>
 								</div>
@@ -118,29 +117,11 @@ if (!isset($_SESSION["cus_loggedin"])) {
 							</form>
 					</div>
 				</div>
-				<?php
-					if(isset($_POST['update_customer'])){
-						$changesDetected = false;
-
-						if ($row['ChangeUserName'] == 0 && $_POST['new_username'] !== $row['CusUserName']) {
-							$changesDetected = true;
-						}
-						if ($changesDetected) {
-							?>
-								<script>document.getElementById("saveButton").removeAttribute("disabled");</script>
-							<?php
-							
-						} else {
-							?>
-								<script>document.getElementById("saveButton").setAttribute("disabled", "disabled");</script>
-							<?php
-							
-						}
-					}
-					?>
+			
 			</div>
 		</div>
 	</div>
+
     <?php include_once("../includes/benefit.php") ?>
     <?php include_once("../includes/newsletter.php") ?>
     <?php include_once("../includes/footer.php") ?>
@@ -154,6 +135,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 <script src="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="../assets/plugins/easing/easing.js"></script>
 <script src="../assets/js/custom.js"></script>
+<script src="../assets/js/handlebutton.js"></script>
 </body>
 
 </html>
