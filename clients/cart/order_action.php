@@ -4,9 +4,9 @@
     require("../../mail/sendmail.php");
     
     //tạo random mã đơn hàng
-    $customerInfo = $_SESSION['cusid'].$_SESSION['email'];
+    $customerInfo = $_SESSION['cusid'];
     $current_time = time();
-    $order_code = md5($customerInfo . $current_time);
+    $order_code = ($customerInfo .'-'. $current_time);
 
     $cusid = $_SESSION['cusid'];
     $order_payment  = $_POST['payment'];
