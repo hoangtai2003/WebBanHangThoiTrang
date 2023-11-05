@@ -8,6 +8,33 @@ if (!isset($_SESSION["cus_loggedin"])) {
 if(!isset($_SESSION["cart"])) {
     header("Location: ./cart_view.php");
 }
+
+?>
+<?php
+if(!isset($_SESSION["selected_items"])) {
+    if(isset($_SESSION['cart'])){
+        $selectedItems = array();
+        $count = 0;
+    
+        foreach ($_SESSION["cart"] as $cart_item) {
+            $itemId = $cart_item['id'];
+            if (isset($_POST['ckProdId_' . $itemId])) {
+                $selectedItems[] = $cart_item;
+                $count++;
+            }
+        }
+        if($count > 0){
+            $_SESSION["selected_items"] = $selectedItems;
+        }
+        else{
+            $_SESSION['message'] = "Bạn vui lòng chọn ít nhất một sản phẩm để mua!";
+            header("Location: ./cart_view.php");
+            exit;
+        }
+    }
+}
+
+                    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -207,6 +234,7 @@ if(!isset($_SESSION["cart"])) {
                     
 
                     <br>
+                    
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table">
@@ -222,10 +250,10 @@ if(!isset($_SESSION["cart"])) {
                                     </tr>
                                 </thead>
                                 <?php
-                                if (isset($_SESSION["cart"])) {
+                                if (isset($_SESSION["selected_items"])) {
                                     $i = 0;
                                     $tongtien = 0;
-                                    foreach ($_SESSION["cart"] as $cart_item) {
+                                    foreach ($_SESSION["selected_items"] as $cart_item) {
                                         $thanhtien = $cart_item['quantity'] * $cart_item['price'];
                                         $tongtien += $thanhtien;
                                         $i++;
