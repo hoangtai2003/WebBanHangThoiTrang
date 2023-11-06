@@ -80,6 +80,12 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdPriceSale'] ?>" name="ppricesale">
                             </div>
                             <div class="form-group">
+                                <label>Tình trạng sản phẩm</label>
+                                <br>
+                                <input type="radio" <?php if ($dataProduct["ProdStatus"] == 1) echo "checked"; ?> name="rdProdStatus" value=1>Đang bán
+                                <input type="radio" <?php if ($dataProduct["ProdStatus"] == 0) echo "checked"; ?> name=rdProdStatus value=0>Dừng kinh doanh
+                            </div>
+                            <div class="form-group">
                                 <label>Tình trạng sale</label>
                                 <br>
                                 <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 1) echo "checked"; ?> name="rdProdIsSale" value=1>Đang sale
