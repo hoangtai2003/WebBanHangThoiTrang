@@ -2,16 +2,17 @@
 session_start();
 require_once('../../config/config.php');
 $ProdId = $_REQUEST['ProdId'];
+if(isset($_SESSION['cusid'])){
+	$cusid = $_SESSION['cusid'];
+}
 
 $sqlProd = "SELECT * FROM product  LEFT JOIN (
-	SELECT ProdId, COUNT(*) AS TotalOrders
+	SELECT ProdId, SUM(OrdQuantity) AS TotalOrders
 	FROM orderdetail
 	GROUP BY ProdId
 ) AS SoldProducts ON product.ProdId = SoldProducts.ProdId and product.ProdId = $ProdId";
 $product = mysqli_query($connection, $sqlProd);
 $dataProduct = mysqli_fetch_assoc($product);
-
-
 
 //Lấy thông tin của các nhận xét theo id sản phẩm
 $sql_feedback = "SELECT * FROM comment
@@ -131,7 +132,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 								}
 								?>
 							</div>
-							<span><?php echo $dataProduct["ProdViewCount"] ?></span><span> Lượt xem</span> | <span><?php echo $dataProduct["TotalOrders"] ?></span><span> Đã bán</span>
+							<span><?php echo $dataProduct["ProdViewCount"] ?></span><span> Lượt xem</span> | <span><?php echo $dataProduct["TotalOrders"] ?></span><span> Đã bán</span> | <span><?php echo $dataProduct['ProdQuantity'] - $dataProduct["TotalOrders"] ?></span><span> Sản phẩm có sẵn</span>
 						</div>
 						<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 							<span class="ti-truck"></span><span>free delivery</span>
@@ -335,6 +336,48 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('body').on('click', '.minus', function(e){
+				var quantity = parseInt($('#quantity_value').text());
+				if (quantity > 1) {
+					quantity -= 1;
+				}
+				$('#quantity_value').text(quantity);
+			});
+			var maxQuantity = 0;
+			$('body').on('click', '.plus', function(e){
+				var productId = <?php echo $dataProduct['ProdId'] ?>;
+				$.ajax({
+					url: './singleproduct_action.php',
+					method: 'get',
+					data: {
+						clickplus: "plus",
+						productId: productId
+					},
+					dataType: 'json',
+					success: function(response) {
+						if(response.success){
+							maxQuantity = response.maxQuantity;
+							// alert(maxQuantity);
+							updateQuantity(maxQuantity);
+						}
+					}
+				});
+			});
+			function updateQuantity(maxQuantity){
+				var quantity = parseInt($('#quantity_value').text());
+				if(quantity < maxQuantity){
+					quantity += 1;
+					if(quantity > maxQuantity){
+						quantity =maxQuantity;
+					}
+				}
+				else{
+					alert('Đã đạt tối đa số lượng sản phẩm và không cho tăng nữa.');
+					quantity = maxQuantity;
+				}
+				$('#quantity_value').text(quantity);
+			}
+
 			function load_cart_item_number() {
 				$.ajax({
 					url: '../cart/cart_action.php',
@@ -347,6 +390,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					}
 				});
 			}
+		
 			$('body').on('click', '#cart_link', function(e) {
 				e.preventDefault();
 				var quantity = 1;
@@ -372,9 +416,15 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 						productId: productId,
 						quantity: quantity
 					},
-					success: function() {
-						alert("Thêm vào giỏ hàng thành công.");
-						load_cart_item_number();
+					dataType: 'json',
+					success: function(response) {
+						if(response.success){
+							alert(response.message);
+							load_cart_item_number();
+						}
+						else{
+							alert(response.message);
+						}
 					}
 				});
 			});
