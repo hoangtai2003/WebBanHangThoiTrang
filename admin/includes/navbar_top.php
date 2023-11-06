@@ -3,7 +3,7 @@
 	<?php
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
 			// Người dùng đã đăng nhập, hiển thị tên người dùng trên thẻ <a>
-			echo '<a class="navbar-brand ps-3" href="index.php">'.$_SESSION['username'].'</a>';
+			echo '<a class="navbar-brand ps-3" href="index.php">Xin chào '.$_SESSION['username'].'</a>';
 		} else {
 			header('Location: ../authen/login.php');
 		}
@@ -13,7 +13,7 @@
 	<!-- Navbar Search-->
 	<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 		<div class="input-group">
-			<input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+			<input class="form-control" type="text" placeholder="Tìm kiếm..." aria-describedby="btnNavbarSearch" />
 			<button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
 		</div>
 	</form>
@@ -27,7 +27,7 @@
 				<li><hr class="dropdown-divider" /></li>
 				<li>
 					<form action="../authen/logout_action.php" method="POST">
-						<button type="submit" name="logout_btn" class="dropdown-item">Logout</button>
+						<button type="submit" name="logout_btn" class="dropdown-item">Đăng xuất</button>
 					</form>
 				</li>
 			</ul>

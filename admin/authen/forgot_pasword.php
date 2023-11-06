@@ -26,12 +26,12 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Forgot Password</h3></div>
                                     <div class="card-body">
+                                        <?php include('message.php')?>
                                         <form method="post" action="forgot_password_action.php">
                                             <div class="form-floating mb-3">
                                                 <input required class="form-control" name="name" type="text" placeholder="UserName" />
                                                 <label for="inputUserName">UserName</label>
                                             </div>
-                                            <font color="red"><?php echo $_SESSION['message']; ?></font>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <button type="submit" class="btn btn-primary btn-block" name="forgot_password_btn">Submit</button>
                                             </div>
@@ -67,5 +67,4 @@
 </html>
 <?php
     unset($_SESSION['message']);
-?>
- 16 changes: 16 additions & 0 deletions16  
+?> 
