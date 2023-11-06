@@ -45,7 +45,7 @@ require_once('../../config/config.php');
 						FROM product
 						INNER JOIN categories ON product.CateId = categories.CateId
 						LEFT JOIN (
-							SELECT ProdId, COUNT(*) AS TotalOrders
+							SELECT ProdId, SUM(OrdQuanTity) AS TotalOrders
 							FROM orderdetail
 							GROUP BY ProdId
 						) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
@@ -303,9 +303,15 @@ require_once('../../config/config.php');
 					productId: productId,
 					quantity: quantity
 				},
-				success: function() {
-					alert("Thêm vào giỏ hàng thành công.");
-					load_cart_item_number();
+				dataType: 'json',
+				success: function(response) {
+					if(response.success){
+						alert(response.message);
+						load_cart_item_number();
+					}
+					else{
+						alert(response.message);
+					}
 				}
 			});
 		});
