@@ -3,20 +3,36 @@ session_start();
 require_once('../../config/config.php');
 $ProdId = $_REQUEST['ProdId'];
 
-$sqlProd = "SELECT * FROM product where ProdId = $ProdId";
+$sqlProd = "SELECT * FROM product  LEFT JOIN (
+	SELECT ProdId, COUNT(*) AS TotalOrders
+	FROM orderdetail
+	GROUP BY ProdId
+) AS SoldProducts ON product.ProdId = SoldProducts.ProdId and product.ProdId = $ProdId";
 $product = mysqli_query($connection, $sqlProd);
 $dataProduct = mysqli_fetch_assoc($product);
 
-if (!isset($_COOKIE['refreshed']) || $_COOKIE['refreshed'] === "false") {
-    // Update the view count for the product
-    $sqlViewCount = "UPDATE product SET ProdViewCount = ProdViewCount + 1 WHERE ProdId = $ProdId";
-    if ($connection->query($sqlViewCount) === TRUE) {
-        // Set a cookie to mark this product as viewed during this visit
-        setcookie('refreshed' , 'true', time() + 3600, '/');
-    }
+
+
+//Lấy thông tin của các nhận xét theo id sản phẩm
+$sql_feedback = "SELECT * FROM comment
+                LEFT JOIN customer on comment.CusId = customer.CusId 
+                WHERE   comment.ProdId=$ProdId";
+$result_feedback = mysqli_query($connection, $sql_feedback);
+$data_feedback = array();
+while ($row = mysqli_fetch_assoc($result_feedback)) {
+	$data_feedback[] = $row;
 }
 
+// lấy sao trung bình
+$sql_rating = "select round(avg(rate), 1) as avg_rate
+				from comment
+				where ProdId = $ProdId";
+$result_rating = mysqli_query($connection, $sql_rating);
+$data_rating = mysqli_fetch_assoc($result_rating);
 
+
+
+// Lấy ảnh mô tả của sản phẩm
 $sqlImgProd = "select * from productimage where ProdId = $ProdId";
 $imgProd = mysqli_query($connection, $sqlImgProd);
 ?>
@@ -38,40 +54,16 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 	<link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="../assets/styles/single_styles.css">
 	<link rel="stylesheet" type="text/css" href="../assets/styles/single_responsive.css">
-	<link rel="stylesheet" type="text/css" href="./Slider.css?v=<?php echo time() ?>">
+	<link rel="stylesheet" type="text/css" href="./Slider.css">
+	<link rel="stylesheet" type="text/css" href="./singleproduct.css">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
-
-	<style>
-		.single_product_thumbnails ul li img {
-			height: 100%;
-			object-fit: cover;
-		}
-
-		.single_product_thumbnails ul {
-			height: 100%;
-		}
-
-		.single_product_thumbnails .item-container {
-			height: 100%;
-		}
-
-		.single_product_thumbnails ul li {
-			position: relative;
-			margin: 0 !important;
-			padding: 10px;
-			height: calc(100% / 4);
-			cursor: pointer;
-		}
-
-	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
 </head>
 
 <body>
 
 	<div class="super_container">
-
 		<!-- Header -->
 		<?php include_once("../includes/header.php") ?>
 
@@ -96,7 +88,6 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 
 				</div>
 			</div>
-
 			<div class="row">
 				<div class="col-lg-7">
 					<div class="single_product_pics">
@@ -126,22 +117,36 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					<div class="product_details">
 						<div class="product_details_title">
 							<h2><?php echo $dataProduct["ProdName"] ?></h2>
-							<span>Số lượt xem: </span><span><?php echo $dataProduct["ProdViewCount"] ?></span>
+							<div class="rate">
+								<span class="number-rate"><?php # echo $result_rating["avg_rate"] 
+															?></span>
+								<?php
+								$avg_rate = $data_rating['avg_rate'];
+								for ($i = 1; $i <= 5; $i++) {
+									if ($i <= $avg_rate) {
+										echo '<i class="fa fa-star" aria-hidden="true"></i>';
+									} else {
+										echo '<i class="fa fa-star-o" aria-hidden="true"></i>';
+									}
+								}
+								?>
+							</div>
+							<span><?php echo $dataProduct["ProdViewCount"] ?></span><span> Lượt xem</span> | <span><?php echo $dataProduct["TotalOrders"] ?></span><span> Đã bán</span>
 						</div>
 						<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 							<span class="ti-truck"></span><span>free delivery</span>
 						</div>
 						<?php
-							if($dataProduct['ProdIsSale'] == 1){
+						if ($dataProduct['ProdIsSale'] == 1) {
 						?>
-						<div class="original_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
-						<div class="product_price"><?php echo number_format($dataProduct["ProdPriceSale"], 0, ',', '.') ?></div>
+							<div class="original_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
+							<div class="product_price"><?php echo number_format($dataProduct["ProdPriceSale"], 0, ',', '.') ?></div>
 						<?php
-							} else if ($dataProduct['ProdIsSale'] == 0){
+						} else if ($dataProduct['ProdIsSale'] == 0) {
 						?>
 							<div class="product_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
 						<?php
-							}
+						}
 						?>
 						<ul class="star_rating">
 							<li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -158,7 +163,13 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 								<span id="quantity_value">1</span>
 								<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
 							</div>
-							<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>
+							<?php
+							if ($dataProduct['ProdQuantity'] - $dataProduct['TotalOrders'] <= 0) {
+								echo '<div class="red_button add_to_cart_button"><a style="color: #fff;">hết hàng</a></div>';
+							} else {
+								echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
+							}
+							?>
 							<div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
 						</div>
 					</div>
@@ -202,19 +213,44 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 
 						<!-- Tab Reviews -->
 
-						<div id="tab_3" class="tab_container">
+						<div id="tab_3" class="tab_container ">
 							<div class="row">
 
 								<!-- User Reviews -->
 
 								<div class="col-lg-6 reviews_col">
 									<div class="tab_title reviews_title">
-										<h4>Reviews (2)</h4>
+										<h4>Reviews(<?php echo count($data_feedback); ?>)</h4>
 									</div>
 
+									<?php foreach ($data_feedback as $feedback) { ?>
+										<div class="user_review_container d-flex flex-column flex-sm-row">
+											<div class="user">
+												<div class="user_pic"></div>
+												<div class="user_rating">
+													<ul class="star_rating">
+														<?php for ($i = 1; $i <= 5; $i++) { ?>
+															<li>
+																<?php if ($i <= $feedback['rate']) { ?>
+																	<i class="fa fa-star" aria-hidden="true"></i>
+																<?php } else { ?>
+																	<i class="fa fa-star-o" aria-hidden="true"></i>
+																<?php } ?>
+															</li>
+														<?php } ?>
+													</ul>
+												</div>
+											</div>
+											<div class="review">
+												<div class="review_date"><?php echo $feedback['created_at']; ?></div>
+												<div class="user_name"><?php echo $feedback['CusUserName']; ?></div>
+												<p><?= $feedback['CmtDescription'] ?></p>
+											</div>
+										</div>
+									<?php } ?>
 									<!-- User Review -->
 
-									<div class="user_review_container d-flex flex-column flex-sm-row">
+									<!-- <div class="user_review_container d-flex flex-column flex-sm-row">
 										<div class="user">
 											<div class="user_pic"></div>
 											<div class="user_rating">
@@ -232,29 +268,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 											<div class="user_name">Brandon William</div>
 											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 										</div>
-									</div>
-
-									<!-- User Review -->
-
-									<div class="user_review_container d-flex flex-column flex-sm-row">
-										<div class="user">
-											<div class="user_pic"></div>
-											<div class="user_rating">
-												<ul class="star_rating">
-													<li><i class="fa fa-star" aria-hidden="true"></i></li>
-													<li><i class="fa fa-star" aria-hidden="true"></i></li>
-													<li><i class="fa fa-star" aria-hidden="true"></i></li>
-													<li><i class="fa fa-star" aria-hidden="true"></i></li>
-													<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-												</ul>
-											</div>
-										</div>
-										<div class="review">
-											<div class="review_date">27 Aug 2016</div>
-											<div class="user_name">Brandon William</div>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-										</div>
-									</div>
+									</div> -->
 								</div>
 
 								<!-- Add Review -->
@@ -262,22 +276,32 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 								<div class="col-lg-6 add_review_col">
 
 									<div class="add_review">
-										<form id="review_form" action="post">
+										<form method="POST" action="./ProductFeedbackAction.php?ProdId=<?php echo $dataProduct["ProdId"] ?>" id="review_form">
 											<div>
-												<h1>Add Review</h1>
-												<input id="review_name" class="form_input input_name" type="text" name="name" placeholder="Name*" required="required" data-error="Name is required.">
-												<input id="review_email" class="form_input input_email" type="email" name="email" placeholder="Email*" required="required" data-error="Valid email is required.">
-											</div>
-											<div>
-												<h1>Your Rating:</h1>
-												<ul class="user_star_rating">
+												<div class="rating-container">
+													<h1>Your Rating:</h1>
+													<!-- <ul class="user_star_rating">
 													<li><i class="fa fa-star" aria-hidden="true"></i></li>
 													<li><i class="fa fa-star" aria-hidden="true"></i></li>
 													<li><i class="fa fa-star" aria-hidden="true"></i></li>
 													<li><i class="fa fa-star" aria-hidden="true"></i></li>
 													<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-												</ul>
-												<textarea id="review_message" class="input_review" name="message" placeholder="Your Review" rows="4" required data-error="Please, leave us a review."></textarea>
+												</ul> -->
+													<span class="star-rating">
+														<input type="radio" id="star5" name="rating" value="5">
+														<label for="star5" title="5 sao"></label>
+														<input type="radio" id="star4" name="rating" value="4">
+														<label for="star4" title="4 sao"></label>
+														<input type="radio" id="star3" name="rating" value="3">
+														<label for="star3" title="3 sao"></label>
+														<input type="radio" id="star2" name="rating" value="2">
+														<label for="star2" title="2 sao"></label>
+														<input type="radio" id="star1" name="rating" value="1">
+														<label for="star1" title="1 sao"></label>
+													</span>
+												</div>
+
+												<textarea id="review_message" class="input_review" name="description" placeholder="viết nhận xét" rows="4" required data-error="Please, leave us a review."></textarea>
 											</div>
 											<div class="text-left text-sm-right">
 												<button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
@@ -310,47 +334,52 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			function load_cart_item_number(){
+		$(document).ready(function() {
+			function load_cart_item_number() {
 				$.ajax({
 					url: '../cart/cart_action.php',
 					method: 'get',
-					data: {cartItem: "cart_item"},
-					success:function(response){
+					data: {
+						cartItem: "cart_item"
+					},
+					success: function(response) {
 						$("#checkout_items").html(response);
 					}
 				});
 			}
-			$('body').on('click', '#cart_link', function(e){
+			$('body').on('click', '#cart_link', function(e) {
 				e.preventDefault();
 				var quantity = 1;
 				var tQuantity = $('#quantity_value').text();
-				if(tQuantity != ''){
-					quantity =parseInt(tQuantity);
+				if (tQuantity != '') {
+					quantity = parseInt(tQuantity);
 				}
 				<?php
-					if(!isset($_SESSION['cus_loggedin'])){
+				if (!isset($_SESSION['cus_loggedin'])) {
 				?>
 					window.location.href = '../authen/login.php';
 					return;
 				<?php
-					}
+				}
 				?>
 				var productId = <?php echo $dataProduct['ProdId'] ?>
 
 				$.ajax({
 					url: '../cart/cart_action.php',
 					method: 'get',
-					data: {cartadd: "themgiohang", productId: productId, quantity: quantity},
-					success:function(){
+					data: {
+						cartadd: "themgiohang",
+						productId: productId,
+						quantity: quantity
+					},
+					success: function() {
 						alert("Thêm vào giỏ hàng thành công.");
-                		load_cart_item_number();
+						load_cart_item_number();
 					}
 				});
 			});
 		});
-
-</script>
+	</script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 	<script>
@@ -399,7 +428,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					}
 				]
 			});
-			
+
 		});
 	</script>
 </body>
