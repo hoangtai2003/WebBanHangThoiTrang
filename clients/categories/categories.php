@@ -137,7 +137,7 @@ require_once('../../config/config.php');
 										FROM product
 										INNER JOIN categories ON product.CateId = categories.CateId
 										LEFT JOIN (
-											SELECT ProdId, COUNT(*) AS TotalOrders
+											SELECT ProdId, SUM(OrdQuantity) AS TotalOrders
 											FROM orderdetail
 											GROUP BY ProdId
 										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
