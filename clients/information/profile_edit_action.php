@@ -32,8 +32,31 @@ if (isset($_POST['update_customer'])) {
         $_SESSION['message'] = "Email hoặc tên đăng nhập đã tồn tại";
         header("Location: profile.php");
     } else {
+        if (isset($_FILES['fimage']) && !empty($_FILES['fimage']['name'])) {
+            $file_name = $_FILES['fimage']['name'];
+            $file_path = $target_dir . $file_name;
+            if (move_uploaded_file($_FILES['fimage']['tmp_name'], $file_path)) {
+                // Thay đổi tên tệp ảnh trong cơ sở dữ liệu
+                $update_sql = "UPDATE customer SET CusImage = '$file_name' WHERE CusId = '$cus_id'";
+                $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
+                if ($update_result) {
+                    $_SESSION['message'] = "Cập nhật thành công";
+                    header('Location: profile.php');
+                    exit(0);
+                } else {
+                    $_SESSION['message'] = "Đã xảy ra sự cố";
+                    header('Location: profile.php');
+                    exit(0);
+                }
+            } else {
+                $_SESSION['message'] = "Không thể tải lên tệp hình ảnh mới.";
+                $_SESSION['message_type'] = 'error';
+                header('Location: profile.php');
+                exit(0);
+            }
+        }
         if ($update_username && strlen($username) >= 10) {
-            $update_sql = "UPDATE customer SET CusUserName = '$username', ChangeUserName = 1,CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
+            $update_sql = "UPDATE customer SET CusUserName = '$username', ChangeUserName = 1, CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
             $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
             if ($update_result) {
                 $_SESSION['message'] = "Cập nhật thành công";
@@ -47,7 +70,6 @@ if (isset($_POST['update_customer'])) {
         }
         $update_sql = "UPDATE customer SET CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
         $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
-
         if ($update_result) {
             $_SESSION['message'] = "Cập nhật thành công";
             header('Location: profile.php');
@@ -59,4 +81,5 @@ if (isset($_POST['update_customer'])) {
         }
     }
 }
+
 ?>

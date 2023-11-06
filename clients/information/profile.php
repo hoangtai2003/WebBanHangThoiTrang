@@ -57,7 +57,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 								$row = $result->fetch_assoc();
 							}
 							?>
-							<form action="profile_edit_action.php" method="post"  id="profileForm">
+							<form action="profile_edit_action.php" method="post"  id="profileForm" enctype="multipart/form-data">
 								<input type="hidden" name="CusId" value="<?=$row['CusId']?>" >
 								<div class="row">
 									<div class="col-md-8">
@@ -106,15 +106,20 @@ if (!isset($_SESSION["cus_loggedin"])) {
 										</div>
 									</div>
 									<div class="col-md-4">
-										<div class="form-group">
-											<label>Hình ảnh</label>
-											<input type="file" class="form-control" name="fimage" id="input-img">
-											<input type="hidden" name="current_image" value="<?= $row['CusImage'] ?>">
-											<img style="margin-top: 10px;" src="../upload/<?= $row['CusImage'] ?>" width="760" class="img_preview">
-                            			</div> 
+										<div>
+											<img style="margin-top: 10px;
+											    		border-radius: 50%;
+    													margin-left: 100px;
+														width: 182px;" 
+												src="../upload/<?= $row['CusImage'] ?>" width="760" class="img_preview">
+										</div>
+										<div class="form-control image">
+											<label for="fileInput" aria-label="Chọn ảnh" style="margin: 8px;">Chọn Ảnh</label>
+											<input type="file" hidden id="fileInput" name="fimage" value="<?= $row['CusImage'] ?>" >
+										</div>
 									</div>
 								</div>
-								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger p-2" id="saveButton" disabled>Lưu</button>
+								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger p-2" id="saveButton" >Lưu</button>
 							</form>
 					</div>
 				</div>
@@ -128,7 +133,6 @@ if (!isset($_SESSION["cus_loggedin"])) {
     <?php include_once("../includes/footer.php") ?>
 
 </div>
-
 <script src="../assets/js/jquery-3.2.1.min.js"></script>
 <script src="../assets/styles/bootstrap4/popper.js"></script>
 <script src="../assets/styles/bootstrap4/bootstrap.min.js"></script>
@@ -137,6 +141,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 <script src="../assets/plugins/easing/easing.js"></script>
 <script src="../assets/js/custom.js"></script>
 <script src="../assets/js/handlebutton.js"></script>
+<script src="../assets/js/show_image.js"></script>
 </body>
 
 </html>
