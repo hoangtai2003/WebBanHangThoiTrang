@@ -41,8 +41,8 @@ include_once('../includes/sidebar.php')
                                 <label>Hình ảnh</label>
                                 <input type="file" class="form-control" name="fimage" id="input-img">
                                 <input type="hidden" name="current_image" value="<?= $slider['slimage'] ?>">
-                                <img style="margin-top: 10px;" src="../../images/<?=$slider['slimage'] ?>" width="760" class="img_preview">
-
+                                <img style="margin-top: 10px;" src="../upload/<?=$slider['slimage'] ?>" width="760" class="img_preview">
+                                
                             </div>                          
                             <button name="update_slider" class="btn btn-primary mt-2">Cập nhật</button>
                             <a href="slider_list.php" class="btn btn-danger mt-2">Quay lại</a>
