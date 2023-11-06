@@ -6,8 +6,8 @@ $uploadOk = true;
 
 if (isset($_POST['update_category'])) {
     $category_id = $_POST['category_id'];
-    $CateName = $_POST['txtCateName'];
-    $CateDescription = $_POST['taCatedesc'];
+    $Catename = mysqli_real_escape_string($connection,$_POST['txtCateName']);
+    $Catedescription = mysqli_real_escape_string($connection, $_POST['taCatedesc']);
     $status = $_POST['rdstatus'];
     // $current_image = $slider['slimage']; // Hình ảnh hiện tại
 
@@ -39,7 +39,7 @@ if (isset($_POST['update_category'])) {
         }
     } else {
         // Nếu không có hình ảnh mới, chỉ cập nhật tên và mô tả
-        $sql = "UPDATE categories SET CateName = '$CateName', CateDescription = '$CateDescription', CateStatus = '$status' WHERE CateId = '$category_id'";
+        $sql = "UPDATE categories SET CateName = '$Catename', CateDescription = '$Catedescription', CateStatus = '$status' WHERE CateId = '$category_id'";
         $result = mysqli_query($connection, $sql) or die($connection->error);
         $connection->close();
         if ($result) {
