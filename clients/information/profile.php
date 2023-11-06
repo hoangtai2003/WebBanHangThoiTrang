@@ -19,6 +19,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
     <link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
+	<link rel="stylesheet" type="text/css" href="../assets/styles/profile.css">
 </head>
 
 <body>
@@ -44,6 +45,8 @@ if (!isset($_SESSION["cus_loggedin"])) {
 				<div class="row">
 					<div class="col-md-12">
 						<h3>Hồ sơ của tôi</h3>
+						<p>Quản lý thông tin hồ sơ để bảo mật tài khoản </p>
+						<div class="cut"></div>
 							<?php
 							if(isset( $_SESSION['cusid'])){
 								$CusId = $_SESSION['cusid'];
@@ -54,70 +57,71 @@ if (!isset($_SESSION["cus_loggedin"])) {
 								$row = $result->fetch_assoc();
 							}
 							?>
-							<style>
-								.form-control{
-									color: black !important;
-								}
-								.form-check{
-									display: inline-block !important;
-									margin-left: 77px;
-								}
-								.form-check-label{
-									padding-left: 0 !important;
-									font-size: 1rem;
-									
-								}
-							</style>
-							<form action="profile_edit_action.php" method="post">
+							<form action="profile_edit_action.php" method="post"  id="profileForm">
 								<input type="hidden" name="CusId" value="<?=$row['CusId']?>" >
-								<div class="form-group">
-									<label style="opacity: 0.5;">Tên đăng nhập</label>
-									<?php
-										if ($row['ChangeUserName'] == 0) {
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<label style="opacity: 0.5;">Tên đăng nhập</label>
+											<?php
+												if ($row['ChangeUserName'] == 0) {
+													?>
+														<label class="profile_show" style="margin-left: 16px;; font-size: 1rem;"><input type="text" class="form-control" name="new_username" value="<?=$row['CusUserName']?>"></label>
+													<?php
+												} else {
+													?> 
+														<label style="margin-left: 16px; font-size: 1rem;"><?=$row['CusUserName'] ?> </label>
+													<?php
+												}
 											?>
-												<label style="margin-left: 16px;width: 40%; font-size: 1rem;"><input type="text" class="form-control" name="new_username" value="<?=$row['CusUserName']?>"></label>
-											<?php
-										} else {
-											?> 
-												<label style="margin-left: 16px; width: 40%; font-size: 1rem;"><?=$row['CusUserName'] ?> </label>
-											<?php
-										}
-									?>
-								</div>
-								<div class="form-group">
-									<label style="opacity: 0.5; ">Tên</label>
-									<label style="margin-left: 95px;width: 40%;"><input type="text" name="CusName" class="form-control" value="<?=$row['CusName']?>"></label>
-								</div>
-								<div class="form-group">
-									<label style="opacity: 0.5; ">Số điện thoại</label>
-									<label style="margin-left: 31px;width: 40%;"><input type="text" name="CusPhone" class="form-control" value="<?=$row['CusPhone']?>"></label>
-								</div>
-								<div class="form-group">
-									<label style="opacity: 0.5; ">Email</label>
-									<label style="margin-left: 78px;width: 40%;"><input type="text" name="CusEmail" class="form-control" value="<?=$row['CusEmail']?>"></label>
-								</div>
-								<div class="form-group" style="margin-bottom: 15px;">
-									<label style="opacity: 0.5; ">Giới tính</label>
-									<div class="form-check">
-										<input class="form-check-input"  type="radio" name="CusGender" id="rdGender0" value=0 <?= $row['CusGender'] == 0  ? 'checked' : '' ?>>
-										<label class="form-check-label" for="rdGender0">Nam</label>
+										</div>
+										<div class="form-group">
+											<label class="profile_name">Tên</label>
+											<label style="margin-left: 95px;" class="profile_show"><input type="text" name="CusName" class="form-control" value="<?=$row['CusName']?>"></label>
+										</div>
+										<div class="form-group">
+											<label style="opacity: 0.5;" class="profile_name">Số điện thoại</label>
+											<label style="margin-left: 31px;" class="profile_show"><input type="text" name="CusPhone" class="form-control" value="<?=$row['CusPhone']?>"></label>
+										</div>
+										<div class="form-group">
+											<label class="profile_name">Email</label>
+											<label style="margin-left: 78px;" class="profile_show"><input type="text" name="CusEmail" class="form-control" value="<?=$row['CusEmail']?>"></label>
+										</div>
+										<div class="form-group" style="margin-bottom: 15px;">
+											<label class="profile_name">Giới tính</label>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="CusGender" id="rdGender0" value=0 <?= $row['CusGender'] == 0  ? 'checked' : '' ?>>
+												<label class="form-check-label" for="rdGender0">Nam</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="CusGender" id="rdGender1" value=1 <?= $row['CusGender'] == 1 ? 'checked' : '' ?>>
+												<label class="form-check-label" for="rdGender1">Nữ</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="profile_name">Ngày sinh</label>
+											<label style="margin-left: 43px;" class="profile_show"><input type="date" name="CusBirthday" class="form-control" value="<?= $row['CusBirthday']?>"></label>
+										</div>
 									</div>
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="CusGender" id="rdGender1" value=1 <?= $row['CusGender'] == 1 ? 'checked' : '' ?>>
-										<label class="form-check-label" for="rdGender1">Nữ</label>
+									<div class="col-md-4">
+										<div>
+											<img class="select_photo" style="width: 55%;height: 50%;" src="<?= $row['CusImage']?>">
+										</div>
+										<div class="form-control image">
+											<label for="fileInput" aria-label="Chọn ảnh" style="margin: 8px;">Chọn Ảnh</label>
+											<input type="file" hidden id="fileInput" name="fimage" class="form-control">
+										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label style="opacity: 0.5; ">Ngày sinh</label>
-									<label style="margin-left: 43px;width: 40%;"><input type="date" name="CusBirthday" class="form-control" value="<?= $row['CusBirthday']?>"></label>
-								</div>
-								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger">Lưu</button>
+								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger p-2" id="saveButton" disabled>Lưu</button>
 							</form>
 					</div>
 				</div>
+			
 			</div>
 		</div>
 	</div>
+
     <?php include_once("../includes/benefit.php") ?>
     <?php include_once("../includes/newsletter.php") ?>
     <?php include_once("../includes/footer.php") ?>
@@ -131,6 +135,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 <script src="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="../assets/plugins/easing/easing.js"></script>
 <script src="../assets/js/custom.js"></script>
+<script src="../assets/js/handlebutton.js"></script>
 </body>
 
 </html>

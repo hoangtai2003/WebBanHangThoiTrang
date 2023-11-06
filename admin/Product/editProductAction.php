@@ -25,7 +25,8 @@ if (isset($_FILES['pimage'])) {
         if ($file['type'] == 'image/jpeg' || $file['type'] == 'image/jpg' ||  $file['type'] == 'image/png') {
             move_uploaded_file($file['tmp_name'], '../../images/' . $file_name);
         } else {
-            echo "Không đúng định dạng";
+            $_SESSION['message'] = "Không đúng định dạng";
+            $_SESSION['message_type'] = 'error';
             $file_name = '';
         }
     }
@@ -51,8 +52,10 @@ if (isset($_FILES['pimages'])) {
 $sqlupdate = "update Product set ProdName = '$pname', ProdDescription = '$pdesc', ProdImage = '$file_name', ProdPrice = '$pprice', ProdPriceSale = '$ppricesale', ProdQuantity = '$pquantity',ProdIsSale = '$pissale',ProdStatus = '$pstatus',CateId = '$CateId' where ProdId = $pid";
 $query = mysqli_query($connection, $sqlupdate);
 if ($query) {
-    echo "Thêm sản phẩm thành công";
+    $_SESSION['message'] = "Thêm sản phẩm thành công";
+    $_SESSION['message_type'] = 'success';
     header("Location: ./myProduct.php");
 } else {
-    echo "Lỗi thêm sản phẩm";
+    $_SESSION['message'] = "Lỗi thêm sản phẩm";
+    $_SESSION['message_type'] = 'error';
 }

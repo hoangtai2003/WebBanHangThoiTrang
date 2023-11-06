@@ -24,10 +24,12 @@
 		$connection->query($sqlinsert) or die($connection->error);
 		if($connection->error==""){
 			$_SESSION["menu_error"]="Thêm thành công";
+			$_SESSION['message_type'] = 'success';
 				
 				header("Location:menu_view.php");
 			}else {
 				$_SESSION["menu_add_error"]="Đã có lỗi xảy ra";
+				$_SESSION['message_type'] = 'error';
 				header("Location:menu_add.php");
 		
 	}
