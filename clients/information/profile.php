@@ -66,7 +66,9 @@ if (!isset($_SESSION["cus_loggedin"])) {
 											<?php
 												if ($row['ChangeUserName'] == 0) {
 													?>
-														<label class="profile_show" style="margin-left: 16px;; font-size: 1rem;"><input type="text" class="form-control" name="new_username" value="<?=$row['CusUserName']?>"></label>
+														<label class="profile_show" style="margin-left: 16px;; font-size: 1rem;">
+															<input type="text" class="form-control" name="new_username" value="<?=$row['CusUserName']?>">
+														</label>
 													<?php
 												} else {
 													?> 
@@ -104,13 +106,12 @@ if (!isset($_SESSION["cus_loggedin"])) {
 										</div>
 									</div>
 									<div class="col-md-4">
-										<div>
-											<img class="select_photo" style="width: 55%;height: 50%;" src="<?= $row['CusImage']?>">
-										</div>
-										<div class="form-control image">
-											<label for="fileInput" aria-label="Chọn ảnh" style="margin: 8px;">Chọn Ảnh</label>
-											<input type="file" hidden id="fileInput" name="fimage" class="form-control">
-										</div>
+										<div class="form-group">
+											<label>Hình ảnh</label>
+											<input type="file" class="form-control" name="fimage" id="input-img">
+											<input type="hidden" name="current_image" value="<?= $row['CusImage'] ?>">
+											<img style="margin-top: 10px;" src="../upload/<?= $row['CusImage'] ?>" width="760" class="img_preview">
+                            			</div> 
 									</div>
 								</div>
 								<button style="cursor: pointer;" type="submit" name="update_customer" class="btn btn-sm btn-danger p-2" id="saveButton" disabled>Lưu</button>
