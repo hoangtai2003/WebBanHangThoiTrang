@@ -303,9 +303,15 @@ require_once('../../config/config.php');
 					productId: productId,
 					quantity: quantity
 				},
-				success: function() {
-					alert("Thêm vào giỏ hàng thành công.");
-					load_cart_item_number();
+				dataType: 'json',
+				success: function(response) {
+					if(response.success){
+						alert(response.message);
+						load_cart_item_number();
+					}
+					else{
+						alert(response.message);
+					}
 				}
 			});
 		});
