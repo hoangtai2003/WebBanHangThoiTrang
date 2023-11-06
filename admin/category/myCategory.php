@@ -57,7 +57,7 @@ require_once('../../config/config.php');
                                     <tr>
                                         <td><?= $row['CateId']; ?></td>
                                         <td><?= $row['CateName']; ?></td>
-                                        <td style="width: 150px"><img style="width: 150px;" src="../../images/<?= $row['CateImage']; ?>" alt=""></td>
+                                        <td style="width: 150px"><img style="width: 150px;" src="../upload/<?= $row['CateImage']; ?>" alt=""></td>
                                         <td><?= $row['CateDescription']; ?></td>
                                         <td><?= $row['CateStatus']; ?></td>
                                         <?php if (checkPrivilege('editCategory.php?CateId=0')) { ?>

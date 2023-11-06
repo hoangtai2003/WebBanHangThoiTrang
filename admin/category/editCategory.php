@@ -39,11 +39,22 @@ if (isset($_GET["CateId"])){
                             <label>Mô tả</label>
                             <textarea class="form-control" rows="5" cols="90" name="taCatedesc"><?= $row['CateDescription']?> </textarea>
                         </div>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                                <label>Trạng thái</label>
+                                <div class="form-check">
+                                    <input class="form-check-input"  type="radio" name="rdstatus" id="rdstatus1" value=1 <?= $row['CateStatus'] == 1 ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="rdstatus1">Hoạt động</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="rdstatus" id="rdstatus0" value=0 <?= $row['CateStatus'] == 0 ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="rdstatus0">Ngừng hoạt động</label>
+                                </div>
+                            </div>
                         <div class="form-group">
                             <label>Hình ảnh</label>
                             <input type="file" class="form-control" name="fimage" id="input-img">
                             <input type="hidden" name="current_image" value="<?= $row['CateImage'] ?>">
-                            <img style="margin-top: 10px;" src="../../images/<?=$row['CateImage'] ?>" width="760" class="img_preview">
+                            <img style="margin-top: 10px;" src="../upload/<?=$row['CateImage'] ?>" width="760" class="img_preview">
                         </div>                          
                         <button name="update_category" class="btn btn-primary mt-2">Cập nhật</button>
                         <a href="myCategory.php" class="btn btn-danger mt-2">Quay lại</a>

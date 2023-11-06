@@ -5,6 +5,7 @@
 		header("Location: ../authen/login.php");
 	}
 	unset($_SESSION["cart"]);
+	unset($_SESSION["selected_items"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +58,7 @@
 						<table class="table">
 							<thead>
                     	        <tr class="text-center">
+									<th><input type="checkbox" id="checkAll"></th>
 									<th>STT</th>
                     	            <th>Mã</th>
                     	            <th>Tên sản phẩm</th>
@@ -124,7 +126,9 @@
 										$i++;
 							?>
 							<tbody>
+								<form action="./transportation_view.php" method="post">
 								<tr class="text-center">
+									<th><input type="checkbox" name="ckProdId_<?php echo $cart_item['id'] ?>" value="<?php echo $cart_item['id'] ?>"></th>
 									<th><?php echo $i ?></th>
 									<td><?php echo $cart_item['id'] ?></td>
 									<td><?php echo '<a href="../singleproduct/singleproduct.php?ProdId='.$cart_item['id'].'">'.$cart_item['name'].'</a>' ?></td>
@@ -141,21 +145,22 @@
 							</tbody>
 							<?php
 									}
+
 									?>
 									<tr>
-										<th colspan="6" class="text-right">Tổng tiền:</th>
-										<th class="text-center"><?php echo number_format($tongtien, 0, ',', '.') ?></th>
+										<th colspan="8"></th>
 										<th class="text-center"><a onclick="return confirm('Bạn có chắc muốn xóa toàn bộ sản phẩm trong giỏ hàng không?')" href="../cart/cart_action.php?deleteAll=1" class="btn btn-sm btn-danger">Xóa tất cả</a></th>
 									</tr>
 									<tr>
-										<th colspan="7"></th>	
+										<th colspan="8"></th>	
 										<!-- <th class="text-center"><a href="./order_action.php" class="btn btn-sm btn-success">Đặt hàng</a></th> -->
-										<th class="text-center"><a href="./transportation_view.php" class="btn btn-sm btn-primary">Mua hàng</a></th>
+										<th class="text-center"><input type="submit" class="btn btn-sm btn-primary" name="cmdMuahang" value="Mua hàng"></th>
 									</tr>
+									</form>
 									<?php
 								}else{
 							?>
-								<tr><td colspan="8">Không có sản phẩm nào trong giỏ hàng</td></tr>
+								<tr><td colspan="9">Không có sản phẩm nào trong giỏ hàng</td></tr>
 							<?php
 								}
 							?>
@@ -176,6 +181,17 @@
     <?php include_once("../includes/footer.php") ?>
 
 </div>
+
+<script>
+    let checkAll = document.getElementById('checkAll');
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]:not(#checkAll)');
+
+    checkAll.addEventListener('click', function () {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = checkAll.checked;
+        });
+    });
+</script>
 
 <script src="../assets/js/jquery-3.2.1.min.js"></script>
 <script src="../assets/styles/bootstrap4/popper.js"></script>
