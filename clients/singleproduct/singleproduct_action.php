@@ -16,11 +16,10 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
             if($resultgetCartDetail->num_rows > 0){
                 $rowgetCartDetail = mysqli_fetch_assoc($resultgetCartDetail);
             
-                $sqlProd = "SELECT * FROM product  LEFT JOIN (
-                    SELECT ProdId, SUM(OrdQuantity) AS TotalOrders
-                    FROM orderdetail
-                    GROUP BY ProdId
-                ) AS SoldProducts ON product.ProdId = SoldProducts.ProdId and product.ProdId = $productId";
+                $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
+                FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
+                WHERE p.ProdId = '$productId'
+                GROUP BY p.ProdId;";
                 $product = mysqli_query($connection, $sqlProd);
                 $dataProduct = mysqli_fetch_assoc($product);
             
@@ -32,11 +31,10 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
                 echo json_encode($response);
                 exit();
             }else{
-                $sqlProd = "SELECT * FROM product  LEFT JOIN (
-                    SELECT ProdId, SUM(OrdQuantity) AS TotalOrders
-                    FROM orderdetail
-                    GROUP BY ProdId
-                ) AS SoldProducts ON product.ProdId = SoldProducts.ProdId and product.ProdId = $productId";
+                $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
+                FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
+                WHERE p.ProdId = '$productId'
+                GROUP BY p.ProdId;";
                 $product = mysqli_query($connection, $sqlProd);
                 $dataProduct = mysqli_fetch_assoc($product);
                 $response = array(
@@ -48,11 +46,10 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
             }
         }
         else if ($result_check_cart->num_rows == 0){
-            $sqlProd = "SELECT * FROM product  LEFT JOIN (
-                SELECT ProdId, SUM(OrdQuantity) AS TotalOrders
-                FROM orderdetail
-                GROUP BY ProdId
-            ) AS SoldProducts ON product.ProdId = SoldProducts.ProdId and product.ProdId = $productId";
+            $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
+            FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
+            WHERE p.ProdId = '$productId'
+            GROUP BY p.ProdId;";
             $product = mysqli_query($connection, $sqlProd);
             $dataProduct = mysqli_fetch_assoc($product);
             $response = array(
@@ -64,11 +61,10 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
         }
     }
     else{
-        $sqlProd = "SELECT * FROM product  LEFT JOIN (
-            SELECT ProdId, SUM(OrdQuantity) AS TotalOrders
-            FROM orderdetail
-            GROUP BY ProdId
-        ) AS SoldProducts ON product.ProdId = SoldProducts.ProdId and product.ProdId = $productId";
+        $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
+        FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
+        WHERE p.ProdId = '$productId'
+        GROUP BY p.ProdId;";
         $product = mysqli_query($connection, $sqlProd);
         $dataProduct = mysqli_fetch_assoc($product);
         $response = array(
