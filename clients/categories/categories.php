@@ -137,16 +137,12 @@ require_once('../../config/config.php');
 										FROM product
 										INNER JOIN categories ON product.CateId = categories.CateId
 										LEFT JOIN (
-											SELECT ProdId, SUM(od.OrdQuantity) AS TotalOrders
-											FROM orderdetail AS od
+											SELECT ProdId, SUM(OrdQuantity) AS TotalOrders
+											FROM orderdetail
 											GROUP BY ProdId
 										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
 										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
 										";
-										// $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
-										// FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
-										// WHERE p.ProdId = '$ProdId'
-										// GROUP BY p.ProdId;";
 										$result = $connection->query($sql);
 
 										if ($result->num_rows > 0) {
@@ -282,9 +278,15 @@ require_once('../../config/config.php');
 						productId: productId,
 						quantity: quantity
 					},
-					success: function() {
-						alert("Thêm vào giỏ hàng thành công.");
-						load_cart_item_number();
+					dataType: 'json',
+					success: function(response) {
+						if(response.success){
+							alert(response.message);
+							load_cart_item_number();
+						}
+						else{
+							alert(response.message);
+						}
 					}
 				});
 			});
