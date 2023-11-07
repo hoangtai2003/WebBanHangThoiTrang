@@ -24,7 +24,6 @@
             $_SESSION['address'] = $address;//lưu địa chỉ
             $connection->close();
             $_SESSION['cus_loggedin'] = true;//đăng nhập thành công
-            
             header("Location: ../index/index.php"); // Chuyển hướng đến trang dashboard hoặc trang chính sau khi đăng nhập thành công
             exit();
         } else {
