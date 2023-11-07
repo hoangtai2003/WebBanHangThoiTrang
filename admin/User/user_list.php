@@ -40,7 +40,7 @@ include_once('../includes/sidebar.php');
                         </tr>
                         <?php
                             include("../OffsetPagination/offset.php");
-                            $sql = "Select * from user order by UserId asc limit ".$item_per_page." offset ".$offset." ";
+                            $sql = "Select * from user order by UserId desc limit ".$item_per_page." offset ".$offset." ";
                             $result = mysqli_query($connection, $sql);
                             $totalRecords = mysqli_query($connection, "select * from user");
                             $totalRecords = $totalRecords->num_rows;
