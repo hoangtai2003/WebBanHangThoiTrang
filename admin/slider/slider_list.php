@@ -36,7 +36,7 @@ include_once('../includes/sidebar.php');
                             </tr>
                             <?php
                             include("../OffsetPagination/offset.php");
-                            $sql = "Select * from sliders order by slid asc limit ".$item_per_page." offset ".$offset."";
+                            $sql = "Select * from sliders order by slid desc limit ".$item_per_page." offset ".$offset."";
                             $result = mysqli_query($connection, $sql);
                             $totalRecords = mysqli_query($connection, "select * from sliders");
                             $totalRecords = $totalRecords->num_rows;
