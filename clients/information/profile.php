@@ -107,15 +107,23 @@ if (!isset($_SESSION["cus_loggedin"])) {
 									</div>
 									<div class="col-md-4">
 										<div>
-											<img style="margin-top: 10px;
-											    		border-radius: 50%;
-    													margin-left: 100px;
-														width: 182px;" 
+											<img style="margin-top: 14px;
+														border-radius: 50%;
+														margin-left: 98px;
+														max-width: 182px;
+														max-height: 182px;"
 												src="../upload/<?= $row['CusImage'] ?>" width="760" class="img_preview">
 										</div>
+										<style>
+											.form-control:hover{
+												background: rgba(0,0,0,.02);
+												cursor: pointer;
+												opacity: 0.5;
+											}
+										</style>
 										<div class="form-control image">
-											<label for="fileInput" aria-label="Chọn ảnh" style="margin: 8px;">Chọn Ảnh</label>
-											<input type="file" hidden id="fileInput" name="fimage" value="<?= $row['CusImage'] ?>" >
+											<label  for="fileInput" aria-label="Chọn ảnh" style="margin: 8px;">Chọn Ảnh</label>
+											<input type="file" hidden id="fileInput" class="input-img" name="fimage" value="<?= $row['CusImage'] ?>" >
 										</div>
 									</div>
 								</div>

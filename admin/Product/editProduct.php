@@ -92,11 +92,12 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 0) echo "checked"; ?> name=rdProdIsSale value=0>Hết sale
                             </div>
                             <div class="form-group">
-                                <label>Ảnh sản phẩm</label>
-                                <br>
-                                <input type="file" name="pimage">
-                                <br>
-                                <img style="width: 100px" src="../../images/<?php echo $dataProduct['ProdImage'] ?>" alt="">
+                            <div class="form-group">
+                                <label>Hình ảnh</label>
+                                <input type="file" class="form-control" name="pimage" id="input-img">
+                                <input type="hidden" name="current_image" value="<?= $dataProduct['ProdImage'] ?>">
+                                <img style="width: 100px;" src="../upload/<?=$dataProduct['ProdImage'] ?>" width="760" class="img_preview">
+                            </div>  
                             </div>
                             <div class="form-group">
                                 <label>Ảnh mô tả</label>

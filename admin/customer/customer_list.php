@@ -39,7 +39,7 @@ include_once('../includes/sidebar.php');
                         </tr>
                         <?php
                             include("../OffsetPagination/offset.php");
-                            $sql = "Select * from customer order by CusId asc limit ".$item_per_page." offset ".$offset." ";
+                            $sql = "Select * from customer order by CusId desc limit ".$item_per_page." offset ".$offset." ";
                             $result = mysqli_query($connection, $sql);
                             $totalRecords = mysqli_query($connection, "select * from customer");
                             $totalRecords = $totalRecords->num_rows;
