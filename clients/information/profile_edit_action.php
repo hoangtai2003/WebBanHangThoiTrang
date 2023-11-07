@@ -69,7 +69,7 @@ if (isset($_POST['update_customer'])) {
             }
         }
         if ($update_username && strlen($username) >= 10) {
-            $update_sql = "UPDATE customer SET CusUserName = '$username', ChangeUserName = 1,CusImage = '$file_name', ChangeImage = 1, CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
+            $update_sql = "UPDATE customer SET CusUserName = '$username', ChangeUserName = 1, CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
             $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
             if ($update_result) {
                 $_SESSION['message'] = "Cập nhật thành công";
