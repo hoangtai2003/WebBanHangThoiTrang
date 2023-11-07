@@ -50,7 +50,7 @@ include_once('../includes/sidebar.php');
                                 FROM product a
                                 INNER JOIN categories b ON a.CateId = b.CateId
                                 LEFT JOIN (
-                                    SELECT ProdId, COUNT(*) AS TotalOrders
+                                    SELECT ProdId, sum(OrdQuantity) AS TotalOrders
                                     FROM orderdetail
                                     GROUP BY ProdId
                                 ) c ON a.ProdId = c.ProdId
