@@ -86,3 +86,9 @@ star-rating label:hover,
 .notice-loggin {
     text-align: center;
 }
+.user_pic {
+    overflow: hidden;
+}
+.user_pic img {
+    width: 100%;
+}
