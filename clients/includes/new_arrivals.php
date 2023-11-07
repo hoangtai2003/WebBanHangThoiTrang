@@ -42,14 +42,14 @@ require_once('../../config/config.php');
 					<?php
 					// $sql = "SELECT * from product inner join categories on product.CateId = categories.CateId where categories.CateStatus = 1 and product.ProdStatus = 1";
 					$sql = "SELECT product.*, categories.CateName, IFNULL(TotalOrders, 0) AS TotalOrders
-						FROM product
-						INNER JOIN categories ON product.CateId = categories.CateId
-						LEFT JOIN (
-							SELECT ProdId, SUM(OrdQuanTity) AS TotalOrders
-							FROM orderdetail
-							GROUP BY ProdId
-						) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
-						WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
+										FROM product
+										INNER JOIN categories ON product.CateId = categories.CateId
+										LEFT JOIN (
+											SELECT ProdId, SUM(od.OrdQuantity) AS TotalOrders
+											FROM orderdetail AS od
+											GROUP BY ProdId
+										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
+										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
 						";
 					$result = $connection->query($sql);
 					if ($result->num_rows > 0) {
@@ -303,17 +303,12 @@ require_once('../../config/config.php');
 					productId: productId,
 					quantity: quantity
 				},
-				dataType: 'json',
-				success: function(response) {
-					if(response.success){
-						alert(response.message);
-						load_cart_item_number();
-					}
-					else{
-						alert(response.message);
-					}
+				success: function() {
+					alert("Thêm vào giỏ hàng thành công.");
+					load_cart_item_number();
 				}
 			});
 		});
 	});
 </script>
+
