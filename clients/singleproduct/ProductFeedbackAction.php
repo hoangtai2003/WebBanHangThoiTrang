@@ -5,7 +5,6 @@ $CusName = $_SESSION["name"];
 require_once('../../config/config.php');
 $ProdId = $_REQUEST["ProdId"];
 
-
 $sql_check_buy = "SELECT o.CusId, od.ProdId
     FROM orders o
     INNER JOIN orderdetail od ON o.OrderId = od.OrderId where od.ProdId = '$ProdId' and o.CusId = '$IdCustomer'";
@@ -21,51 +20,41 @@ WHERE od.ProdId = $ProdId AND o.CusId = $IdCustomer";
 
 $resultOrderStatus = mysqli_query($connection, $sqlOrderStatus);
 $orderStatus = mysqli_fetch_assoc($resultOrderStatus);
+
+
+// kiểm tra xem khách hàng đã đánh giá chưa
+$sql_check_rate = "SELECT COUNT(*) as count FROM comment WHERE ProdId = $ProdId AND CusId = $IdCustomer";
+$result_check_rate = mysqli_query($connection, $sql_check_rate);
+$data_check_rate = mysqli_fetch_assoc($result_check_rate);
+
+
 if (isset($data_check) && $data_check["CusId"] == $IdCustomer) {
     if (!is_null($orderStatus) && $orderStatus['OrderStatus'] == 3) {
-        $rating = $_REQUEST["rating"];
-        $description = $_REQUEST["description"];
-        if (!empty($rating)) {
-            $sql_rating = mysqli_query($connection, "insert into comment(CusId, ProdId, CmtDescription, rate) values($IdCustomer,$ProdId, '$description', $rating)");
-            // header("Location: ./singleproduct.php?ProdId=$ProdId");
-            echo '<div class="user_review_container d-flex flex-column flex-sm-row">
-            <div class="user">
-              <div class="user_pic"></div>
-                 <div class="user_rating">
-                <ul class="star_rating">';
-
-                 for ($i = 1; $i <= 5; $i++) {
-                     echo '<li>';
-                     if ($i <= $rating) {
-                     echo '<i class="fa fa-star" aria-hidden="true"></i>';
-                     } else {
-                    echo '<i class="fa fa-star-o" aria-hidden="true"></i>';
-                    }
-                    echo '</li>';
-                     }
-
-            echo '</ul>
-                 </div>
-            </div>
-            <div class="review">
-              <div class="review_date">' . date("Y-m-d H:i:s") . '</div>
-              <div class="user_name">' . $CusName . '</div>
-              <p>' . $description . '</p>
-            </div>
-          </div>';
+        $rating = isset($_REQUEST["rating"]) ? $_REQUEST["rating"] : null;
+        $description = isset($_REQUEST["description"]) ? $_REQUEST["description"] : null;
+        if ($data_check_rate["count"] < 1) {
+            if (!empty($rating) && !empty($description)) {
+                $sql_rating = mysqli_query($connection, "INSERT INTO comment (CusId, ProdId, CmtDescription, rate) VALUES ($IdCustomer, $ProdId, '$description', $rating)");
+                if ($sql_rating) {
+                    header("Location: ./singleproduct.php?ProdId=$ProdId");
+                } else {
+                    $_SESSION['message'] = "Có lỗi xảy ra khi đánh giá sản phẩm. Vui lòng thử lại sau.";
+                    header("Location: ./singleproduct.php?ProdId=$ProdId");
+                }
+            } else {
+                $_SESSION['message'] = "Vui lòng nhập đầy đủ thông tin đánh giá";
+                header("Location: ./singleproduct.php?ProdId=$ProdId");
+            }
         } else {
-            $_SESSION['message'] = "Vui lòng nhập đầy đủ thông tin đánh giá";
-            // header("Location: ./singleproduct.php?ProdId=$ProdId");
+            $_SESSION['message'] = "Bạn đã đánh giá sản phẩm này rồi";
+            header("Location: ./singleproduct.php?ProdId=$ProdId");
         }
     } else {
         $_SESSION['message'] = "Bạn chỉ có thể đánh giá sản phẩm sau khi đã nhận được hàng.";
-        // header("Location: ./singleproduct.php?ProdId=$ProdId");
-        echo "";
+        header("Location: ./singleproduct.php?ProdId=$ProdId");
     }
 } else {
     $_SESSION['message'] = "Bạn không thể đánh giá hay nhận xét khi chưa mua sản phẩm này!";
-    // header("Location: ./singleproduct.php?ProdId=$ProdId");
-    echo "";
-
+    header("Location: ./singleproduct.php?ProdId=$ProdId");
     exit();
 }
