@@ -4,7 +4,9 @@ require_once('../../config/config.php');
 
 // Lấy id sản phẩm và id khách hàng
 $ProdId = $_REQUEST['ProdId'];
-$CusId = $_SESSION['cusid'];
+if (isset($_SESSION['cusid'])) {
+	$CusId = $_SESSION['cusid'];
+}
 
 
 
@@ -15,6 +17,7 @@ WHERE p.ProdId = '$ProdId'
 GROUP BY p.ProdId;";
 $product = mysqli_query($connection, $sqlProd);
 $dataProduct = mysqli_fetch_assoc($product);
+
 
 
 
@@ -96,7 +99,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 							<div class="col-lg-3 thumbnails_col order-lg-1 order-2">
 								<div class="single_product_thumbnails">
 									<div class="item-container">
-										<ul class="slider-image-product">
+										<ul style="overflow-y: auto;" class="">
 											<li class="active "><img src="../../images/<?php echo $dataProduct['ProdImage'] ?>" alt="" data-image="../../images/<?php echo $dataProduct['ProdImage'] ?>"></li>
 											<?php foreach ($imgProd as $key => $value) { ?>
 												<li><img src="../../images/<?php echo $value["Image"] ?>" alt="" data-image="../../images/<?php echo $value["Image"] ?>"></li>
@@ -183,7 +186,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 				<div class="row">
 					<div class="col">
 						<!-- Tab Description -->
-						<div id="tab_1" class="tab_container active">
+						<div id="tab_1" class="tab_container ">
 							<div class="row">
 								<div class="col-lg-5 desc_col">
 									<div class="tab_title">
@@ -196,7 +199,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 							</div>
 						</div>
 						<!-- Tab Reviews -->
-						<div id="tab_3" class="tab_container ">
+						<div id="tab_3" class="tab_container active">
 							<div class="row">
 								<!-- User Reviews -->
 								<div class="col-lg-6 reviews_col">
@@ -208,7 +211,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 										<?php foreach ($data_feedback as $feedback) { ?>
 											<div class="user_review_container d-flex flex-column flex-sm-row">
 												<div class="user">
-													<div class="user_pic"></div>
+													<div class="user_pic"><img src="../upload/<?= $feedback["CusImage"] ?>" alt=""></div>
 													<div class="user_rating">
 														<ul class="star_rating">
 															<?php for ($i = 1; $i <= 5; $i++) { ?>
@@ -237,9 +240,9 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 								<div class="col-lg-6 add_review_col">
 									<div class="add_review">
 										<?php include('../authen/message.php') ?>
+
 										<?php
-										if (isset($_SESSION['cus_loggedin'])) {
-										?>
+										if (isset($_SESSION['cus_loggedin']) && isset($_SESSION['cusid'])) { ?>
 											<form class="form_reviews" action="./ProductFeedbackAction.php?ProdId=<?php echo $dataProduct["ProdId"] ?>" method="POST" id="review_form">
 												<div>
 													<div class="rating-container">
@@ -253,7 +256,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 															<label for="star3" title="3 sao"></label>
 															<input type="radio" id="star2" name="rating" value="2">
 															<label for="star2" title="2 sao"></label>
-															<input type="radio" id="star1" name="rating" value="1">
+															<input type="radio" id="star1" name "rating" value="1">
 															<label for="star1" title="1 sao"></label>
 														</span>
 													</div>
@@ -264,13 +267,17 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 												</div>
 											</form>
 										<?php
-
 										} else {
-											echo '<h1 class="notice-loggin">Bạn chưa đăng nhập, vui lòng đăng nhập để đánh giá</h1>';
-											echo '<div class="btn-loggin"><button btn btn-primary><a href="../authen/login.php">Đăng nhập</a></button></div>';
+										?>
+											<h1 class="notice-loggin">Bạn chưa đăng nhập, vui lòng đăng nhập để đánh giá</h1>
+											<div class="btn-loggin">
+												<button class="btn btn-primary"><a href="../authen/login.php">Đăng nhập</a></button>
+											</div>
+										<?php
 										}
 										?>
 									</div>
+
 								</div>
 							</div>
 						</div>
@@ -294,12 +301,10 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 	<script src="../assets/plugins/easing/easing.js"></script>
 	<script src="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="../assets/js/single_custom.js"></script>
-
-
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('body').on('click', '.minus', function(e){
+			$('body').on('click', '.minus', function(e) {
 				var quantity = parseInt($('#quantity_value').text());
 				if (quantity > 1) {
 					quantity -= 1;
@@ -307,7 +312,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 				$('#quantity_value').text(quantity);
 			});
 			var maxQuantity = 0;
-			$('body').on('click', '.plus', function(e){
+			$('body').on('click', '.plus', function(e) {
 				var productId = <?php echo $dataProduct['ProdId'] ?>;
 				$.ajax({
 					url: './singleproduct_action.php',
@@ -318,7 +323,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					},
 					dataType: 'json',
 					success: function(response) {
-						if(response.success){
+						if (response.success) {
 							maxQuantity = response.maxQuantity;
 							// alert(maxQuantity);
 							updateQuantity(maxQuantity);
@@ -326,15 +331,15 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					}
 				});
 			});
-			function updateQuantity(maxQuantity){
+
+			function updateQuantity(maxQuantity) {
 				var quantity = parseInt($('#quantity_value').text());
-				if(quantity < maxQuantity){
+				if (quantity < maxQuantity) {
 					quantity += 1;
-					if(quantity > maxQuantity){
-						quantity =maxQuantity;
+					if (quantity > maxQuantity) {
+						quantity = maxQuantity;
 					}
-				}
-				else{
+				} else {
 					alert('Đã đạt tối đa số lượng sản phẩm và không cho tăng nữa.');
 					quantity = maxQuantity;
 				}
@@ -353,7 +358,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					}
 				});
 			}
-		
+
 			$('body').on('click', '#cart_link', function(e) {
 				e.preventDefault();
 				var quantity = 1;
@@ -381,11 +386,10 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					},
 					dataType: 'json',
 					success: function(response) {
-						if(response.success){
+						if (response.success) {
 							alert(response.message);
 							load_cart_item_number();
-						}
-						else{
+						} else {
 							alert(response.message);
 						}
 					}
@@ -393,82 +397,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 			});
 		});
 	</script>
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-	<script>
-		// Kích hoạt Slick Slider
-		$(document).ready(function() {
-			$('.slider-image-product').slick({
-				autoplaySpeed: 20000,
-				infinite: true,
-				autoplay: false,
-				vertical: true, // Kích hoạt chế độ dọc
-				verticalSwiping: true, // Cho phép chuyển trang dọc
-				slidesToShow: 4,
-				slidesToScroll: 1,
-				responsive: [{
-						breakpoint: 1024,
-						settings: {
-							slidesToShow: 3,
-							slidesToScroll: 1,
-							infinite: true,
-							autoplay: false,
-							autoplaySpeed: 1000,
-							infinite: true,
-							vertical: false,
-							verticalSwiping: false,
-						}
-					},
-					{
-						breakpoint: 600,
-						settings: {
-							slidesToShow: 1,
-							slidesToScroll: 1,
-							autoplay: true,
-							autoplaySpeed: 1000,
-							infinite: true,
-						}
-					},
-					{
-						breakpoint: 480,
-						settings: {
-							slidesToShow: 1,
-							slidesToScroll: 1,
-							autoplay: true,
-							autoplaySpeed: 1000,
-							infinite: true,
-						}
-					}
-				]
-			});
-
-		});
-	</script>
-
-
-	 <script>
-		const btnSubmit = document.querySelector("#review_form");
-		const containerListReview = document.querySelector(".reviews_list");
-
-		btnSubmit.addEventListener("submit", e => {
-			e.preventDefault();
-
-			const rating = document.querySelector('input[name="rating"]:checked').value;
-			const description = document.querySelector('#review_message').value;
-
-			const formData = new FormData();
-			formData.append("rating", rating);
-			formData.append("description", description);
-
-			const xhttp = new XMLHttpRequest();
-			xhttp.onload = function() {
-				containerListReview.insertAdjacentHTML('afterbegin', this.responseText);
-			};
-
-			xhttp.open("POST", "./ProductFeedbackAction.php?ProdId=<?php echo $dataProduct['ProdId'] ?>", true);
-			xhttp.send(formData);
-		});
-	</script> 
 </body>
 
 </html>
