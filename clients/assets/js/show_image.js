@@ -1,4 +1,4 @@
-const inputImg = document.querySelector('#input-img')
+const inputImg = document.querySelector('.input-img')
 inputImg.addEventListener('input', (e) => {
     let file = e.target.files[0]
     if (!file) return
