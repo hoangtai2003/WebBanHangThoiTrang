@@ -43,6 +43,8 @@
         }
         if ($uploadOk) {
             if (move_uploaded_file($_FILES['fimage']['tmp_name'], $file_path)) {
+                $Catename = mysqli_real_escape_string($connection,$Catename);
+                $Catedescription = mysqli_real_escape_string($connection, $Catedescription);
                 $sql = "INSERT INTO categories (CateName, CateDescription, CateImage, CateStatus) VALUES ('$Catename', '$Catedescription', '$file_name', '$status')";
                 $result = mysqli_query($connection, $sql);
     

@@ -62,7 +62,7 @@ include("../../config/config.php");
                             }
                         </style>
                         <li class="account">
-                            <a href="#"><img class="account_img" src="<?= $row['CusImage']?>">
+                            <a href="#"><img class="account_img" src="../upload/<?= $row['CusImage']?>">
                                 <?= $row['CusUserName']?>
                             </a>
                             <ul class="account_selection">
