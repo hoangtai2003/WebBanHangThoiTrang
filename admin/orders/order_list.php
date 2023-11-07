@@ -34,7 +34,7 @@ session_start();
                             <tbody>
                                 <?php
                                     include("../OffsetPagination/offset.php");
-                                    $sql = "SELECT * FROM orders, customer WHERE orders.CusId = customer.CusId ORDER BY orders.OrderId asc limit ".$item_per_page." offset ".$offset."";
+                                    $sql = "SELECT * FROM orders, customer WHERE orders.CusId = customer.CusId ORDER BY orders.OrderId desc limit ".$item_per_page." offset ".$offset."";
                                     $result = mysqli_query($connection,$sql);
                                     $totalRecords = mysqli_query($connection, "select * from orders");
                                     $totalRecords = $totalRecords->num_rows;
