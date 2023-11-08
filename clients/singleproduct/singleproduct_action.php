@@ -75,4 +75,17 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
         exit();
     }
 }
+
+
+if(isset($_GET['ProdId'])){
+    $productId = $_GET['ProdId'];
+    $sql = "SELECT ProdViewCount FROM product WHERE ProdId = '".$productId."'";
+    $result = $connection->query($sql);
+    $row = $result->fetch_assoc();
+
+    $sql1 = "UPDATE product SET ProdViewCount = '".($row['ProdViewCount'] + 1)."' WHERE ProdId = '".$productId."'";
+    $connection->query($sql1);
+    $connection->close();
+    header("Location: ./singleproduct.php?ProdId=".$productId);
+}
 ?>
