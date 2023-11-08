@@ -68,7 +68,7 @@ require_once('../../config/config.php');
 										<div class="favorite favorite_left"></div>
 										<!-- <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div> -->
 										<div class="product_info">
-											<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row["ProdId"] ?>"><?php echo $row["ProdName"] ?></a></h6>
+											<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row["ProdId"] ?>"><?php echo $row["ProdName"] ?></a></h6>
 											<?php
 											if ($row['ProdIsSale'] == 1) {
 											?>

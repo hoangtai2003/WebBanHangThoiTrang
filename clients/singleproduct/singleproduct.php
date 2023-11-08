@@ -120,7 +120,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					<div class="product_details">
 						<div class="product_details_title">
 							<h2><?php echo $dataProduct["ProdName"] ?></h2>
-							<span><?php echo $dataProduct["ProdViewCount"] ?></span><span> Lượt xem</span> | <span><?php echo $dataProduct["TotalOrders"] ?></span><span> Đã bán</span> | <span><?php echo $dataProduct["ProdQuantity"] - $dataProduct["TotalOrders"] ?></span><span> Tồn kho</span>
+							<span><?php echo $dataProduct["ProdViewCount"] ?></span><span> Lượt xem</span> | <span><?php echo $dataProduct["TotalOrders"] ?></span><span> Đã bán</span> | <span><?php echo $dataProduct["ProdQuantity"] - $dataProduct["TotalOrders"] ?></span><span> Sản phẩm sẵn có</span>
 						</div>
 						<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 							<span class="ti-truck"></span><span>free delivery</span>
@@ -211,7 +211,20 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 										<?php foreach ($data_feedback as $feedback) { ?>
 											<div class="user_review_container d-flex flex-column flex-sm-row">
 												<div class="user">
-													<div class="user_pic"><img src="../upload/<?= $feedback["CusImage"] ?>" alt=""></div>
+													<div class="user_pic">
+														<?php
+															if($feedback['ChangeImage'] == 1){
+																?>
+																	<img src="../upload/<?= $feedback["CusImage"] ?>" alt="">
+																<?php
+															} else {
+																?>
+																	<img src="<?= $feedback["CusImage"] ?>" alt="">
+																<?php
+															}
+														?>
+		
+													</div>
 													<div class="user_rating">
 														<ul class="star_rating">
 															<?php for ($i = 1; $i <= 5; $i++) { ?>
