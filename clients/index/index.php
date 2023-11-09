@@ -30,6 +30,7 @@ require_once('../../config/config.php');
 	<?php include_once("../includes/hamburger_menu.php") ?>
 
 	<!-- Slider -->
+    <?php # include_once('../includes/message.php') ?>
     <?php include_once("../includes/slider.php") ?>
 
 	<!-- Banner -->
@@ -52,7 +53,6 @@ require_once('../../config/config.php');
 
 	<!-- Newsletter -->
     <?php include_once("../includes/newsletter.php") ?>
-
 	<!-- Footer -->
     <?php include_once("../includes/footer.php") ?>
 
