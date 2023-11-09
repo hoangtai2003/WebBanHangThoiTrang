@@ -214,8 +214,8 @@ if (isset($_GET['add'])) {
             $dataProduct = mysqli_fetch_assoc($product);
 
             $maxQuantity = ($dataProduct['ProdQuantity'] - $dataProduct["TotalOrders"]) - $row_check_cart_detail['Quantity'];
-            if($maxQuantity == 0){
-                $_SESSION['message'] = 'Không thể thêm vào giỏ hàng do quá số lượng sản phẩm sẵn có!';
+            if($maxQuantity <= 0){
+                $_SESSION['message'] = 'Rất tiếc, mặt hàng này chỉ còn '.($dataProduct['ProdQuantity'] - $dataProduct['TotalOrders']).' sản phẩm sẵn có!';
                 header('Location: ./cart_view.php');
                 exit();
             }
