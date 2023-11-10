@@ -62,7 +62,18 @@ include("../../config/config.php");
                             }
                         </style>
                         <li class="account">
-                            <a href="#"><img class="account_img" src="<?= $row['CusImage']?>">
+                            <a href="#">
+                            <?php
+                                if($row['ChangeImage'] == 1){
+                                    ?>
+                                        <img class="account_img" src="../upload/<?= $row['CusImage']?>">
+                                    <?php
+                                } else {
+                                    ?>
+                                        <img class="account_img" src="<?= $row['CusImage']?>">
+                                    <?php
+                                }
+                            ?>
                                 <?= $row['CusUserName']?>
                             </a>
                             <ul class="account_selection">

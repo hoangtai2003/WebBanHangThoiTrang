@@ -42,14 +42,14 @@ require_once('../../config/config.php');
 					<?php
 					// $sql = "SELECT * from product inner join categories on product.CateId = categories.CateId where categories.CateStatus = 1 and product.ProdStatus = 1";
 					$sql = "SELECT product.*, categories.CateName, IFNULL(TotalOrders, 0) AS TotalOrders
-						FROM product
-						INNER JOIN categories ON product.CateId = categories.CateId
-						LEFT JOIN (
-							SELECT ProdId, COUNT(*) AS TotalOrders
-							FROM orderdetail
-							GROUP BY ProdId
-						) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
-						WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
+										FROM product
+										INNER JOIN categories ON product.CateId = categories.CateId
+										LEFT JOIN (
+											SELECT ProdId, SUM(od.OrdQuantity) AS TotalOrders
+											FROM orderdetail AS od
+											GROUP BY ProdId
+										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
+										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
 						";
 					$result = $connection->query($sql);
 					if ($result->num_rows > 0) {
@@ -68,7 +68,7 @@ require_once('../../config/config.php');
 										<div class="favorite favorite_left"></div>
 										<!-- <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div> -->
 										<div class="product_info">
-											<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row["ProdId"] ?>"><?php echo $row["ProdName"] ?></a></h6>
+											<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row["ProdId"] ?>"><?php echo $row["ProdName"] ?></a></h6>
 											<?php
 											if ($row['ProdIsSale'] == 1) {
 											?>
@@ -303,11 +303,18 @@ require_once('../../config/config.php');
 					productId: productId,
 					quantity: quantity
 				},
-				success: function() {
-					alert("Thêm vào giỏ hàng thành công.");
-					load_cart_item_number();
+				dataType: 'json',
+				success: function(response) {
+					if(response.success){
+						alert(response.message);
+						load_cart_item_number();
+					}
+					else{
+						alert(response.message);
+					}
 				}
 			});
 		});
 	});
 </script>
+

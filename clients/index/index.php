@@ -1,8 +1,6 @@
 <?php
 session_start();
-// require_once('./config/config.php');
 require_once('../../config/config.php');
-setcookie("refreshed", "false", time() + 3600, "/");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +30,7 @@ setcookie("refreshed", "false", time() + 3600, "/");
 	<?php include_once("../includes/hamburger_menu.php") ?>
 
 	<!-- Slider -->
+    <?php # include_once('../includes/message.php') ?>
     <?php include_once("../includes/slider.php") ?>
 
 	<!-- Banner -->
@@ -54,7 +53,6 @@ setcookie("refreshed", "false", time() + 3600, "/");
 
 	<!-- Newsletter -->
     <?php include_once("../includes/newsletter.php") ?>
-
 	<!-- Footer -->
     <?php include_once("../includes/footer.php") ?>
 
@@ -67,6 +65,11 @@ setcookie("refreshed", "false", time() + 3600, "/");
 <script src="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="../assets/plugins/easing/easing.js"></script>
 <script src="../assets/js/custom.js"></script>
+<script>
+        window.onload = function() {
+            openModal("<?php echo $_SESSION['messenger'] ?>");
+        }
+    </script>
 </body>
 
 </html>

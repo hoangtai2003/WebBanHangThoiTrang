@@ -137,12 +137,16 @@ require_once('../../config/config.php');
 										FROM product
 										INNER JOIN categories ON product.CateId = categories.CateId
 										LEFT JOIN (
-											SELECT ProdId, COUNT(*) AS TotalOrders
-											FROM orderdetail
+											SELECT ProdId, SUM(od.OrdQuantity) AS TotalOrders
+											FROM orderdetail AS od
 											GROUP BY ProdId
 										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
 										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
 										";
+										// $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
+										// FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
+										// WHERE p.ProdId = '$ProdId'
+										// GROUP BY p.ProdId;";
 										$result = $connection->query($sql);
 
 										if ($result->num_rows > 0) {
@@ -158,7 +162,7 @@ require_once('../../config/config.php');
 															<div class="favorite"></div>
 															<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
 															<div class="product_info">
-																<h6 class="product_name"><a href="../singleproduct/singleproduct.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
 																<?php
 																if ($row['ProdIsSale'] == 1) {
 																?>
@@ -243,49 +247,55 @@ require_once('../../config/config.php');
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function(e) {
-			function load_cart_item_number() {
-				$.ajax({
-					url: '../cart/cart_action.php',
-					method: 'get',
-					data: {
-						cartItem: "cart_item"
-					},
-					success: function(response) {
-						$("#checkout_items").html(response);
-					}
-				});
-			}
-			$('body').on('click', '#cart_link', function(e) {
-				e.preventDefault();
-				var quantity = 1;
-				<?php
-				if (!isset($_SESSION['cus_loggedin'])) {
-				?>
-					window.location.href = '../authen/login.php';
-					return;
-				<?php
+	$(document).ready(function(e) {
+		function load_cart_item_number() {
+			$.ajax({
+				url: '../cart/cart_action.php',
+				method: 'get',
+				data: {
+					cartItem: "cart_item"
+				},
+				success: function(response) {
+					$("#checkout_items").html(response);
 				}
-				?>
-				var $form = $(this).closest(".form-submit");
-				var productId = $form.find(".ProdId").val();
+			});
+		}
+		$('body').on('click', '#cart_link', function(e) {
+			e.preventDefault();
+			var quantity = 1;
+			<?php
+			if (!isset($_SESSION['cus_loggedin'])) {
+			?>
+				window.location.href = '../authen/login.php';
+				return;
+			<?php
+			}
+			?>
+			var $form = $(this).closest(".form-submit");
+			var productId = $form.find(".ProdId").val();
 
-				$.ajax({
-					url: '../cart/cart_action.php',
-					method: 'get',
-					data: {
-						cartadd: "themgiohang",
-						productId: productId,
-						quantity: quantity
-					},
-					success: function() {
-						alert("Thêm vào giỏ hàng thành công.");
+			$.ajax({
+				url: '../cart/cart_action.php',
+				method: 'get',
+				data: {
+					cartadd: "themgiohang",
+					productId: productId,
+					quantity: quantity
+				},
+				dataType: 'json',
+				success: function(response) {
+					if(response.success){
+						alert(response.message);
 						load_cart_item_number();
 					}
-				});
+					else{
+						alert(response.message);
+					}
+				}
 			});
 		});
-	</script>
+	});
+</script>
 
 	<script src="../assets/js/jquery-3.2.1.min.js"></script>
 	<script src="../assets/styles/bootstrap4/popper.js"></script>
