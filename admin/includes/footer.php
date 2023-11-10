@@ -22,5 +22,25 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         <script src="../assets/js/date.js"></script>
         <script src="../assets/js/thongkedonhang.js"></script>
+        <?php include("../ajax/thongkesanpham.php") ?>
+        <script>
+            $(document).ready(function(){
+                var colorDanger = "#FF1744";
+                var donut = Morris.Donut({
+                    element: 'donut-example',
+                    resize: true,
+                    colors: [
+                        '#f58742',
+                        '#f5429e',
+                        '#42f5c8',
+                    ],
+                    data: [
+                        {label:"Tổng số sản phẩm", value: <?php echo $totalProduct?>},
+                        {label:"Tổng số khách hàng", value: <?php echo $totalCustomers?>},
+                        {label:"Tổng số đơn hàng", value: <?php echo $totalOrders?>}
+                    ]
+                });
+            });
+        </script>
     </body>
 </html>
