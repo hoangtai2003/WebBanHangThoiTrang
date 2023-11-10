@@ -13,9 +13,7 @@
 				<div class="col">
 					<div class="product_slider_container">
 						<div class="owl-carousel owl-theme product_slider">
-
 							<!-- Slide 1 -->
-
 							<div class="owl-item product_slider_item">
 								<div class="product-item">
 									<div class="product discount">

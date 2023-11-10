@@ -47,7 +47,7 @@ require_once('../../config/config.php');
                         <tbody>
                             <?php
                             include("../OffsetPagination/offset.php");
-                            $result = $connection->query("select * from categories order by CateId asc limit ".$item_per_page." offset ".$offset."");
+                            $result = $connection->query("select * from categories order by CateId desc limit ".$item_per_page." offset ".$offset."");
                             $totalRecords = mysqli_query($connection, "select * from categories");
                             $totalRecords = $totalRecords->num_rows;
                             // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang

@@ -48,20 +48,88 @@ if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang' && isset($_GET[
         }
         $sql_check_cart = "SELECT * FROM cart WHERE CusId = '" . $cusid . "'";
         $result_check_cart = $connection->query($sql_check_cart);
-        $row_check_cart = $result_check_cart->fetch_assoc();
+        if( $result_check_cart->num_rows > 0) {
+            $row_check_cart = $result_check_cart->fetch_assoc();
 
-        $sql_check_cart_detail = "SELECT * FROM cartdetail WHERE CartId = '" . $row_check_cart['CartId'] . "' AND ProdId = '" . $productId . "' LIMIT 1";
-        $result_check_cart_detail = $connection->query($sql_check_cart_detail);
+            $sql_check_cart_detail = "SELECT * FROM cartdetail WHERE CartId = '" . $row_check_cart['CartId'] . "' AND ProdId = '" . $productId . "' LIMIT 1";
+            $result_check_cart_detail = $connection->query($sql_check_cart_detail);
 
-        if ($result_check_cart_detail->num_rows > 0) {
-            $row_check_cart_detail = $result_check_cart_detail->fetch_assoc();
-            $new_quantity = $row_check_cart_detail["Quantity"] + $quantity;
-            $sql_update_cart = "UPDATE cartdetail SET Quantity = '" . $new_quantity . "' WHERE CartId = '" . $row_check_cart['CartId'] . "' AND ProdId = '" . $productId . "'";
-            $connection->query($sql_update_cart);
-        } else {
-            $sql_insert_cart_detail = "INSERT INTO cartdetail (CartId, ProdId, Quantity) VALUES ('" . $row_check_cart['CartId'] . "', '" . $productId . "', '".$quantity."')";
-            $connection->query($sql_insert_cart_detail);
+            if ($result_check_cart_detail->num_rows > 0) {
+                $row_check_cart_detail = $result_check_cart_detail->fetch_assoc();
+
+                $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
+                FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
+                WHERE p.ProdId = '$productId'
+                GROUP BY p.ProdId;";
+                $product = mysqli_query($connection, $sqlProd);
+                $dataProduct = mysqli_fetch_assoc($product);
+
+                $maxQuantity = ($dataProduct['ProdQuantity'] - $dataProduct["TotalOrders"]) - $row_check_cart_detail['Quantity'];
+                if($maxQuantity == 0){
+                    $response = array(
+                        'success' => false,
+                        'message' => 'Không thể thêm vào giỏ hàng do quá số lượng sản phẩm sẵn có!'
+                    );
+                    echo json_encode($response);
+                    exit();
+                }
+                else{
+                    $new_quantity = $row_check_cart_detail["Quantity"] + $quantity;
+                    $sql_update_cart = "UPDATE cartdetail SET Quantity = '" . $new_quantity . "' WHERE CartId = '" . $row_check_cart['CartId'] . "' AND ProdId = '" . $productId . "'";
+                    $connection->query($sql_update_cart);
+                    $response = array(
+                        'success' => true,
+                        'message' => 'Thêm vào giỏ hàng thành công.',
+                        'maxQuantity' => $maxQuantity
+                    );
+                    echo json_encode($response);
+                    exit();
+                }
+
+                
+            } else if ($result_check_cart_detail->num_rows == 0) {
+                $sql_insert_cart_detail = "INSERT INTO cartdetail (CartId, ProdId, Quantity) VALUES ('" . $row_check_cart['CartId'] . "', '" . $productId . "', '".$quantity."')";
+                $connection->query($sql_insert_cart_detail);
+                $response = array(
+                    'success' => true,
+                    'message' => 'Thêm vào giỏ hàng thành công.'
+                );
+                echo json_encode($response);
+                exit();
+            }
         }
+
+        //lấy max số sản phẩm sẵn có
+        // $sqlgetCartDetail = "SELECT * FROM cartdetail WHERE CartId = '".$row_check_cart['CartId']."' AND ProdId = '".$productId."'";
+        // $resultgetCartDetail = mysqli_query($connection, $sqlgetCartDetail);
+        // $rowgetCartDetail = mysqli_fetch_assoc($resultgetCartDetail);
+
+        // $sqlProd = "SELECT * FROM product  LEFT JOIN (
+        //     SELECT ProdId, SUM(OrdQuantity) AS TotalOrders
+        //     FROM orderdetail
+        //     GROUP BY ProdId
+        // ) AS SoldProducts ON product.ProdId = SoldProducts.ProdId and product.ProdId = $productId";
+        // $product = mysqli_query($connection, $sqlProd);
+        // $dataProduct = mysqli_fetch_assoc($product);
+
+        // $maxQuantity = ($dataProduct['ProdQuantity'] - $dataProduct["TotalOrders"]) - $rowgetCartDetail['Quantity'];
+        // if($maxQuantity == 0){
+        //     $response = array(
+        //         'success' => false,
+        //         'message' => 'Không thể thêm vào giỏ hàng!'
+        //     );
+        //     echo json_encode($response);
+        //     exit();
+        // }
+        // else{
+        //     $response = array(
+        //         'success' => true,
+        //         'message' => 'Thêm vào giỏ hàng thành công.',
+        //         'maxQuantity' => $maxQuantity
+        //     );
+        //     echo json_encode($response);
+        //     exit();
+        // }
     }
 }
 
@@ -131,9 +199,38 @@ if (isset($_GET['add'])) {
         $sql_get_cart = "SELECT * FROM cart WHERE CusId = '" . $cusid . "'";
         $result_get_cart = $connection->query($sql_get_cart);
         $row_get_cart = $result_get_cart->fetch_assoc();
+
+        $sql_check_cart_detail = "SELECT * FROM cartdetail WHERE CartId = '" . $row_get_cart['CartId'] . "' AND ProdId = '" . $productId . "' LIMIT 1";
+        $result_check_cart_detail = $connection->query($sql_check_cart_detail);
+
+        if ($result_check_cart_detail->num_rows > 0) {
+            $row_check_cart_detail = $result_check_cart_detail->fetch_assoc();
+
+            $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
+            FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
+            WHERE p.ProdId = '$productId'
+            GROUP BY p.ProdId;";
+            $product = mysqli_query($connection, $sqlProd);
+            $dataProduct = mysqli_fetch_assoc($product);
+
+            $maxQuantity = ($dataProduct['ProdQuantity'] - $dataProduct["TotalOrders"]) - $row_check_cart_detail['Quantity'];
+            if($maxQuantity <= 0){
+                $_SESSION['message'] = 'Rất tiếc, mặt hàng này chỉ còn '.($dataProduct['ProdQuantity'] - $dataProduct['TotalOrders']).' sản phẩm sẵn có!';
+                header('Location: ./cart_view.php');
+                exit();
+            }
+            else{
+                $new_quantity = $row_check_cart_detail["Quantity"] + 1;
+                $sql_update_cart = "UPDATE cartdetail SET Quantity = '" . $new_quantity . "' WHERE CartId = '" . $row_get_cart['CartId'] . "' AND ProdId = '" . $productId . "'";
+                $connection->query($sql_update_cart);
+                header('Location: ./cart_view.php');
+                exit();
+            }    
+        }
+
         //tăng
-        $sql_add_quantity = "UPDATE cartdetail SET Quantity = Quantity + 1 WHERE CartId = '" . $row_get_cart['CartId'] . "' AND ProdId = '" . $productId . "'";
-        $connection->query($sql_add_quantity);
+        // $sql_add_quantity = "UPDATE cartdetail SET Quantity = Quantity + 1 WHERE CartId = '" . $row_get_cart['CartId'] . "' AND ProdId = '" . $productId . "'";
+        // $connection->query($sql_add_quantity);
     }
     // foreach ($_SESSION['cart'] as $cart_item) {
     //     if ($cart_item['id'] != $productId) {
@@ -145,7 +242,6 @@ if (isset($_GET['add'])) {
     //         $_SESSION['cart'] = $product;
     //     }
     // }
-    header('Location: ./cart_view.php');
 }
 
 //trừ số lượng
