@@ -22,9 +22,9 @@
     if (isset($_POST['from_date']) && $_POST['from_to']){
         $from = $_POST['from_date'];
         $to= $_POST['from_to'];
-        $sql = "select DATE(created_at) as 'ngay', count(OrderId) as 'TongDonHang', Sum(OrderTotalPrice) as 'TongTien', sum(OrderQuantity) as 'TongSanPhamDaBan' from orders where created_at between '$from' and '$to' group by ngay order by created_at asc ";
+        $sql = "select DATE(created_at) as 'ngay', count(OrderId) as 'TongDonHang', Sum(OrderTotalPrice) as 'TongTien', sum(OrderQuantity) as 'TongSanPhamDaBan' from orders where created_at between '$from' and '$to' and OrderStatus = 3 group by ngay order by created_at asc ";
     } else {
-        $sql = "select DATE(created_at) as 'ngay', count(OrderId) as 'TongDonHang', Sum(OrderTotalPrice) as 'TongTien', sum(OrderQuantity) as 'TongSanPhamDaBan' from orders where created_at between '$subdays' and '$now' group by ngay order by created_at asc";
+        $sql = "select DATE(created_at) as 'ngay', count(OrderId) as 'TongDonHang', Sum(OrderTotalPrice) as 'TongTien', sum(OrderQuantity) as 'TongSanPhamDaBan' from orders where created_at between '$subdays' and '$now' and OrderStatus = 3 group by ngay order by created_at asc";
     }
     $result = mysqli_query($connection, $sql);
     foreach($result as $key => $row){

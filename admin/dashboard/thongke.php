@@ -47,11 +47,11 @@
                         </div>
                     </div>
                 </form>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="myfirstchart" style="height: 250px;"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="myfirstchart" style="height: 250px;"></div>
+                        </div>
                     </div>
-                </div>
             </div>
             <!-- <h4 align=center>Thống kê truy cập</h4>
             <table class="table table-bordered">
@@ -74,6 +74,12 @@
                     </tr>
                 </tbody>
             </table> -->
+            <h4 style="margin-left:80px;">Thống kê sản phẩm đơn hàng</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="donut-example" style="height: 250px;"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
