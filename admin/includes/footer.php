@@ -22,7 +22,6 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         <script src="../assets/js/date.js"></script>
         <script src="../assets/js/thongkedonhang.js"></script>
-        <?php include("../ajax/thongkesanpham.php") ?>
         <script>
             $(document).ready(function(){
                 var colorDanger = "#FF1744";
