@@ -34,9 +34,6 @@ include_once('../includes/sidebar.php');
                             <th>Giới tính</th>
                             <th>Trạng thái</th>
                             <th>Chăm sóc khách hàng</th>
-                            <?php if (checkPrivilege('customer_delete.php?CusId=0')) { ?>
-                                <th>Xóa</th>
-                            <?php } ?>
                         </tr>
                         <?php
                         include("../OffsetPagination/offset.php");
@@ -85,23 +82,17 @@ include_once('../includes/sidebar.php');
                                             </i>Nhắn tin
                                         </a>
                                         <span 
-                                        style="border-radius: 50%;
-                                        position: absolute;
-                                        top: 12%;
-                                        font-size: 12px;
-                                        left: 16%;
-                                        background-color: red;
-                                        color: #fff;
-                                        padding: 0 6px;" class="number-mess"
-                                        >0
+                                            style="border-radius: 50%;
+                                            position: absolute;
+                                            top: 12%;
+                                            font-size: 12px;
+                                            left: 16%;
+                                            background-color: red;
+                                            color: #fff;
+                                            padding: 0 6px;" class="number-mess"
+                                            >0
                                         </span>
                                     </td>
-                                    <?php if (checkPrivilege('customer_delete.php?CusId=0')) { ?>
-                                        <td>
-                                            <a href="customer_delete.php?CusId=<?php echo $row["CusId"]; ?>" class="btn btn-danger action_delete" value="<?= $row['CusId']; ?>"><i class="fa-solid fa-trash" style="margin-right: 5px;"></i>Xóa
-                                            </a>
-                                        </td>
-                                    <?php } ?>
                                 </tr>
                         <?php
                             }
