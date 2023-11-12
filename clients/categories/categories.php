@@ -1,6 +1,21 @@
 <?php
 session_start();
 require_once('../../config/config.php');
+$CateId = $_REQUEST['CateId'];
+$sqlCate = "Select * from categories";
+$resultCate = mysqli_query($connection, $sqlCate);
+
+$sqlAllProduct = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
+FROM product
+inner join categories on product.CateId = categories.CateId
+LEFT JOIN (
+	SELECT ProdId, SUM(od.OrdQuantity) AS TotalOrders
+	FROM orderdetail AS od
+	GROUP BY ProdId
+) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
+WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
+";
+$resultProduct = mysqli_query($connection, $sqlAllProduct);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +57,7 @@ require_once('../../config/config.php');
 					<div class="breadcrumbs d-flex flex-row align-items-center">
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li class="active"><a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i>Men's</a></li>
+							<li class="active"><a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 						</ul>
 					</div>
 
@@ -54,12 +69,23 @@ require_once('../../config/config.php');
 								<h5>Product Category</h5>
 							</div>
 							<ul class="sidebar_categories">
-								<li><a href="#">Men</a></li>
-								<li class="active"><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li>
-								<li><a href="#">Accessories</a></li>
-								<li><a href="#">New Arrivals</a></li>
-								<li><a href="#">Collection</a></li>
-								<li><a href="#">Shop</a></li>
+								<?php if (!isset($_REQUEST['CateId'])) { ?>
+									<li class="active"><a href="categories.php"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>All</a></li>
+								<?php } else { ?>
+									<li class=""><a href="categories.php">All</a></li>
+								<?php } ?>
+								<?php
+								if (mysqli_num_rows($resultCate) > 0) {
+									foreach ($resultCate as $row) {
+								?>
+										<?php if ($row["CateId"] == $CateId) { ?>
+											<li class="active"><a href=""><span><i class="fa fa-angle-double-right" aria-hidden="true"></i><?= $row["CateName"] ?></a></li>
+										<?php  } else { ?>
+											<li class=""><a href="categories.php?CateId=<?php echo $row["CateId"] ?>"><?= $row["CateName"] ?></a></li>
+										<?php } ?>
+									<?php } ?>
+									<!-- <li class="active"><a href="categories_viewhome.php?CateId=1"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li> -->
+								<?php } ?>
 							</ul>
 						</div>
 
@@ -132,23 +158,18 @@ require_once('../../config/config.php');
 
 										<!-- Product 1 -->
 										<?php
-										// $sql = "SELECT * from product inner join categories on product.CateId = categories.CateId where categories.CateStatus = 1 and product.ProdStatus = 1";
-										$sql = "SELECT product.*, categories.CateName, IFNULL(TotalOrders, 0) AS TotalOrders
+										$sql = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
 										FROM product
-										INNER JOIN categories ON product.CateId = categories.CateId
+										inner join categories on product.CateId = categories.CateId
 										LEFT JOIN (
 											SELECT ProdId, SUM(od.OrdQuantity) AS TotalOrders
 											FROM orderdetail AS od
 											GROUP BY ProdId
 										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
-										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
+										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1 and product.CateId = '$CateId';
 										";
-										// $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
-										// FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
-										// WHERE p.ProdId = '$ProdId'
-										// GROUP BY p.ProdId;";
 										$result = $connection->query($sql);
-
+											if(isset($CateId)) {
 										if ($result->num_rows > 0) {
 											while ($row = $result->fetch_assoc()) {
 										?>
@@ -191,6 +212,50 @@ require_once('../../config/config.php');
 										} else {
 											echo "Không có sản phẩm nào";
 										}
+									} else {
+										if ($resultProduct->num_rows > 0) {
+											while ($row = $resultProduct->fetch_assoc()) {
+										?>
+												<form action="" class="form-submit">
+													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
+													<div class="product-item women">
+														<div class="product product_filter">
+															<div class="product_image">
+																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+															</div>
+															<div class="favorite"></div>
+															<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
+															<div class="product_info">
+																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+																<?php
+																if ($row['ProdIsSale'] == 1) {
+																?>
+																	<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?><span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?></span></div>
+																<?php
+																} else if ($row['ProdIsSale'] == 0) {
+																?>
+																	<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?></div>
+																<?php
+																}
+																?>
+															</div>
+														</div>
+														<?php
+														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
+															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
+														} else {
+															echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
+														}
+														?>
+													</div>
+												</form>
+										<?php
+
+											}
+										} else {
+											echo "Không có sản phẩm nào";
+										}
+									}
 										$connection->close();
 										?>
 									</div>
@@ -247,55 +312,54 @@ require_once('../../config/config.php');
 	</div>
 
 	<script type="text/javascript">
-	$(document).ready(function(e) {
-		function load_cart_item_number() {
-			$.ajax({
-				url: '../cart/cart_action.php',
-				method: 'get',
-				data: {
-					cartItem: "cart_item"
-				},
-				success: function(response) {
-					$("#checkout_items").html(response);
-				}
-			});
-		}
-		$('body').on('click', '#cart_link', function(e) {
-			e.preventDefault();
-			var quantity = 1;
-			<?php
-			if (!isset($_SESSION['cus_loggedin'])) {
-			?>
-				window.location.href = '../authen/login.php';
-				return;
-			<?php
+		$(document).ready(function(e) {
+			function load_cart_item_number() {
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {
+						cartItem: "cart_item"
+					},
+					success: function(response) {
+						$("#checkout_items").html(response);
+					}
+				});
 			}
-			?>
-			var $form = $(this).closest(".form-submit");
-			var productId = $form.find(".ProdId").val();
-
-			$.ajax({
-				url: '../cart/cart_action.php',
-				method: 'get',
-				data: {
-					cartadd: "themgiohang",
-					productId: productId,
-					quantity: quantity
-				},
-				dataType: 'json',
-				success: function(response) {
-					if(response.success){
-						alert(response.message);
-						load_cart_item_number();
-					}
-					else{
-						alert(response.message);
-					}
+			$('body').on('click', '#cart_link', function(e) {
+				e.preventDefault();
+				var quantity = 1;
+				<?php
+				if (!isset($_SESSION['cus_loggedin'])) {
+				?>
+					window.location.href = '../authen/login.php';
+					return;
+				<?php
 				}
+				?>
+				var $form = $(this).closest(".form-submit");
+				var productId = $form.find(".ProdId").val();
+
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {
+						cartadd: "themgiohang",
+						productId: productId,
+						quantity: quantity
+					},
+					dataType: 'json',
+					success: function(response) {
+						if (response.success) {
+							alert(response.message);
+							load_cart_item_number();
+						} else {
+							alert(response.message);
+						}
+					}
+				});
 			});
 		});
-	});
-</script>
+	</script>
 
 	<script src="../assets/js/jquery-3.2.1.min.js"></script>
 	<script src="../assets/styles/bootstrap4/popper.js"></script>
