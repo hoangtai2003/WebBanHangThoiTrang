@@ -25,8 +25,12 @@ include_once('../includes/sidebar.php');
                     <table class="table table-bordered">
                         <tr>
                             <th>ID</th>
-                            <th>Tên</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Họ và Tên</th>
                             <th>Email</th>
+                            <th>Ngày sinh</th>
+                            <th>Địa chỉ</th>
+                            <th>Giới tính</th>
                             <th>Trạng thái</th>
                             <?php if (checkPrivilege('role.php?UserId=0')) { ?>
                                 <th>Phân quyền</th>
@@ -52,7 +56,22 @@ include_once('../includes/sidebar.php');
                             <tr>
                                 <th scope="row"><?= $row['UserId']; ?></th>
                                 <td><?= $row['UserName']; ?></td>
+                                <td><?= $row['HoTen']; ?></td>
                                 <td><?= $row['UserEmail']; ?></td>
+                                <td><?= $row['UserBirthday']; ?></td>
+                                <td><?= $row['UserAddress']; ?></td>
+                                <td><?php
+                                    if ($row['UserGender'] == 0) {
+                                    ?>
+                                        <span>Nam</span>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <span>Nữ</span>
+                                    <?php
+                                    }
+                                    ?>
+                                </td>
                                 <td><?php
                                     if ($row['UserStatus'] == 1) {
                                     ?>
