@@ -100,7 +100,7 @@ if(!isset($_SESSION["selected_items"])) {
 
                     <div class="breadcrumbs d-flex flex-row align-items-center">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="../index/index.php">Home</a></li>
                             <li class="active"><a href="./cart_view.php"><i class="fa fa-angle-right" aria-hidden="true"></i>Giỏ hàng</a></li>
                             <li class="active"><a href=""><i class="fa fa-angle-right" aria-hidden="true"></i>Hình thức vận chuyển</a></li>
                         </ul>

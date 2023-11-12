@@ -13,7 +13,7 @@ $(document).ready(function(){
         var from_to = $('.date_to').val();
 
         $.ajax({
-            url: "../ajax/thongke.php",
+            url: "../ajax/thongkedonhang.php",
             method: "POST",
             dataType: "JSON",
             data: {from_date:from_date,from_to:from_to},
@@ -36,7 +36,7 @@ $(document).ready(function(){
         $('#text-date').text(text);
         $.ajax(
             {
-                url: '../ajax/thongke.php',
+                url: '../ajax/thongkedonhang.php',
                 method: 'POST',
                 dataType: 'JSON',
                 cache: false,
@@ -52,7 +52,7 @@ $(document).ready(function(){
         var text = '365 ngày qua ';
         $('text-date').text(text);
         $.ajax({
-            url: '../ajax/thongke.php',
+            url: '../ajax/thongkedonhang.php',
             method: 'POST',
             dataType: 'JSON',
             cache: false,
