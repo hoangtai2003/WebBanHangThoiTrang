@@ -33,14 +33,6 @@ include_once('../includes/sidebar.php')
                                 <input hidden type="text" name="user_id" class="form-control" value=<?= $user['UserId'] ?>>
                             </div>
                             <div class="form-group" style="margin-bottom: 15px;">
-                                <label>Tên người dùng</label>
-                                <input type="text" name="name" class="form-control" value="<?= $user['UserName'] ?>">
-                            </div>
-                            <div class="form-group" style="margin-bottom: 15px;">
-                                <label>Email</label>
-                                <input type="email" class="form-control" name="email" value=<?= $user['UserEmail'] ?>>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 15px;">
                                 <label>Trạng thái</label>
                                 <div class="form-check">
                                     <input class="form-check-input"  type="radio" name="rdstatus" id="rdstatus1" value=1 <?= $user['UserStatus'] == 1 ? 'checked' : '' ?>>

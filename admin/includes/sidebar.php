@@ -11,7 +11,7 @@
 					<?php if(checkPrivilege('../user/user_list.php')) { ?>
 					<a class="nav-link" href="../user/user_list.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-						Quản lý  thành viên
+						Danh sách thành viên
 					</a>
 					<?php } ?>
 					<?php if(checkPrivilege('../customer/customer_list.php')) { ?>
