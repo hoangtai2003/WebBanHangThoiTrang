@@ -74,9 +74,6 @@ $resultCate = mysqli_query($connection, $sqlCate);
 									<?php } ?>
 									<!-- <li class="active"><a href="categories_viewhome.php?CateId=1"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li> -->
 								<?php } ?>
-								<li><a href="#">New Arrivals</a></li>
-								<li><a href="#">Collection</a></li>
-								<li><a href="#">Shop</a></li>
 							</ul>
 
 						</div>
