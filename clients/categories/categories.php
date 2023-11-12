@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once('../../config/config.php');
+$CateId = $_REQUEST['CateId'];
+$sqlCate = "Select * from categories";
+$resultCate = mysqli_query($connection, $sqlCate);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +46,7 @@ require_once('../../config/config.php');
 					<div class="breadcrumbs d-flex flex-row align-items-center">
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li class="active"><a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i>Men's</a></li>
+							<li class="active"><a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 						</ul>
 					</div>
 
@@ -53,10 +57,24 @@ require_once('../../config/config.php');
 							<div class="sidebar_title">
 								<h5>Product Category</h5>
 							</div>
-							<ul class="sidebar_categories">
-								<li><a href="#">Men</a></li>
-								<li class="active"><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li>
-								<li><a href="#">Accessories</a></li>
+                            <ul class="sidebar_categories">
+								<?php if(!isset($_REQUEST['CateId'])) { ?>
+								<li class="active"><a href="categories.php" ><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>All</a></li>
+								<?php } else { ?>
+									<li class=""><a href="categories.php">All</a></li>
+                                <?php }?>
+								<?php
+								if (mysqli_num_rows($resultCate) > 0) {
+									foreach ($resultCate as $row) {
+								?>
+										<?php if ($row["CateId"] == $CateId) { ?>
+											<li class="active"><a href=""><span><i class="fa fa-angle-double-right" aria-hidden="true"></i><?= $row["CateName"] ?></a></li>
+										<?php  } else { ?>
+											<li class=""><a href="categories_viewhome.php?CateId=<?php echo $row["CateId"] ?>"><?= $row["CateName"] ?></a></li>
+										<?php } ?>
+									<?php } ?>
+									<!-- <li class="active"><a href="categories_viewhome.php?CateId=1"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li> -->
+								<?php } ?>
 								<li><a href="#">New Arrivals</a></li>
 								<li><a href="#">Collection</a></li>
 								<li><a href="#">Shop</a></li>
