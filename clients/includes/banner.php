@@ -15,9 +15,9 @@ $resultCate = mysqli_query($connection, $sqlCategory);
                                 foreach ($resultCate as $row) {
                             ?>
 				<div class="col-md-4">
-					<div class="banner_item align-items-center" style="background-image:url(../assets/images/<?php echo $row["CateImage"] ?>)">
+					<div class="banner_item align-items-center" style="background-image:url(../upload/<?php echo $row["CateImage"] ?>)">
 						<div class="banner_category">
-							<a href="../categories/categories_viewhome.php?CateId=<?=$row["CateId"]?>"><?=$row["CateName"]?></a>
+							<a href="../categories/categories.php?CateId=<?=$row["CateId"]?>"><?=$row["CateName"]?></a>
 						</div>
 					</div>
 				</div>
