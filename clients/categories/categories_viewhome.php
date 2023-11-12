@@ -4,7 +4,6 @@ require_once('../../config/config.php');
 $CateId = $_REQUEST['CateId'];
 $sqlCate = "Select * from categories";
 $resultCate = mysqli_query($connection, $sqlCate);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,9 +56,9 @@ $resultCate = mysqli_query($connection, $sqlCate);
 							<div class="sidebar_title">
 								<h5>Product Category</h5>
 							</div>
-                            <ul class="sidebar_categories">
+							<ul class="sidebar_categories">
 								<?php if(!isset($_REQUEST['CateId'])) { ?>
-								<li class="active"><a href="categories.php" ><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>All</a></li>
+								<li class="active"><a href="categories.php">All</a></li>
 								<?php } else { ?>
 									<li class=""><a href="categories.php">All</a></li>
                                 <?php }?>
@@ -79,6 +78,7 @@ $resultCate = mysqli_query($connection, $sqlCate);
 								<li><a href="#">Collection</a></li>
 								<li><a href="#">Shop</a></li>
 							</ul>
+
 						</div>
 
 						<!-- Price Range Filtering -->
@@ -151,7 +151,7 @@ $resultCate = mysqli_query($connection, $sqlCate);
 										<!-- Product 1 -->
 										<?php
 										// $sql = "SELECT * from product inner join categories on product.CateId = categories.CateId where categories.CateStatus = 1 and product.ProdStatus = 1";
-										$sql = "SELECT product.*, categories.CateName, IFNULL(TotalOrders, 0) AS TotalOrders
+										$sqlProduct = "SELECT product.*, categories.CateName, IFNULL(TotalOrders, 0) AS TotalOrders
 										FROM product
 										INNER JOIN categories ON product.CateId = categories.CateId
 										LEFT JOIN (
@@ -159,16 +159,17 @@ $resultCate = mysqli_query($connection, $sqlCate);
 											FROM orderdetail AS od
 											GROUP BY ProdId
 										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
-										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
-										";
+										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1 AND product.CateId = '$CateId'";
+
+
 										// $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
 										// FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
 										// WHERE p.ProdId = '$ProdId'
 										// GROUP BY p.ProdId;";
-										$result = $connection->query($sql);
+										$resultProduct = $connection->query($sqlProduct);
 
-										if ($result->num_rows > 0) {
-											while ($row = $result->fetch_assoc()) {
+										if ($resultProduct->num_rows > 0) {
+											while ($row = $resultProduct->fetch_assoc()) {
 										?>
 												<form action="" class="form-submit">
 													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
@@ -265,55 +266,54 @@ $resultCate = mysqli_query($connection, $sqlCate);
 	</div>
 
 	<script type="text/javascript">
-	$(document).ready(function(e) {
-		function load_cart_item_number() {
-			$.ajax({
-				url: '../cart/cart_action.php',
-				method: 'get',
-				data: {
-					cartItem: "cart_item"
-				},
-				success: function(response) {
-					$("#checkout_items").html(response);
-				}
-			});
-		}
-		$('body').on('click', '#cart_link', function(e) {
-			e.preventDefault();
-			var quantity = 1;
-			<?php
-			if (!isset($_SESSION['cus_loggedin'])) {
-			?>
-				window.location.href = '../authen/login.php';
-				return;
-			<?php
+		$(document).ready(function(e) {
+			function load_cart_item_number() {
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {
+						cartItem: "cart_item"
+					},
+					success: function(response) {
+						$("#checkout_items").html(response);
+					}
+				});
 			}
-			?>
-			var $form = $(this).closest(".form-submit");
-			var productId = $form.find(".ProdId").val();
-
-			$.ajax({
-				url: '../cart/cart_action.php',
-				method: 'get',
-				data: {
-					cartadd: "themgiohang",
-					productId: productId,
-					quantity: quantity
-				},
-				dataType: 'json',
-				success: function(response) {
-					if(response.success){
-						alert(response.message);
-						load_cart_item_number();
-					}
-					else{
-						alert(response.message);
-					}
+			$('body').on('click', '#cart_link', function(e) {
+				e.preventDefault();
+				var quantity = 1;
+				<?php
+				if (!isset($_SESSION['cus_loggedin'])) {
+				?>
+					window.location.href = '../authen/login.php';
+					return;
+				<?php
 				}
+				?>
+				var $form = $(this).closest(".form-submit");
+				var productId = $form.find(".ProdId").val();
+
+				$.ajax({
+					url: '../cart/cart_action.php',
+					method: 'get',
+					data: {
+						cartadd: "themgiohang",
+						productId: productId,
+						quantity: quantity
+					},
+					dataType: 'json',
+					success: function(response) {
+						if (response.success) {
+							alert(response.message);
+							load_cart_item_number();
+						} else {
+							alert(response.message);
+						}
+					}
+				});
 			});
 		});
-	});
-</script>
+	</script>
 
 	<script src="../assets/js/jquery-3.2.1.min.js"></script>
 	<script src="../assets/styles/bootstrap4/popper.js"></script>
