@@ -47,37 +47,65 @@
                         </div>
                     </div>
                 </form>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="myfirstchart" style="height: 250px;"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="myfirstchart" style="height: 250px;"></div>
+                        </div>
                     </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                <h4 style="margin-left:80px;">Thống kê sản phẩm đơn hàng</h4>
+                    <div id="donut-example" style="height: 250px;"></div>
+                </div>
+                <div class="col-md-4">
+                    <h4 >Sản phẩm xem nhiều nhất</h4>
+                    <style>
+                        li{
+                            margin-top: 5px;
+                        }
+                    </style>
+                   
+                    <ol class="list_views">
+                        <?php
+                            $sql = "select * from product order by ProdViewCount desc limit 10";
+                            $result = mysqli_query($connection, $sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                ?>
+                                    <li>
+                                        <a target="_blank">
+                                            <?=$row['ProdName']?> - <span style="color: black;"><?=$row['ProdViewCount']?> lượt xem</span>
+                                        </a>
+                                    </li>
+                                <?php
+                            }
+                        ?>
+                    </ol>
+                </div>
+                <div class="col-md-4">
+                    <h4>Sản phẩm bán chạy nhất</h4>
+                    <ol class="list_views">
+                        <?php
+                            $sql = "select ProdName, sum(OrdQuantity) as 'LuotMuaNhieuNhat' from product inner join orderdetail on product.ProdId = orderdetail.ProdId inner join orders on  orders.OrderId = orderdetail.OrderId where OrderStatus = 3 group by ProdName order by sum(OrdQuantity) desc limit 10";
+                            $result = mysqli_query($connection, $sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                ?>
+                                    <li>
+                                        <a target="_blank">
+                                            <?=$row['ProdName']?> - <span style="color: black;"><?=$row['LuotMuaNhieuNhat']?> đã bán </span>
+                                        </a>
+                                    </li>
+                                <?php
+                            }
+                        ?>
+                    </ol>
                 </div>
             </div>
-            <!-- <h4 align=center>Thống kê truy cập</h4>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Đang online</th>
-                        <th scope="col">Tổng tháng trước</th>
-                        <th scope="col">Tổng tháng này</th>
-                        <th scope="col">Tổng 1 năm</th>
-                        <th scope="col">Tổng truy cập</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>.</td>
-                    </tr>
-                </tbody>
-            </table> -->
         </div>
     </div>
 </div>
 <?php 
+    include("../ajax/thongkesanpham.php");
     include_once('../includes/footer.php');
     
 ?>
