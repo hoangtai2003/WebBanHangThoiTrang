@@ -54,7 +54,7 @@ if (isset($_GET["CateId"])){
                             <label>Hình ảnh</label>
                             <input type="file" class="form-control" name="fimage" id="input-img">
                             <input type="hidden" name="current_image" value="<?= $row['CateImage'] ?>">
-                            <img style="margin-top: 10px;" src="../upload/<?=$row['CateImage'] ?>" width="760" class="img_preview">
+                            <img style="margin-top: 10px;" src="../upload/<?=$row['CateImage'] ?>" width="300px" class="img_preview">
                         </div>                          
                         <button name="update_category" class="btn btn-primary mt-2">Cập nhật</button>
                         <a href="myCategory.php" class="btn btn-danger mt-2">Quay lại</a>
