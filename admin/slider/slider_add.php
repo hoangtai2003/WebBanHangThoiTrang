@@ -32,7 +32,7 @@ include_once('../includes/sidebar.php')
                         <div class="form-group">
                             <label>Hình ảnh</label>
                             <input type="file" class="form-control" name="fimage" id="input-img">
-                            <img style="margin-top: 10px;" class="img_preview" width="760">
+                            <img style="margin-top: 10px;" class="img_preview" width="300px">
                         </div>
                         <button name="add_slider" class="btn btn-primary mt-2">Gửi đi</button>
                         <a href="slider_list.php" class="btn btn-danger mt-2">Quay lại</a>
