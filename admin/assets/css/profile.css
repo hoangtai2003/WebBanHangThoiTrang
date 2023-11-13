@@ -1,10 +1,6 @@
 .form-control{
     color: black !important;
 }
-.form-check{
-    display: inline-block !important;
-    margin-left: 62px;
-}
 .form-check-label{
     padding-left: 0 !important;
     font-size: 1rem;

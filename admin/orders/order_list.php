@@ -9,7 +9,6 @@ session_start();
             <li class="breadcrumb-item active">Danh sách đơn hàng</li>
         </ol>
         <div class="row">
-            <?php include('../authen/message.php'); ?>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
