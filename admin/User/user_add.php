@@ -12,7 +12,6 @@ include_once('../includes/sidebar.php')
         <li class="breadcrumb-item active">Thêm thành viên</li>
     </ol>
     <div class="row">
-        <?php include('../authen/message.php'); ?>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">

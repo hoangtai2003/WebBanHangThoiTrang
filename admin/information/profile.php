@@ -6,6 +6,12 @@ include('../includes/header.php');
 include_once('../includes/navbar_top.php');
 include_once('../includes/sidebar.php');
 ?>
+<style>
+    .form-check{
+    display: inline-block !important;
+    margin-left: 62px;
+}
+</style>
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
     </ol>
