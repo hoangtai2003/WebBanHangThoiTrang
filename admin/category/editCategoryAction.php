@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('../../config/config.php');
-$target_dir = "../upload/";
+$target_dir = "../../clients/upload/";
 $uploadOk = true;
 
 if (isset($_POST['update_category'])) {

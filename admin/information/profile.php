@@ -6,55 +6,6 @@ include('../includes/header.php');
 include_once('../includes/navbar_top.php');
 include_once('../includes/sidebar.php')
 ?>
-<style>
-    
-.form-control{
-    color: black !important;
-}
-.form-check{
-    display: inline-block !important;
-    margin-left: 62px;
-}
-.form-check-label{
-    padding-left: 0 !important;
-    font-size: 1rem;
-}
-.cut_1 {
-    border-bottom: solid 1px #ebebeb;
-    margin-bottom: 27px;
-}
-.cut_2 {
-    border-bottom: solid 1px #ebebeb;
-    margin-top: 35px;
-}
-.profile_show{
-    width: 75%;
-}
-.change_password{
-    margin-top: 20px;
-    display: flex;
-}
-.image{
-    width: 22%;	
-    margin-left: 130px;
-    margin-top: 30px;		
-}
-.select_photo{
-    border-radius: 50%;
-    margin-left: 89px;
-}
-.form-group {
-    margin-bottom: 30px;
-}
-.upload:hover{
-    background: rgba(0,0,0,.02);
-    cursor: pointer;
-    opacity: 0.5;
-}
-.change_margin{
-    margin-right: 150px;
-}
-</style>
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
     </ol>
