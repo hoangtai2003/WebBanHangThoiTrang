@@ -4,6 +4,7 @@
         header("Location: ../home/index.php");
         exit();
     }
+    include('../../helpers/function.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +16,7 @@
         <meta name="author" content="" />
         <title>Login</title>
         <link href="./../assets/css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../assets/css/toastr.min.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
@@ -54,5 +56,17 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="./../assets/js/scripts.js"></script>
+        <script src="../assets/js/jquery-3.7.1.min.js"></script>
+        <script src="../assets/js/toastr.min.js"></script>
+        <script src="../assets/js/toastr.js"></script>
+        <script>
+            <?php if (isset($_SESSION['message'])) : ?>
+                <?php
+                    $message = flash('message');
+                    $message_type = isset($_SESSION['message_type']) ? $_SESSION['message_type'] : 'success';
+                ?>
+                toastr.<?php echo $message_type; ?>("<?php echo $message; ?>");
+            <?php endif; ?>
+        </script>
     </body>
 </html>
