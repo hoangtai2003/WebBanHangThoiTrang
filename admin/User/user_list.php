@@ -24,7 +24,6 @@ include_once('../includes/sidebar.php');
                     <table class="table table-bordered">
                         <tr>
                             <th>ID</th>
-                            <th>Tên đăng nhập</th>
                             <th>Họ và Tên</th>
                             <th>Email</th>
                             <th>Ngày sinh</th>
@@ -54,7 +53,6 @@ include_once('../includes/sidebar.php');
                         ?>
                             <tr>
                                 <th scope="row"><?= $row['UserId']; ?></th>
-                                <td><?= $row['UserName']; ?></td>
                                 <td><?= $row['HoTen']; ?></td>
                                 <td><?= $row['UserEmail']; ?></td>
                                 <td><?= $row['UserBirthday']; ?></td>

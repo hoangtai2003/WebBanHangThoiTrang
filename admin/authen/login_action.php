@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once('../../config/config.php');
+    include('../../helpers/function.php');
 
     if (isset($_POST['login_btn'])){
         $name = $_POST['name'];
@@ -27,7 +28,7 @@
             header('Location: ../home/index.php');
             exit(0);
         }else {
-            $_SESSION['message'] = "Email hoặc Password không hợp lệ";
+            $_SESSION['message'] = "Thông tin đăng nhập không chính xác";
             $_SESSION['message_type'] = 'error';
             header('Location: login.php');
             exit(0);
