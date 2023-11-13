@@ -14,7 +14,6 @@ require_once('../../config/config.php');
         <li class="breadcrumb-item active">Danh sách danh mục</li>
     </ol>
     <div class="Prod">
-        <?php include('../authen/message.php'); ?>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">

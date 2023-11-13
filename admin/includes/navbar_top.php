@@ -11,8 +11,8 @@ if (isset($_SESSION['UserId'])){
 ?>
 <style>
 	.account_img{
-	width: 22px;
-	height: 22px;
+	width: 30px;
+	height: 30px;
 	border-radius: 50%;
 	margin-bottom: -3px;
 	margin-right: 10px;

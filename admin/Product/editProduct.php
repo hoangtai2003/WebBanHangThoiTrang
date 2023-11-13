@@ -39,7 +39,6 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
             <li class="breadcrumb-item active">Sửa sản phẩm</li>
         </ol>
         <div class="row">
-            <?php include('../authen/message.php'); ?>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
