@@ -10,6 +10,7 @@
         $cnew_password = $_POST['cpassword_new'];
         if (strpos($new_password, ' ') !== false || strpos($cnew_password, ' ') !== false){
             $_SESSION['message'] = "Ký tự nhập vào không được chứa khoảng trắng!";
+            $_SESSION['message_type'] = 'warning';
             header("Location: profile.php");
             exit();
         }
@@ -24,10 +25,12 @@
                     $sqlUpdate = "update user set UserPassword = '".$new_password_hash."' where UserId = '".$userid."'";
                     $resultUpdate = $connection->query($sqlUpdate);
                     $_SESSION['message'] = "Đổi mật khẩu thành công!";
+                    $_SESSION['message_type'] = 'success';
                     header('Location: profile.php');
                     exit();
                 }else{
                     $_SESSION['message'] = "Sai thông tin!";
+                    $_SESSION['message_type'] = 'error';
                     header('Location: profile.php');
                     exit();
                 }

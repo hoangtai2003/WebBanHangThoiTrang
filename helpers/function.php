@@ -8,5 +8,15 @@
         $privileges = implode("|", $privileges);
         preg_match('/index\.php|'. $privileges . '/', $uri, $matches);
         return !empty($matches);
-    }  
+    } 
+    function flash ($name, $text = ''){
+        if (isset($_SESSION[$name])){
+            $message = $_SESSION[$name];
+            unset($_SESSION[$name]);
+            return $message;
+        } else {
+            $_SESSION[$name] = $text;
+        }
+        return '';
+    } 
 ?>
