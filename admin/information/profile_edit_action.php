@@ -22,7 +22,7 @@
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
                 $_SESSION['message'] = "Email hoặc tên đã tồn tại";
-                $_SESSION['message_type'] = 'warning';
+                $_SESSION['message_type'] = 'error';
                 header("Location: profile.php?UserId=$user_id");
             } 
             else{
@@ -57,10 +57,12 @@
                     $update_result = mysqli_query($connection, $sql) or die($connection->error);
                     if ($update_result) {
                         $_SESSION['message'] = "Cập nhật thành công";
+                        $_SESSION['message_type'] = 'success';
                         header('Location: profile.php');
                         exit(0);
                     } else {
                         $_SESSION['message'] = "Đã xảy ra sự cố";
+                        $_SESSION['message_type'] = 'error';
                         header('Location: profile.php');
                         exit(0);
                     }

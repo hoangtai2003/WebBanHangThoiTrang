@@ -4,12 +4,11 @@ session_start();
 include('../../config/config.php');
 include('../includes/header.php');
 include_once('../includes/navbar_top.php');
-include_once('../includes/sidebar.php')
+include_once('../includes/sidebar.php');
 ?>
 <div class="container-fluid px-4">
     <ol class="breadcrumb mt-5">
     </ol>
-    <?php include('../authen/message.php'); ?>
     <div class="row">
         <div class="col-md-12">
             <h3>Thay đổi thông tin cá nhân</h3>
@@ -105,15 +104,15 @@ include_once('../includes/sidebar.php')
                     <div class="col-md-12 change_password">
                         <div class="form-group change_margin ">
                             <label>Nhập mật khẩu cũ</label>
-                            <input require type="password" name="password_old" class="form-control" >
+                            <input required type="password" name="password_old" class="form-control" >
                         </div>
                         <div class="form-group change_margin ">
                             <label>Nhập mật khẩu mới</label>
-                            <input require type="password" name="password_new" class="form-control">
+                            <input required type="password" name="password_new" class="form-control">
                         </div>
                         <div class="form-group change_margin">
                             <label>Xác nhận mật khẩu</label>
-                            <input require type="password" name="cpassword_new" class="form-control">
+                            <input required type="password" name="cpassword_new" class="form-control">
                         </div>
                     </div>
                 </div>

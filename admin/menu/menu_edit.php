@@ -11,7 +11,8 @@
 	
 	$result = $connection->query($sql) or die($connection->error);
 	if ($result->num_rows==0){
-		$_SESSION["menu_error"]="Data not exist!";
+		$_SESSION["message"]="Data not exist!";
+		$_SESSION["message_type"]="error";
 		header("Location:menu_view.php");
 	} else {
 		$row = $result->fetch_assoc();
@@ -46,5 +47,4 @@
 <?php 
 	}
 	$connection->close();
-	unset($_SESSION["menu_edit_error"]);
 ?>

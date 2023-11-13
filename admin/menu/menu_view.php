@@ -15,7 +15,6 @@
         <li class="breadcrumb-item active">Danh sách Menu</li>
     </ol>   
     <div class="row">
-        <?php include('../authen/message.php'); ?>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
