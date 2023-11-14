@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('../../config/config.php');
+include('../../helpers/function.php');
 $target_dir = "../upload/";
 $uploadOk = true;
 if (isset($_POST['update_customer'])) {
@@ -12,7 +13,6 @@ if (isset($_POST['update_customer'])) {
     $birthday = $_POST['CusBirthday'];
     $gender = $_POST['CusGender'];
     $update_username = false; // Tạo biến để kiểm tra xem "username" đã thay đổi hay không
-
     // Kiểm tra xem "username" có thay đổi hay không
     $check_username_sql = "SELECT CusUserName FROM customer WHERE CusId = '$cus_id'";
     $check_username_result = mysqli_query($connection, $check_username_sql);
@@ -29,6 +29,7 @@ if (isset($_POST['update_customer'])) {
 
     if (mysqli_num_rows($result) > 0) {
         $_SESSION['message'] = "Email hoặc tên đăng nhập đã tồn tại";
+        $_SESSION['message_type'] = 'warning';
         header("Location: profile.php");
     } else {
         if (isset($_FILES['fimage']) && !empty($_FILES['fimage']['name'])) {
@@ -42,10 +43,12 @@ if (isset($_POST['update_customer'])) {
                     $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
                     if ($update_result) {
                         $_SESSION['message'] = "Cập nhật thành công";
+                        $_SESSION['message_type'] = 'success';
                         header('Location: profile.php');
                         exit(0);
                     } else {
                         $_SESSION['message'] = "Đã xảy ra sự cố";
+                        $_SESSION['message_type'] = 'error';
                         header('Location: profile.php');
                         exit(0);
                     }
@@ -54,10 +57,12 @@ if (isset($_POST['update_customer'])) {
                 $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
                 if ($update_result) {
                     $_SESSION['message'] = "Cập nhật thành công";
+                    $_SESSION['message_type'] = 'success';
                     header('Location: profile.php');
                     exit(0);
                 } else {
                     $_SESSION['message'] = "Đã xảy ra sự cố";
+                    $_SESSION['message_type'] = 'error';
                     header('Location: profile.php');
                     exit(0);
                 }
@@ -73,22 +78,22 @@ if (isset($_POST['update_customer'])) {
             $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
             if ($update_result) {
                 $_SESSION['message'] = "Cập nhật thành công";
-                header('Location: profile.php');
-                exit(0);
-            } else {
-                $_SESSION['message'] = "Đã xảy ra sự cố";
+                $_SESSION['message_type'] = 'success';
                 header('Location: profile.php');
                 exit(0);
             }
         }
+
         $update_sql = "UPDATE customer SET CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
         $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
         if ($update_result) {
             $_SESSION['message'] = "Cập nhật thành công";
+            $_SESSION['message_type'] = 'success';
             header('Location: profile.php');
             exit(0);
         } else {
             $_SESSION['message'] = "Đã xảy ra sự cố";
+            $_SESSION['message_type'] = 'error';
             header('Location: profile.php');
             exit(0);
         }
