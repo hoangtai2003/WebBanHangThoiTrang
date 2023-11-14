@@ -79,9 +79,17 @@ star-rating label:hover,
     border: none;
     padding: 10px 20px;
 }
+.btn-action {
+    background-color: #fe4c50;
+    color: #fff;
+}
+.btn-action:hover {
+    background-color: #ff7c7e;
+
+}
 .btn-loggin a {
     text-decoration: none;
-    color: #fe4c50;
+    color: #fff;
 }
 .notice-loggin {
     text-align: center;

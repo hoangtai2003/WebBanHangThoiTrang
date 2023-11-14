@@ -6,6 +6,8 @@ require_once('../../config/config.php');
 $ProdId = $_REQUEST['ProdId'];
 if (isset($_SESSION['cusid'])) {
 	$CusId = $_SESSION['cusid'];
+} else {
+	$CusId = "";
 }
 
 
@@ -45,6 +47,16 @@ $data_rating = mysqli_fetch_assoc($result_rating);
 // Lấy ảnh mô tả của sản phẩm
 $sqlImgProd = "select * from productimage where ProdId = $ProdId";
 $imgProd = mysqli_query($connection, $sqlImgProd);
+
+
+// Kiểm tra xem người dùng đã đánh giá chưa
+if (isset($_SESSION['cusid'])) {
+	$sql_check_rate = "SELECT COUNT(*) as count FROM comment WHERE ProdId = $ProdId AND CusId = $CusId";
+	$result_check_rate = mysqli_query($connection, $sql_check_rate);
+	$data_check_rate = mysqli_fetch_assoc($result_check_rate);
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,8 +189,8 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 					<div class="col">
 						<div class="tabs_container">
 							<ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
-								<li class="tab active" data-active-tab="tab_1"><span>Description</span></li>
-								<li class="tab" data-active-tab="tab_3"><span>Reviews(<?php echo count($data_feedback); ?>)</span></li>
+								<li class="tab " data-active-tab="tab_1"><span>Description</span></li>
+								<li class="tab active" data-active-tab="tab_3"><span>Reviews(<?php echo count($data_feedback); ?>)</span></li>
 							</ul>
 						</div>
 					</div>
@@ -213,17 +225,17 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 												<div class="user">
 													<div class="user_pic">
 														<?php
-															if($feedback['ChangeImage'] == 1){
-																?>
-																	<img src="../upload/<?= $feedback["CusImage"] ?>" alt="">
-																<?php
-															} else {
-																?>
-																	<img src="<?= $feedback["CusImage"] ?>" alt="">
-																<?php
-															}
+														if ($feedback['ChangeImage'] == 1) {
 														?>
-		
+															<img src="../upload/<?= $feedback["CusImage"] ?>" alt="">
+														<?php
+														} else {
+														?>
+															<img src="<?= $feedback["CusImage"] ?>" alt="">
+														<?php
+														}
+														?>
+
 													</div>
 													<div class="user_rating">
 														<ul class="star_rating">
@@ -253,38 +265,47 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 								<div class="col-lg-6 add_review_col">
 									<div class="add_review">
 										<?php include('../authen/message.php') ?>
-
 										<?php
-										if (isset($_SESSION['cus_loggedin']) && isset($_SESSION['cusid'])) { ?>
-											<form class="form_reviews" action="./ProductFeedbackAction.php?ProdId=<?php echo $dataProduct["ProdId"] ?>" method="POST" id="review_form">
-												<div>
-													<div class="rating-container">
-														<h1>Your Rating:</h1>
-														<span class="star-rating">
-															<input type="radio" id="star5" name="rating" value="5">
-															<label for="star5" title="5 sao"></label>
-															<input type="radio" id="star4" name="rating" value="4">
-															<label for="star4" title="4 sao"></label>
-															<input type="radio" id="star3" name="rating" value="3">
-															<label for="star3" title="3 sao"></label>
-															<input type="radio" id="star2" name="rating" value="2">
-															<label for="star2" title="2 sao"></label>
-															<input type="radio" id="star1" name "rating" value="1">
-															<label for="star1" title="1 sao"></label>
-														</span>
-													</div>
-													<textarea id="review_message" class="input_review" name="description" placeholder="Viết nhận xét" rows="4" data-error="Please, leave us a review."></textarea>
-												</div>
-												<div class="text-left text-sm-right">
-													<button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">Submit</button>
-												</div>
-											</form>
-										<?php
-										} else {
+										if (isset($_SESSION['cus_loggedin']) && isset($_SESSION['cusid'])) {
+											if ($data_check_rate["count"] < 1) {
 										?>
+												<form class="form_reviews" action="./ProductFeedbackAction.php?ProdId=<?php echo $dataProduct["ProdId"] ?>" method="POST" id="review_form">
+													<div>
+														<div class="rating-container">
+															<h1>Your Rating:</h1>
+															<span class="star-rating">
+																<input type="radio" id="star5" name="rating" value="5">
+																<label for="star5" title="5 sao"></label>
+																<input type="radio" id="star4" name="rating" value="4">
+																<label for="star4" title="4 sao"></label>
+																<input type="radio" id="star3" name="rating" value="3">
+																<label for="star3" title="3 sao"></label>
+																<input type="radio" id="star2" name="rating" value="2">
+																<label for="star2" title="2 sao"></label>
+																<input type="radio" id="star1" name "rating" value="1">
+																<label for="star1" title="1 sao"></label>
+															</span>
+														</div>
+														<textarea id="review_message" class="input_review" name="description" placeholder="Viết nhận xét" rows="4" data-error="Please, leave us a review."></textarea>
+													</div>
+													<div class="text-left text-sm-right">
+														<button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">Submit</button>
+													</div>
+												</form>
+											<?php
+											} else {
+											?>
+												<h1 class="notice-loggin">Bạn đã đánh giá sản phẩm rồi, Tiếp tục mua sắm để đánh giá sản phẩm khác nhé!</h1>
+												<div class="btn-loggin">
+													<button class="btn btn-action"><a href="../index/index.php">Mua sắm</a></button>
+												</div>
+											<?php
+											}
+										} else {
+											?>
 											<h1 class="notice-loggin">Bạn chưa đăng nhập, vui lòng đăng nhập để đánh giá</h1>
 											<div class="btn-loggin">
-												<button class="btn btn-primary"><a href="../authen/login.php">Đăng nhập</a></button>
+												<button class="btn btn-action"><a href="../authen/login.php">Đăng nhập</a></button>
 											</div>
 										<?php
 										}
@@ -315,6 +336,36 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 	<script src="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="../assets/js/single_custom.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- Thêm sau phần hiển thị reviews -->
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#review_submit').click(function(e) {
+				e.preventDefault();
+				var rating = $('input[name="rating"]:checked').val();
+				var description = $('#review_message').val();
+
+				// Thực hiện AJAX request
+				$.ajax({
+					url: './ProductFeedbackAction.php?ProdId=<?php echo $dataProduct["ProdId"] ?>',
+					method: 'POST',
+					data: {
+						rating: rating,
+						description: description
+					},
+					dataType: 'json',
+					success: function(response) {
+						// Xử lý kết quả từ server
+						alert(response.message);
+
+						// Reload trang để cập nhật reviews
+						location.reload();
+					}
+				});
+			});
+		});
+	</script>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('body').on('click', '.minus', function(e) {
