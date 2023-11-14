@@ -27,7 +27,7 @@
             header("Location: ../index/index.php"); // Chuyển hướng đến trang dashboard hoặc trang chính sau khi đăng nhập thành công
             exit();
         } else {
-            $_SESSION['message'] = "Sai tên đăng nhập hoặc mật khẩu!";
+            $_SESSION['message'] = "Thông tin đăng nhập không chính xác!";
             header("Location: ./login.php"); // Chuyển hướng về trang đăng nhập nếu đăng nhập không thành công
             exit();
         }

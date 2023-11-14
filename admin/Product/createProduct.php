@@ -21,7 +21,6 @@ $result = $connection->query($sql) or die($connection->connect_error);
             <li class="breadcrumb-item active">Thêm sản phẩm</li>
         </ol>
         <div class="row">
-            <?php include('../authen/message.php'); ?>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
