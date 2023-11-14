@@ -4,6 +4,7 @@ if (isset($_SESSION['cus_loggedin']) && $_SESSION['cus_loggedin'] == true) {
     header("Location: ../index/index.php");
     exit();
 }
+include('../../helpers/function.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,7 @@ if (isset($_SESSION['cus_loggedin']) && $_SESSION['cus_loggedin'] == true) {
     <meta name="author" content="" />
     <title>Đăng nhập</title>
     <link href="../../admin/assets/css/styles.css" rel="stylesheet" />
+    <link href="../../admin/assets/css/toastr.min.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
@@ -31,7 +33,6 @@ if (isset($_SESSION['cus_loggedin']) && $_SESSION['cus_loggedin'] == true) {
                                     <h3 class="text-center font-weight-light my-4">Đăng nhập</h3>
                                 </div>
                                 <div class="card-body">
-                                    <?php include('message.php') ?>
                                     <form method="post" action="./login_action.php">
                                         <div class="form-floating mb-3">
                                             <input required class="form-control" name="phone" type="text" placeholder="Số điện thoại" />
@@ -59,6 +60,18 @@ if (isset($_SESSION['cus_loggedin']) && $_SESSION['cus_loggedin'] == true) {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="../../admin/assets/js/scripts.js"></script>
+    <script src="../../admin/assets/js/jquery-3.7.1.min.js"></script>
+    <script src="../../admin/assets/js/toastr.min.js"></script>
+    <script src="../../admin/assets/js/toastr.js"></script>
+    <script>
+        <?php if (isset($_SESSION['message'])) : ?>
+            <?php
+                $message = flash('message');
+                $message_type = isset($_SESSION['message_type']) ? $_SESSION['message_type'] : 'success';
+            ?>
+            toastr.<?php echo $message_type; ?>("<?php echo $message; ?>");
+        <?php endif; ?>
+    </script>
 </body>
 
 </html>
