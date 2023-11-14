@@ -4,6 +4,7 @@ include("../../config/config.php");
 if (!isset($_SESSION["cus_loggedin"])) {
     header("Location: ../authen/login.php");
 }
+include('../../helpers/function.php');
 ?>
 <head>
     <title>Colo Shop</title>
@@ -20,6 +21,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
 	<link rel="stylesheet" type="text/css" href="../assets/styles/profile.css">
+	<link href="../../admin/assets/css/toastr.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -41,7 +43,6 @@ if (!isset($_SESSION["cus_loggedin"])) {
 						<li class="active"><i class="fa fa-angle-right" aria-hidden="true"></i>Tài khoản của tôi</a></li>
 					</ul>
                 </div>
-				<?php include("../authen/message.php") ?>
 				<div class="row">
 					<div class="col-md-12">
 						<h3>Hồ sơ của tôi</h3>
@@ -165,6 +166,17 @@ if (!isset($_SESSION["cus_loggedin"])) {
 <script src="../assets/js/custom.js"></script>
 <script src="../assets/js/handlebutton.js"></script>
 <script src="../assets/js/show_image.js"></script>
+<script src="../../admin/assets/js/toastr.min.js"></script>
+<script src="../../admin/assets/js/toastr.js"></script>
+<script>
+	<?php if (isset($_SESSION['message'])) : ?>
+		<?php
+			$message = flash('message');
+			$message_type = isset($_SESSION['message_type']) ? $_SESSION['message_type'] : 'success';
+		?>
+		toastr.<?php echo $message_type; ?>("<?php echo $message; ?>");
+	<?php endif; ?>
+</script>
 </body>
 
 </html>

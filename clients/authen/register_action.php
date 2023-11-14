@@ -1,6 +1,7 @@
 <?php 
     session_start();
     require_once ('../../config/config.php');
+    include('../../helpers/function.php');
     function generateRandomUsername($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $username = '';
@@ -16,11 +17,12 @@
         $password = $_POST['password'];
         $password_hash = md5($password);
         $confirm_password = $_POST['cpassword'];
-        $email = test_input($_POST['email']);
+        $email = $_POST['email'];
         $phone = $_POST['phone'];
 
         if ( strpos($email, ' ') !== false || strpos($password, ' ') !== false){
             $_SESSION['message'] = "Ký tự nhập vào không được chứa khoảng trắng!";
+            $_SESSION['message_type'] = 'warning';
             header("Location: ./register.php");
             exit();
         }
@@ -31,6 +33,7 @@
                     $result = $connection->query($sql) or die ($connection->error);
                     if ($result->num_rows > 0){
                         $_SESSION['message'] = "Email hoặc Số điện thoại đã tồn tại!";
+                        $_SESSION['message_type'] = 'warning';
                         header("Location: ./register.php");
                         exit();
                     } else {
@@ -40,22 +43,26 @@
                         if ($user_query_run)
                         {
                             $_SESSION['message'] = "Đăng ký thành công";
+                            $_SESSION['message_type'] = 'success';
                             header("Location: ./login.php");
                             exit();
                         } else {
                             $_SESSION['message'] = "Xảy ra lỗi!";
+                            $_SESSION['message_type'] = 'error';
                             header( "Location: ./register.php");
                             exit();
                         }
                     }
                 } else {
                     $_SESSION['message'] = 'Nhập lại mật khẩu chưa chính xác!';
+                    $_SESSION['message_type'] = 'error';
                     header("Location: ./register.php");
                     exit();
                 }
             }
             else{
                 $_SESSION['message'] = 'Email không hợp lệ';
+                $_SESSION['message_type'] = 'error';
                 header("Location: ./register.php");
                 exit();
             }
@@ -65,11 +72,4 @@
         header("Location: ./register.php");
         exit();
     }
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-    
 ?>

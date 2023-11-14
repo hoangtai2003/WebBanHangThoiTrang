@@ -1,5 +1,6 @@
 <?php
     session_start();
+    include('../../helpers/function.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +12,7 @@
         <meta name="author" content="" />
         <title>Đăng ký</title>
         <link href="../../admin/assets/css/styles.css" rel="stylesheet" />
+        <link href="../../admin/assets/css/toastr.min.css" rel="stylesheet">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
@@ -23,7 +25,6 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng ký</h3></div>
                                     <div class="card-body">
-                                        <?php include('message.php') ?>
                                         <form action="./register_action.php" method="POST">
                                             <div class="form-floating mb-3">
                                                 <input required class="form-control" type="text" name="phone" placeholder="Số điện thoại" />
@@ -64,5 +65,17 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="../../admin/js/scripts.js"></script>
+        <script src="../../admin/assets/js/jquery-3.7.1.min.js"></script>
+        <script src="../../admin/assets/js/toastr.min.js"></script>
+        <script src="../../admin/assets/js/toastr.js"></script>
+        <script>
+            <?php if (isset($_SESSION['message'])) : ?>
+                <?php
+                    $message = flash('message');
+                    $message_type = isset($_SESSION['message_type']) ? $_SESSION['message_type'] : 'success';
+                ?>
+                toastr.<?php echo $message_type; ?>("<?php echo $message; ?>");
+            <?php endif; ?>
+        </script>
     </body>
 </html>
