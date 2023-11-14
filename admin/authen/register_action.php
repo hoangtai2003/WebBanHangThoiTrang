@@ -1,9 +1,11 @@
 <?php 
     session_start();
     require_once ('../../config/config.php');
+    include('../../helpers/function.php');
     if (isset($_POST['register_btn'])){
         $name = $_POST['name'];
-        $email = test_input($_POST['email']);
+        $email = $_POST['email'];
+        $hoten = $_POST['hoten'];
         $password = $_POST['password'];
         $password_hash = md5($password);
         $confirm_password =  $_POST['cpassword'];
@@ -15,7 +17,7 @@
                 $_SESSION['message_type'] = 'warning';
                 header("Location: register.php");
             } else {
-                $user_query = "INSERT INTO user (UserName, UserEmail, UserPassword) values('$name', '$email', '$password_hash')";
+                $user_query = "INSERT INTO user (UserName,HoTen, UserEmail, UserPassword) values('$name', '$hoten', '$email', '$password_hash')";
                 $user_query_run = mysqli_query($connection,$user_query);
                 if ($user_query_run)
                 {
@@ -38,12 +40,6 @@
     } else {
         header("Location: register.php");
         exit();
-    }
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
     }
     
 ?>

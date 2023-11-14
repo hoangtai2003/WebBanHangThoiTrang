@@ -22,6 +22,17 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         <script src="../assets/js/date.js"></script>
         <script src="../assets/js/thongkedonhang.js"></script>
+        <script src="../assets/js/toastr.min.js"></script>
+        <script src="../assets/js/toastr.js"></script>
+        <script>
+            <?php if (isset($_SESSION['message'])) : ?>
+                <?php
+                    $message = flash('message');
+                    $message_type = isset($_SESSION['message_type']) ? $_SESSION['message_type'] : 'success';
+                ?>
+                toastr.<?php echo $message_type; ?>("<?php echo $message; ?>");
+            <?php endif; ?>
+        </script>
         <script>
             $(document).ready(function(){
                 var colorDanger = "#FF1744";

@@ -12,7 +12,6 @@ include_once('../includes/sidebar.php')
         <li class="breadcrumb-item active">Sửa thành viên</li>
     </ol>
     <div class="row">
-    <?php include('../authen/message.php'); ?>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -31,14 +30,6 @@ include_once('../includes/sidebar.php')
                         <form action="user_edit_action.php" method="POST">
                             <div class="form-group">
                                 <input hidden type="text" name="user_id" class="form-control" value=<?= $user['UserId'] ?>>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 15px;">
-                                <label>Tên người dùng</label>
-                                <input type="text" name="name" class="form-control" value="<?= $user['UserName'] ?>">
-                            </div>
-                            <div class="form-group" style="margin-bottom: 15px;">
-                                <label>Email</label>
-                                <input type="email" class="form-control" name="email" value=<?= $user['UserEmail'] ?>>
                             </div>
                             <div class="form-group" style="margin-bottom: 15px;">
                                 <label>Trạng thái</label>
