@@ -32,6 +32,7 @@ include_once('../includes/sidebar.php');
                             <th>Ngày sinh</th>
                             <th>Giới tính</th>
                             <th>Trạng thái</th>
+                            <th>Sửa</th>
                             <th>Chăm sóc khách hàng</th>
                         </tr>
                         <?php
@@ -76,6 +77,13 @@ include_once('../includes/sidebar.php');
                                         }
                                         ?>
                                     </td>
+                                    <?php if (checkPrivilege('customer_edit.php?CusId=0')) { ?>
+                                        <td>
+                                            <a href="customer_edit.php?CusId=<?= $row['CusId'] ?>" class="btn btn-success">
+                                                <i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa
+                                            </a>
+                                        </td>
+                                    <?php } ?>
                                     <td style="position:relative">
                                         <a href="customer_support.php?CusId=<?php echo $row["CusId"]; ?>" class="btn btn-primary" value="<?= $row['CusId']; ?>"><i style="margin-right: 10px;" class="fa-brands fa-facebook-messenger">
                                             </i>Nhắn tin
