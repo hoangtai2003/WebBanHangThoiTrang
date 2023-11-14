@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('../../config/config.php');
-$CateId = $_REQUEST['CateId'];
+	$CateId = $_REQUEST['CateId'];
 $sqlCate = "Select * from categories";
 $resultCate = mysqli_query($connection, $sqlCate);
 
@@ -37,7 +37,6 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 </head>
 
 <body>
-
 	<div class="super_container">
 
 		<!-- Header -->
@@ -84,31 +83,22 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 											<li class=""><a href="categories.php?CateId=<?php echo $row["CateId"] ?>"><?= $row["CateName"] ?></a></li>
 										<?php } ?>
 									<?php } ?>
-									<!-- <li class="active"><a href="categories_viewhome.php?CateId=1"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li> -->
 								<?php } ?>
 							</ul>
 						</div>
-
-						<!-- Price Range Filtering -->
-						<div class="sidebar_section">
-							<div class="sidebar_title">
-								<h5>Filter by Price</h5>
-							</div>
-							<p>
-								<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-							</p>
-							<div id="slider-range"></div>
-							<div class="filter_button"><span>filter</span></div>
+						<div>
+							<h5>Khoảng giá</h5>
 						</div>
-
+						<div class="shopee-price-range-filter__inputs"><input id="min-price" type="number" aria-label="" maxlength="13" class="shopee-price-range-filter__input" placeholder="₫ từ" value="" fdprocessedid="krwrii">
+							<div class="shopee-price-range-filter__range-line"></div><input id="max-price" type="number" aria-label="" maxlength="13" class="shopee-price-range-filter__input" placeholder="₫ đến" value="" fdprocessedid="kthd6b">
+						</div>
+						<div class="filter_button" onclick="filterByPrice()"><span>Áp dụng</span></div>
 					</div>
 
 					<!-- Main Content -->
-
 					<div class="main_content">
 
 						<!-- Products -->
-
 						<div class="products_iso">
 							<div class="row">
 								<div class="col">
@@ -124,6 +114,8 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 													<li class="type_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Default Sorting</span></li>
 													<li class="type_sorting_btn" data-isotope-option='{ "sortBy": "price" }'><span>Price</span></li>
 													<li class="type_sorting_btn" data-isotope-option='{ "sortBy": "name" }'><span>Product Name</span></li>
+													<!-- <li class="type_sorting_btn"><span>Giá: cao đến thấp</span></li>
+													<li class="type_sorting_btn"><span>Giá: thấp đến cao</span></li> -->
 												</ul>
 											</li>
 											<li>
@@ -154,8 +146,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 
 									<!-- Product Grid -->
 
-									<div class="product-grid">
-
+									<div class="product-grid" style="display: flex;">
 										<!-- Product 1 -->
 										<?php
 										$sql = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
@@ -169,13 +160,11 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1 and product.CateId = '$CateId';
 										";
 										$result = $connection->query($sql);
-											if(isset($CateId)) {
-										if ($result->num_rows > 0) {
-											while ($row = $result->fetch_assoc()) {
+										if (isset($CateId)) {
+											if ($result->num_rows > 0) {
+												while ($row = $result->fetch_assoc()) {
 										?>
-												<form action="" class="form-submit">
-													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
-													<div class="product-item women">
+													<div class="product-item">
 														<div class="product product_filter">
 															<div class="product_image">
 																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
@@ -201,30 +190,25 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
 															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
 														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
+															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
 														}
 														?>
 													</div>
-												</form>
-										<?php
-
+												<?php
+												}
+											} else {
+												echo "Không có sản phẩm nào";
 											}
 										} else {
-											echo "Không có sản phẩm nào";
-										}
-									} else {
-										if ($resultProduct->num_rows > 0) {
-											while ($row = $resultProduct->fetch_assoc()) {
-										?>
-												<form action="" class="form-submit">
-													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
-													<div class="product-item women">
+											if ($resultProduct->num_rows > 0) {
+												while ($row = $resultProduct->fetch_assoc()) {
+												?>
+													<div class="product-item">
 														<div class="product product_filter">
 															<div class="product_image">
 																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
 															</div>
 															<div class="favorite"></div>
-															<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
 															<div class="product_info">
 																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
 																<?php
@@ -248,15 +232,13 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 														}
 														?>
 													</div>
-												</form>
-										<?php
 
+										<?php
+												}
+											} else {
+												echo "Không có sản phẩm nào";
 											}
-										} else {
-											echo "Không có sản phẩm nào";
 										}
-									}
-										$connection->close();
 										?>
 									</div>
 
@@ -291,7 +273,6 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 										</div>
 
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -370,6 +351,37 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 	<script src="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 	<script src="../assets/js/categories_custom.js"></script>
 
+	<!-- lọc giá sản phẩm -->
+	<script>
+		const deleteSelect = document.querySelector('.btn-delete');
+		console.log(deleteSelect)
+		function filterByPrice() {
+			var minPrice = document.getElementById("min-price").value;
+			var maxPrice = document.getElementById("max-price").value;
+			// sử dụng ajax để gửi giá lên server
+
+			if (minPrice === "" || maxPrice === "") {
+				alert("Vui lòng nhập khoảng giá trước khi áp dụng bộ lọc.");
+				return;
+			}
+			var CateId = <?php echo json_encode($CateId); ?>;
+			$.ajax({
+				type: 'POST',
+				url: 'filter_products.php',
+				data: {
+					CateId: CateId,
+					minPrice: minPrice,
+					maxPrice: maxPrice
+				},
+				success: function(response) {
+					$('.product-grid').html(response);
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		}
+	</script>
 </body>
 
 </html>

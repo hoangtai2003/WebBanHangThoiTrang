@@ -1046,6 +1046,8 @@ section
 }
 .product_image img
 {
+	object-fit: cover;
+    height: 240px;
 	width: 100%;
 }
 .product_info
