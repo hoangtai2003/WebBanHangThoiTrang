@@ -21,7 +21,7 @@
             $sql = "SELECT UserName, UserEmail from user where  (UserEmail = '$email' or UserName ='$username') and UserId != '$user_id'";
             $result = mysqli_query($connection,$sql) or die ($connection->error);
             if (mysqli_num_rows($result) > 0){
-                $_SESSION['message'] = "Email hoặc tên đã tồn tại";
+                $_SESSION['message'] = "Email hoặc tên đăng nhập đã tồn tại";
                 $_SESSION['message_type'] = 'error';
                 header("Location: profile.php?UserId=$user_id");
             } 
