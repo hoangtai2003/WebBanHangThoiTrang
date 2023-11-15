@@ -164,6 +164,8 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 											if ($result->num_rows > 0) {
 												while ($row = $result->fetch_assoc()) {
 										?>
+												<form action="" class="form-submit">
+													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
 													<div class="product-item">
 														<div class="product product_filter">
 															<div class="product_image">
@@ -194,6 +196,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 														}
 														?>
 													</div>
+												</form>
 												<?php
 												}
 											} else {
@@ -203,6 +206,8 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 											if ($resultProduct->num_rows > 0) {
 												while ($row = $resultProduct->fetch_assoc()) {
 												?>
+												<form action="" class="form-submit">
+													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
 													<div class="product-item">
 														<div class="product product_filter">
 															<div class="product_image">
@@ -232,6 +237,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 														}
 														?>
 													</div>
+												</form>
 
 										<?php
 												}
