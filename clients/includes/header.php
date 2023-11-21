@@ -10,7 +10,7 @@ include("../../config/config.php");
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="top_nav_left">free shipping on all u.s orders over $50</div>
+                <div class="top_nav_left">Miễn phí vận chuyển nội thành Hà Nội</div>
             </div>
             <div class="col-md-6 text-right">
                 <div class="top_nav_right">
@@ -19,27 +19,23 @@ include("../../config/config.php");
                             if(isset($_SESSION['cus_loggedin']) && $_SESSION['cus_loggedin'] == true){
                         ?>
                         <li class="currency">
-                            <a href="#">
-                                usd
+                             <a href="#">
+                                Mệnh giá
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="currency_selection">
-                                <li><a href="#">cad</a></li>
-                                <li><a href="#">aud</a></li>
-                                <li><a href="#">eur</a></li>
-                                <li><a href="#">gbp</a></li>
+                                <li><a href="#">VNĐ VNĐ</a></li>
+                                <li><a href="#">$ USD</a></li>
                             </ul>
                         </li>
                         <li class="language">
                             <a href="#">
-                                English
+                                Ngôn ngữ
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="language_selection">
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">Italian</a></li>
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
+                                <li><a href="#">Tiếng Việt</a></li>
+                                <li><a href="#">English</a></li>
                             </ul>
                         </li>
                         <?php
@@ -93,26 +89,22 @@ include("../../config/config.php");
                         ?>
                         <li class="currency">
                             <a href="#">
-                                usd
+                                Mệnh giá
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="currency_selection">
-                                <li><a href="#">cad</a></li>
-                                <li><a href="#">aud</a></li>
-                                <li><a href="#">eur</a></li>
-                                <li><a href="#">gbp</a></li>
+                                <li><a href="#">VNĐ VNĐ</a></li>
+                                <li><a href="#">$ USD</a></li>
                             </ul>
                         </li>
                         <li class="language">
                             <a href="#">
-                                English
+                                Ngôn ngữ
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="language_selection">
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">Italian</a></li>
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
+                                <li><a href="#">Tiếng Việt</a></li>
+                                <li><a href="#">English</a></li>
                             </ul>
                         </li>
                         <li class="account" style="border-right: solid 1px #33333b;padding-right: 21px;">

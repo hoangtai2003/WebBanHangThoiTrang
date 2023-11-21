@@ -65,7 +65,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 					<div class="sidebar">
 						<div class="sidebar_section">
 							<div class="sidebar_title">
-								<h5>Product Category</h5>
+								<h4>Danh mục</h4>
 							</div>
 							<ul class="sidebar_categories">
 								<?php if (!isset($_REQUEST['CateId'])) { ?>
