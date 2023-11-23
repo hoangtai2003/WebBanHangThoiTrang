@@ -5,7 +5,11 @@ include("../../config/config.php");
 <header class="header trans_300">
 
 <!-- Top Navigation -->
-
+<style>
+    .currency > a {
+        text-transform: none !important;
+    }
+</style>
 <div class="top_nav">
     <div class="container">
         <div class="row">
@@ -78,7 +82,7 @@ include("../../config/config.php");
                                 ?>
                                     <li><a href="../information/profile.php"><i class="fa fa-user"></i>Tài khoản</a></li>  
                                     <li><a href="../cart/percharse_order.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Đơn mua</a></li>
-                                    <li><a href="../authen/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
+                                    <li><a href="../authen/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a></li>
                                 <?php    
                                     }
                                 ?>
@@ -108,16 +112,14 @@ include("../../config/config.php");
                             </ul>
                         </li>
                         <li class="account" style="border-right: solid 1px #33333b;padding-right: 21px;">
-                            <a href="../authen/register.php">Register</a>
+                            <a href="../authen/register.php">Đăng ký</a>
                         </li>
                         <li class="account">
-                            <a href="../authen/login.php">Sign in</a>
+                            <a href="../authen/login.php">Đăng nhập</a>
                         </li>
                         <?php
                             }
                         ?>
-                        <!-- Currency / Language / My Account -->
-
                     </ul>
                 </div>
             </div>

@@ -38,7 +38,7 @@ include('../../helpers/function.php');
 			<div class="col product_section clearfix">
 				<div class="breadcrumbs d-flex flex-row align-items-center">
 					<ul>
-						<li>Trang chủ</a></li>
+						<li><a href="../index/index.php">Trang chủ</a></li>
 						<li class="active"><i class="fa fa-angle-right" aria-hidden="true"></i>Tài khoản của tôi</a></li>
 					</ul>
                 </div>

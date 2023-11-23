@@ -15,7 +15,7 @@ $result_top_sellers = mysqli_query($connection, $sql_top_sellers);
 			<div class="row">
 				<div class="col text-center">
 					<div class="section_title new_arrivals_title">
-						<h2>Best Sellers</h2>
+						<h2 style="color: #a84832;">Gợi ý hôm nay</h2>
 					</div>
 				</div>
 			</div>
@@ -23,7 +23,6 @@ $result_top_sellers = mysqli_query($connection, $sql_top_sellers);
 				<div class="col">
 					<div class="product_slider_container">
 						<div class="owl-carousel owl-theme product_slider">
-							<!-- Slide 1 -->
 							<?php if(mysqli_fetch_assoc($result_top_sellers) > 0) { 
 								foreach($result_top_sellers as $row) {
 								?>
@@ -31,13 +30,13 @@ $result_top_sellers = mysqli_query($connection, $sql_top_sellers);
 								<div class="product-item">
 									<div class="product discount">
 										<div class="product_image">
-											<img src="../upload/<?=$row["ProdImage"]?>" alt="">
+											<img src="../../admin/upload/<?=$row["ProdImage"]?>" alt="">
 										</div>
 										<div class="favorite favorite_left"></div>
 										<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span><?=$row["ProdPriceSale"] - $row["ProdPrice"]?></span></div>
 										<div class="product_info">
 											<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?=$row["ProdId"]?>"><?=$row["ProdName"]?></a></h6>
-											<div class="product_price"><?=$row["ProdPriceSale"]?><span><?=$row["ProdPrice"]?></span></div>
+											<div class="product_price"><?= number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?= number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
 										</div>
 									</div>
 								</div>
