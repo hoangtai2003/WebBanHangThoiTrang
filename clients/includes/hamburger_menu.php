@@ -7,26 +7,22 @@
 					?>
 					<li class="menu_item has-children">
 						<a href="#">
-							usd
+							Mệnh giá
 							<i class="fa fa-angle-down"></i>
 						</a>
 						<ul class="menu_selection">
-							<li><a href="#">cad</a></li>
-							<li><a href="#">aud</a></li>
-							<li><a href="#">eur</a></li>
-							<li><a href="#">gbp</a></li>
+							<li><a href="#">VNĐ VNĐ</a></li>
+							<li><a href="#">$ USD</a></li>
 						</ul>
 					</li>
 					<li class="menu_item has-children">
 						<a href="#">
-							English
-							<i class="fa fa-angle-down"></i>
+                            Ngôn ngữ
+                            <i class="fa fa-angle-down"></i>
 						</a>
 						<ul class="menu_selection">
-							<li><a href="#">French</a></li>
-							<li><a href="#">Italian</a></li>
-							<li><a href="#">German</a></li>
-							<li><a href="#">Spanish</a></li>
+							<li><a href="#">Tiếng Việt</a></li>
+							<li><a href="#">English</a></li>
 						</ul>
 					</li>
 					<?php
@@ -49,8 +45,19 @@
 						}
 					</style>
 					<li class="menu_item has-children">
-						<a href="#"><img class="account_img" src="<?= $row['CusImage']?>">
-							<?= $row['CusUserName']?>
+						<a href="#">
+							<?php
+								if($row['ChangeImage'] == 1){
+									?>
+										<img class="account_img" src="../upload/<?= $row['CusImage']?>">
+									<?php
+								} else {
+									?>
+										<img class="account_img" src="<?= $row['CusImage']?>">
+									<?php
+								}
+							?>
+								<?= $row['CusUserName']?>
 						</a>
 						<ul class="menu_selection">
 							<?php
@@ -69,26 +76,22 @@
 					?>
 					<li class="menu_item has-children">
 						<a href="#">
-							usd
+							Mệnh giá
 							<i class="fa fa-angle-down"></i>
 						</a>
-						<ul class="menu_selection">
-							<li><a href="#">cad</a></li>
-							<li><a href="#">aud</a></li>
-							<li><a href="#">eur</a></li>
-							<li><a href="#">gbp</a></li>
+						<ul class="currency_selection">
+							<li><a href="#">VNĐ VNĐ</a></li>
+							<li><a href="#">$ USD</a></li>
 						</ul>
 					</li>
 					<li class="menu_item has-children">
 						<a href="#">
-							English
-							<i class="fa fa-angle-down"></i>
+                            Ngôn ngữ
+                            <i class="fa fa-angle-down"></i>
 						</a>
-						<ul class="menu_selection">
-							<li><a href="#">French</a></li>
-							<li><a href="#">Italian</a></li>
-							<li><a href="#">German</a></li>
-							<li><a href="#">Spanish</a></li>
+						<ul class="language_selection">
+							<li><a href="#">Tiếng Việt</a></li>
+							<li><a href="#">English</a></li>
 						</ul>
 					</li>
 					<li class="menu_item has-children">
@@ -100,12 +103,14 @@
 					<?php
 						}
 					?>
-				<li class="menu_item"><a href="../index/index.php">home</a></li>
-				<li class="menu_item"><a href="../categories/categories.php">shop</a></li>
-				<li class="menu_item"><a href="#">promotion</a></li>
-				<li class="menu_item"><a href="#">pages</a></li>
-				<li class="menu_item"><a href="#">blog</a></li>
-				<li class="menu_item"><a href="#">contact</a></li>
+                    <?php
+						$result= mysqli_query($connection, "select * from menu ");
+						while ($row = mysqli_fetch_assoc($result)){ 
+					?>
+						<li class="menu_item"><a href="<?= $row["MenuLink"]?>"><?= $row["MenuName"]; ?> </a></li>
+					<?php
+						}
+                    ?>
 			</ul>
 		</div>
 	</div>
