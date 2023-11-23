@@ -45,7 +45,7 @@ require_once('../../config/config.php');
                         </thead>
                         <tbody>
                             <?php
-                            include("../OffsetPagination/offset.php");
+                            include("../pagination/offset.php");
                             $result = $connection->query("select * from categories order by CateId desc limit ".$item_per_page." offset ".$offset."");
                             $totalRecords = mysqli_query($connection, "select * from categories");
                             $totalRecords = $totalRecords->num_rows;
@@ -84,7 +84,7 @@ require_once('../../config/config.php');
                             ?>
                         </tbody>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>

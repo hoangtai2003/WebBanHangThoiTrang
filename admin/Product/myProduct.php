@@ -43,7 +43,7 @@ include_once('../includes/sidebar.php');
                         </thead>
                         <tbody>
                             <?php
-                            include("../OffsetPagination/offset.php");
+                            include("../pagination/offset.php");
                             // $sql = "Select a.*, b.CateName from product a inner join categories  b on a.CateId = b.CateId order by ProdId asc limit ".$item_per_page." offset ".$offset."";
                             $sql = "SELECT a.*, b.CateName, IFNULL(c.TotalOrders, 0) AS TotalOrders
                                 FROM product a
@@ -108,7 +108,7 @@ include_once('../includes/sidebar.php');
                             ?>
                         </tbody>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>

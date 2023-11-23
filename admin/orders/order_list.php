@@ -32,7 +32,7 @@ session_start();
                             </thead>
                             <tbody>
                                 <?php
-                                    include("../OffsetPagination/offset.php");
+                                    include("../pagination/offset.php");
                                     $sql = "SELECT * FROM orders, customer WHERE orders.CusId = customer.CusId ORDER BY orders.OrderId desc limit ".$item_per_page." offset ".$offset."";
                                     $result = mysqli_query($connection,$sql);
                                     $totalRecords = mysqli_query($connection, "select * from orders");
@@ -84,7 +84,7 @@ session_start();
                                 ?>
                             </tbody>
                         </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                     </div>
                 </div>
             </div>

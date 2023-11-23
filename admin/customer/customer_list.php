@@ -36,7 +36,7 @@ include_once('../includes/sidebar.php');
                             <th>Chăm sóc khách hàng</th>
                         </tr>
                         <?php
-                        include("../OffsetPagination/offset.php");
+                        include("../pagination/offset.php");
                         $sql = "Select * from customer order by CusId desc limit " . $item_per_page . " offset " . $offset . " ";
                         $result = mysqli_query($connection, $sql);
                         $totalRecords = mysqli_query($connection, "select * from customer");
@@ -106,7 +106,7 @@ include_once('../includes/sidebar.php');
                         }
                         ?>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                     </form>
                 </div>
             </div>
