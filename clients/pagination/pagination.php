@@ -1,3 +1,13 @@
+<style>
+  .page-item.active .page-link {
+    background-color: #fe4c50 !important;
+    border-color: #fe4c50 !important;
+}
+.page-link {
+  color: #51545f !important ;
+}
+</style>
+
 <nav aria-label="...">
   <ul class="pagination" style="justify-content: center; padding-top: 40px;">
     <?php
