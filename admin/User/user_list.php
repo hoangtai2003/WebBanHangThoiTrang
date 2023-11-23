@@ -41,7 +41,7 @@ include_once('../includes/sidebar.php');
                             <?php } ?>
                         </tr>
                         <?php
-                            include("../OffsetPagination/offset.php");
+                            include("../pagination/offset.php");
                             $sql = "Select * from user order by UserId desc limit ".$item_per_page." offset ".$offset." ";
                             $result = mysqli_query($connection, $sql);
                             $totalRecords = mysqli_query($connection, "select * from user");
@@ -107,7 +107,7 @@ include_once('../includes/sidebar.php');
                         }
                         ?>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>

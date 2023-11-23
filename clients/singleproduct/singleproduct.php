@@ -112,9 +112,9 @@ if (isset($_SESSION['cusid'])) {
 								<div class="single_product_thumbnails">
 									<div class="item-container">
 										<ul style="overflow-y: auto;" class="">
-											<li class="active "><img src="../../images/<?php echo $dataProduct['ProdImage'] ?>" alt="" data-image="../../images/<?php echo $dataProduct['ProdImage'] ?>"></li>
+											<li class="active "><img src="../../admin/upload/<?php echo $dataProduct['ProdImage'] ?>" alt="" data-image="../../admin/upload/<?php echo $dataProduct['ProdImage'] ?>"></li>
 											<?php foreach ($imgProd as $key => $value) { ?>
-												<li><img src="../../images/<?php echo $value["Image"] ?>" alt="" data-image="../../images/<?php echo $value["Image"] ?>"></li>
+												<li><img src="../../admin/upload/<?php echo $value["Image"] ?>" alt="" data-image="../../admin/upload/<?php echo $value["Image"] ?>"></li>
 											<?php } ?>
 										</ul>
 									</div>
@@ -122,7 +122,7 @@ if (isset($_SESSION['cusid'])) {
 							</div>
 							<div class="col-lg-9 image_col order-lg-2 order-1">
 								<div class="single_product_image">
-									<div class="single_product_image_background" style="background-image:url(../../images/<?php echo $dataProduct['ProdImage'] ?>)"><img src="" alt=""></div>
+									<div class="single_product_image_background" style="background-image:url(../../admin/upload/<?php echo $dataProduct['ProdImage'] ?>)"><img src="" alt=""></div>
 								</div>
 							</div>
 						</div>
@@ -140,12 +140,12 @@ if (isset($_SESSION['cusid'])) {
 						<?php
 						if ($dataProduct['ProdIsSale'] == 1) {
 						?>
-							<div class="original_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
-							<div class="product_price"><?php echo number_format($dataProduct["ProdPriceSale"], 0, ',', '.') ?></div>
+							<div class="original_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+							<div class="product_price"><?php echo number_format($dataProduct["ProdPriceSale"], 0, ',', '.') ?> VNĐ</div>
 						<?php
 						} else if ($dataProduct['ProdIsSale'] == 0) {
 						?>
-							<div class="product_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?></div>
+							<div class="product_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
 						<?php
 						}
 						?>
