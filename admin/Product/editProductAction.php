@@ -23,7 +23,7 @@ if (isset($_FILES['pimage'])) {
         $file_name = $dataProduct['ProdImage'];
     } else {
         if ($file['type'] == 'image/jpeg' || $file['type'] == 'image/jpg' ||  $file['type'] == 'image/png') {
-            move_uploaded_file($file['tmp_name'], '../../images/' . $file_name);
+            move_uploaded_file($file['tmp_name'], '../upload/' . $file_name);
         } else {
             $_SESSION['message'] = "Không đúng định dạng";
             $_SESSION['message_type'] = 'error';
@@ -40,7 +40,7 @@ if (isset($_FILES['pimages'])) {
         mysqli_query($connection, "delete from productimage where ProdId = $pid");
 
         foreach ($file_names as $key => $value) {
-            move_uploaded_file($files['tmp_name'][$key], '../../images/' . $value);
+            move_uploaded_file($files['tmp_name'][$key], '../upload/' . $value);
         }
         foreach ($file_names as $key => $value) {
             $sqlInsertImage = "INSERT INTO productimage(ProdId, Image) values (" . $pid . ",  '" . $value . "' ) ";

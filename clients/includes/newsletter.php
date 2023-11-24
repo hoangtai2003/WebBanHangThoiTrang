@@ -5,8 +5,8 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-						<h4>Newsletter</h4>
-						<p>Subscribe to our newsletter and get 20% off your first purchase</p>
+						<h4>Bản tin</h4>
+						<p style="width: 600px;">Đăng ký nhận bản tin của chúng tôi và được giảm giá 20% cho lần mua hàng đầu tiên</p>
 					</div>
 				</div>
 				<div class="col-lg-6">
