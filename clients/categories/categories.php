@@ -124,17 +124,18 @@ require_once('../../config/config.php')
 																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
 															</div>
 															<div class="favorite"></div>
-															<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
 															<div class="product_info">
 																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
 																<?php
+																$priceSale = number_format(floatval($row["ProdPriceSale"]), 0, ',', '.');
+																$price = number_format(floatval($row["ProdPrice"]), 0, ',', '.');
 																if ($row['ProdIsSale'] == 1) {
 																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
+																	<div class="product_price"><?= $priceSale ?>₫<span><?= $price ?>₫</span></div>
 																<?php
 																} else if ($row['ProdIsSale'] == 0) {
 																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+																	<div class="product_price"><?= $price ?>₫</div>
 																<?php
 																}
 																?>
@@ -186,13 +187,16 @@ require_once('../../config/config.php')
 															<div class="product_info">
 																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
 																<?php
+																$priceSale = number_format(floatval($row["ProdPriceSale"]), 0, ',', '.');
+																$price = number_format(floatval($row["ProdPrice"]), 0, ',', '.');
+														
 																if ($row['ProdIsSale'] == 1) {
 																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
+																	<div class="product_price"><?= $priceSale ?>₫<span><?=$price ?>₫</span></div>
 																<?php
 																} else if ($row['ProdIsSale'] == 0) {
 																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+																	<div class="product_price"><?=$price ?>₫</div>
 																<?php
 																}
 																?>
