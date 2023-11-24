@@ -149,7 +149,21 @@ include("../../config/config.php");
                             ?>
                     </ul>
                     <ul class="navbar_user">
-                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                        <li class="search_hover">
+                            <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                            <div class="search_notify">
+                                <div class="search_notify__bar">
+                                    <form action="../categories/categories.php" method="GET" class="search_notify__bar-form">
+                                        <input type="text" name="search-box" class="search-box">
+                                        <button type="submit" name=cmd value="1"  class="btn btn-primary">Search</button>
+                                    </form>
+                                </div>
+
+                                <div id="suggesstion-box"></div>
+                                
+                            </div>       
+                    
+                    </li>
                         <li class="checkout">
                             <a href="../cart/cart_view.php">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -183,5 +197,31 @@ include("../../config/config.php");
 			}
 		});
 	</script>
+     <script>
+                        $(document).ready(function(){
+                            $(".search-box").keyup(function(){
+                                $.ajax({
+                                type: "GET",
+                                url: "../includes/readProduct.php",
+                                data:'keyword='+$(this).val(),
+                               
+                                success: function(data){
+                                    $("#suggesstion-box").show();
+                                    $("#suggesstion-box").html(data);
+                                    $(".search-box").css("background","#FFF");
+                                }
+                                });
+                            });
+                        });
+                       
+                        function selectProduct(val) {
+                        $(".search-box").val(val);
+                        $(".search-box").show();
+                        $("#suggesstion-box").hide();
+                        }
+                        
+                        
+		            </script>
+
 
 </header>
