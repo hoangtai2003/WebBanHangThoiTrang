@@ -62,7 +62,7 @@ if (isset($_SESSION['cusid'])) {
 <html lang="en">
 
 <head>
-	<title>Single Product</title>
+	<title>Colo Shop</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="Colo Shop Template">
@@ -97,9 +97,8 @@ if (isset($_SESSION['cusid'])) {
 					<!-- Breadcrumbs -->
 					<div class="breadcrumbs d-flex flex-row align-items-center">
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="categories.html"><i class="fa fa-angle-right" aria-hidden="true"></i>Men's</a></li>
-							<li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Single Product</a></li>
+							<li><a href="index.html">Trang chủ</a></li>
+							<li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Chi tiết sản phẩm</a></li>
 						</ul>
 					</div>
 				</div>
@@ -112,9 +111,9 @@ if (isset($_SESSION['cusid'])) {
 								<div class="single_product_thumbnails">
 									<div class="item-container">
 										<ul style="overflow-y: auto;" class="">
-											<li class="active "><img src="../../admin/upload/<?php echo $dataProduct['ProdImage'] ?>" alt="" data-image="../../admin/upload/<?php echo $dataProduct['ProdImage'] ?>"></li>
+											<li class="active "><img src="../../admin/upload/<?= $dataProduct['ProdImage'] ?>" alt="" data-image="../../admin/upload/<?= $dataProduct['ProdImage'] ?>"></li>
 											<?php foreach ($imgProd as $key => $value) { ?>
-												<li><img src="../../admin/upload/<?php echo $value["Image"] ?>" alt="" data-image="../../admin/upload/<?php echo $value["Image"] ?>"></li>
+												<li><img src="../../admin/upload/<?= $value["Image"] ?>" alt="" data-image="../../admin/upload/<?= $value["Image"] ?>"></li>
 											<?php } ?>
 										</ul>
 									</div>
@@ -122,7 +121,7 @@ if (isset($_SESSION['cusid'])) {
 							</div>
 							<div class="col-lg-9 image_col order-lg-2 order-1">
 								<div class="single_product_image">
-									<div class="single_product_image_background" style="background-image:url(../../admin/upload/<?php echo $dataProduct['ProdImage'] ?>)"><img src="" alt=""></div>
+									<div class="single_product_image_background" style="background-image:url(../../admin/upload/<?= $dataProduct['ProdImage'] ?>)"><img src="" alt=""></div>
 								</div>
 							</div>
 						</div>
@@ -131,21 +130,24 @@ if (isset($_SESSION['cusid'])) {
 				<div class="col-lg-5">
 					<div class="product_details">
 						<div class="product_details_title">
-							<h2><?php echo $dataProduct["ProdName"] ?></h2>
-							<span><?php echo $dataProduct["ProdViewCount"] ?></span><span> Lượt xem</span> | <span><?php echo $dataProduct["TotalOrders"] ?></span><span> Đã bán</span> | <span><?php echo $dataProduct["ProdQuantity"] - $dataProduct["TotalOrders"] ?></span><span> Sản phẩm sẵn có</span>
+							<h2><?= $dataProduct["ProdName"] ?></h2>
+							<div>
+								<span><?= $dataProduct["ProdViewCount"] ?></span><span> Lượt Xem</span>  | <span><?= count($data_feedback) ?></span><span> Đánh Giá</span> | <span><?= $dataProduct["TotalOrders"] ?></span><span> Đã Bán</span>
+							</div>
+							
 						</div>
-						<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
-							<span class="ti-truck"></span><span>free delivery</span>
+						<div class="free_delivery d-flex flex-row align-items-center justify-content-center" style="margin-top: 35px;margin-bottom: 30px;">
+							 <span class="ti-truck"></span><span>Miễn phí vận chuyển</span>
 						</div>
 						<?php
 						if ($dataProduct['ProdIsSale'] == 1) {
 						?>
-							<div class="original_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
-							<div class="product_price"><?php echo number_format($dataProduct["ProdPriceSale"], 0, ',', '.') ?> VNĐ</div>
+							<div class="original_price" style="margin-right: 10px;"><?= number_format($dataProduct["ProdPrice"], 0, ',', '.') ?>₫</div>
+							<div class="product_price"><?= number_format($dataProduct["ProdPriceSale"], 0, ',', '.') ?>₫</div>
 						<?php
 						} else if ($dataProduct['ProdIsSale'] == 0) {
 						?>
-							<div class="product_price"><?php echo number_format($dataProduct["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+							<div class="product_price"><?= number_format($dataProduct["ProdPrice"], 0, ',', '.') ?>₫</div>
 						<?php
 						}
 						?>
@@ -160,23 +162,30 @@ if (isset($_SESSION['cusid'])) {
 								}
 							}
 							?>
-						</ul>
+						</ul> 
 						<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
-							<span>Quantity:</span>
+							<span>Số lượng:</span>
 							<div class="quantity_selector">
 								<span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
 								<span id="quantity_value">1</span>
 								<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
 							</div>
-							<?php
+							<div style="display: inline; margin-left: 20px;"><span style="margin-right:5px;"><?= $dataProduct["ProdQuantity"] - $dataProduct["TotalOrders"] ?></span>sản phẩm có sẵn</div>
+						</div>
+						
+						<?php
 							if ($dataProduct['ProdQuantity'] - $dataProduct['TotalOrders'] <= 0) {
-								echo '<div class="red_button add_to_cart_button"><a style="color: #fff;">hết hàng</a></div>';
+								?>
+									<div class="red_button add_to_cart_button" style="margin-top: 27px;margin-left: 0px;"><a style="color: #fff;">hết hàng</a></div>
+								<?php
 							} else {
-								echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
+								?>
+									<div class="red_button add_to_cart_button" style="margin-top: 27px;margin-left: 0px;"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div> 
+									
+								<?php
 							}
 							?>
-							<div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
-						</div>
+						<!-- <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div> -->
 					</div>
 				</div>
 			</div>
@@ -189,8 +198,8 @@ if (isset($_SESSION['cusid'])) {
 					<div class="col">
 						<div class="tabs_container">
 							<ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
-								<li class="tab " data-active-tab="tab_1"><span>Description</span></li>
-								<li class="tab active" data-active-tab="tab_3"><span>Reviews(<?php echo count($data_feedback); ?>)</span></li>
+								<li class="tab " data-active-tab="tab_1"><span>Mô tả sản phẩm</span></li>
+								<li class="tab active" data-active-tab="tab_3"><span>Đánh giá sản phẩm</span></li>
 							</ul>
 						</div>
 					</div>
@@ -202,21 +211,21 @@ if (isset($_SESSION['cusid'])) {
 							<div class="row">
 								<div class="col-lg-5 desc_col">
 									<div class="tab_title">
-										<h4>Description</h4>
+										<h4>Mô tả sản phẩm</h4>
 										<p><?php echo $dataProduct["ProdDescription"] ?></p>
 									</div>
-
 								</div>
-
 							</div>
 						</div>
+
+					</div>
 						<!-- Tab Reviews -->
 						<div id="tab_3" class="tab_container active">
 							<div class="row">
 								<!-- User Reviews -->
 								<div class="col-lg-6 reviews_col">
 									<div class="tab_title reviews_title">
-										<h4>Reviews(<?php echo count($data_feedback); ?>)</h4>
+										<h4>Tất cả(<?php echo count($data_feedback); ?>)</h4>
 									</div>
 									<div class="reviews_list">
 
@@ -272,7 +281,7 @@ if (isset($_SESSION['cusid'])) {
 												<form class="form_reviews" action="./ProductFeedbackAction.php?ProdId=<?php echo $dataProduct["ProdId"] ?>" method="POST" id="review_form">
 													<div>
 														<div class="rating-container">
-															<h1>Your Rating:</h1>
+															<h1>Chất lượng sản phẩm:</h1>
 															<span class="star-rating">
 																<input type="radio" id="star5" name="rating" value="5">
 																<label for="star5" title="5 sao"></label>
@@ -282,14 +291,14 @@ if (isset($_SESSION['cusid'])) {
 																<label for="star3" title="3 sao"></label>
 																<input type="radio" id="star2" name="rating" value="2">
 																<label for="star2" title="2 sao"></label>
-																<input type="radio" id="star1" name "rating" value="1">
+																<input type="radio" id="star1" name= "rating" value="1">
 																<label for="star1" title="1 sao"></label>
 															</span>
 														</div>
 														<textarea id="review_message" class="input_review" name="description" placeholder="Viết nhận xét" rows="4" data-error="Please, leave us a review."></textarea>
 													</div>
 													<div class="text-left text-sm-right">
-														<button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">Submit</button>
+														<button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">Hoàn thành</button>
 													</div>
 												</form>
 											<?php
