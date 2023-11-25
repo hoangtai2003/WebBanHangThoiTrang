@@ -7,13 +7,41 @@ include_once('../includes/sidebar.php');
 require_once('../../config/config.php');
 
 ?>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+                   <script>
+                     $(document).ready(function(){
+			            $(".txtSearch").keyup(function(){
+                
+                        $.ajax({
+                            type: "GET",
+                            url: "", // Đường dẫn đến chính tệp PHP hiện tại
+                            data:  'keyword=' +$(this).val(),
+                            success: function(data) {
+                                // Xử lý phản hồi từ máy chủ và cập nhật nội dung trong bảng
+                                var limitedContent = $(data).find('.highlight');
+                                $("#category_table").html(limitedContent);
+                            },
+                            error: function(error) {
+                                // Xử lý lỗi nếu có
+                                console.error(error);
+                    }
+                });
+            });
+                     });
+        
+    </script>
     <!-- container-category-->
 <div class="container-fluid px-4">
+<div class="float-end">
+                                    <form style="display: inline-flex;" name=f method="get">
+                                        <input class="form-control txtSearch" name="" type="text" required style="margin-left:0;"  placeholder="Tìm kiếm..." />
+                                         
+            </form></div>
     <ol class="breadcrumb mt-5">
         <li class="breadcrumb-item active">Danh mục</li>
         <li class="breadcrumb-item active">Danh sách danh mục</li>
     </ol>
-    <div class="Prod">
+    <div id="category_table" class="Prod highlight">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -26,7 +54,12 @@ require_once('../../config/config.php');
                     </a>
                     <?php } ?>
                 </div>
-                <div class="card-body">
+                <?php
+                if ($_SERVER["REQUEST_METHOD"] === "GET") {
+                  // Xử lý Ajax request
+                        $search = isset($_GET["keyword"]) ? $_GET["keyword"] : '';
+              ?>
+                <div class="card-body highlight">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -46,7 +79,9 @@ require_once('../../config/config.php');
                         <tbody>
                             <?php
                             include("../pagination/offset.php");
-                            $result = $connection->query("select * from categories order by CateId desc limit ".$item_per_page." offset ".$offset."");
+                            $result = $connection->query("select * from categories
+                                                        where CateName like '%".$search."%'
+                                                        order by CateId desc    limit ".$item_per_page." offset ".$offset."");
                             $totalRecords = mysqli_query($connection, "select * from categories");
                             $totalRecords = $totalRecords->num_rows;
                             // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
@@ -81,6 +116,7 @@ require_once('../../config/config.php');
                                     </tr>
                             <?php
                                 }
+                            }
                             ?>
                         </tbody>
                     </table>
