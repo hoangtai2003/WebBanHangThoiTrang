@@ -13,9 +13,10 @@ if (isset($_POST['slCid'])) {
         $file = $_FILES['pimage'];
         $file_name = $file['name'];
         if($file['type'] == 'image/jpeg' || $file['type'] == 'image/jpg' ||  $file['type'] == 'image/png') {
-            move_uploaded_file($file['tmp_name'], '../../images/' . $file_name);
+            move_uploaded_file($file['tmp_name'], '../upload/' . $file_name);
         } else {
-            echo"Không đúng định dạng";
+            $_SESSION['message'] = "Không đúng định dạng";
+            $_SESSION['message_type'] = 'error';
             $file_name = '';
         }
     }
@@ -23,7 +24,7 @@ if (isset($_POST['slCid'])) {
         $files = $_FILES['pimages'];
         $file_names = $files['name'];
         foreach($file_names as $key => $value) {
-            move_uploaded_file($files['tmp_name'][$key], '../../images/' . $value);
+            move_uploaded_file($files['tmp_name'][$key], '../upload/' . $value);
         }
     }
     $sqlinsert = "insert into Product(ProdName, ProdDescription, ProdImage, ProdPrice, ProdPriceSale, ProdQuantity, CateId, UserId) values('" . $pname . "','" . $pdesc . "','" . $file_name . "'," . $pprice . "," . $ppricesale . "," . $pquantity . "," . $CateId . "," . $userid . ")";
@@ -33,10 +34,12 @@ if (isset($_POST['slCid'])) {
         mysqli_query($connection, "insert into productimage(ProdId, Image) values ('$ProdId', '$value') ");
     }
     if ($query) {
-        echo "Thêm sản phẩm thành công";
+        $_SESSION['message'] = "Thêm sản phẩm thành công";
+        $_SESSION['message_type'] = 'success';
         header("Location: ./myProduct.php");
     } else {
-        echo "Lỗi thêm sản phẩm";
+        $_SESSION['message'] = "Lỗi thêm sản phẩm";
+        $_SESSION['message_type'] = 'error';
     }
    
 }

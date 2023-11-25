@@ -10,7 +10,6 @@ include_once('../includes/sidebar.php');
     <ol class="breadcrumb mt-5">
     </ol>
     <div class="row">
-        <?php include('../authen/message.php'); ?>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -35,8 +34,8 @@ include_once('../includes/sidebar.php');
                                 <?php } ?>
                             </tr>
                             <?php
-                            include("../OffsetPagination/offset.php");
-                            $sql = "Select * from sliders order by slid asc limit ".$item_per_page." offset ".$offset."";
+                            include("../pagination/offset.php");
+                            $sql = "Select * from sliders order by slid desc limit ".$item_per_page." offset ".$offset."";
                             $result = mysqli_query($connection, $sql);
                             $totalRecords = mysqli_query($connection, "select * from sliders");
                             $totalRecords = $totalRecords->num_rows;
@@ -49,7 +48,7 @@ include_once('../includes/sidebar.php');
                                         <th scope="row"><?= $row['slid']; ?></th>
                                         <td><?= $row['slname']; ?></td>
                                         <td><?= $row['sldescription']; ?></td>
-                                        <td><img width=300 src="../../images/<?= $row["slimage"];?>"></td>
+                                        <td><img width=300 src="../upload/<?= $row["slimage"];?>"></td>
                                         <?php if (checkPrivilege('slider_edit.php?slid=0')) { ?>
                                             <td>
                                                 <a href="slider_edit.php?slid=<?= $row['slid'] ?>" class="btn btn-success">
@@ -73,7 +72,7 @@ include_once('../includes/sidebar.php');
                             }
                             ?>
                         </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                     </form>
                 </div>
             </div>

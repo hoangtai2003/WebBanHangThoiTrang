@@ -11,7 +11,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 <html lang="en">
 
 <head>
-    <title>Colo Shop Categories</title>
+    <title>Colo Shop</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Colo Shop Template">
@@ -24,6 +24,8 @@ if (!isset($_SESSION["cus_loggedin"])) {
     <link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
+	<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
 </head>
 
 <body>
@@ -46,7 +48,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
 
                     <div class="breadcrumbs d-flex flex-row align-items-center">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="../index/index.php">Home</a></li>
                             <li class="active"><a href="percharse_order.php"><i class="fa fa-angle-right" aria-hidden="true"></i>Đơn mua</a></li>
                         </ul>
                     </div>
@@ -65,7 +67,7 @@ if (!isset($_SESSION["cus_loggedin"])) {
                                 ?>
 
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-8" style="border-right: 1px solid black;">
                                         <h5><b style="color: brown;">Mã đơn hàng:</b> <?php echo "<b>" .$row_get_order['OrderCode'] ."</b>" ?></h5>
                                         <div class="d-flex align-items-center">
                                             <h5><b style="color: brown;">Trạng thái:</b>
@@ -151,7 +153,6 @@ if (!isset($_SESSION["cus_loggedin"])) {
                                             
                                 
                                     </div>
-                                    <div class="vr"></div>
                                     <?php
                                         $sql_get_trans = "SELECT * FROM ship WHERE ShipId = '".$row_get_order['ShipId']."'";
                                         $result_get_trans = $connection->query($sql_get_trans);

@@ -21,7 +21,6 @@ $result = $connection->query($sql) or die($connection->connect_error);
             <li class="breadcrumb-item active">Thêm sản phẩm</li>
         </ol>
         <div class="row">
-            <?php include('../authen/message.php'); ?>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
@@ -63,7 +62,8 @@ $result = $connection->query($sql) or die($connection->connect_error);
                             <div class="form-group">
                                 <label>Ảnh sản phẩm</label>
                                 <br>
-                                <input type="file" name="pimage">
+                                <input type="file" class="form-control" name="pimage" id="input-img">
+                                <img  class="img_preview" width="100px">
                             </div>
                             <div class="form-group">
                                 <label>Ảnh mô tả</label>

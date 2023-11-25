@@ -1,5 +1,6 @@
 <?php
-	session_start();
+session_start();
+require_once('../../config/config.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +30,7 @@
 	<?php include_once("../includes/hamburger_menu.php") ?>
 
 	<!-- Slider -->
+    <?php # include_once('../includes/message.php') ?>
     <?php include_once("../includes/slider.php") ?>
 
 	<!-- Banner -->
@@ -51,7 +53,6 @@
 
 	<!-- Newsletter -->
     <?php include_once("../includes/newsletter.php") ?>
-
 	<!-- Footer -->
     <?php include_once("../includes/footer.php") ?>
 
@@ -64,6 +65,13 @@
 <script src="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="../assets/plugins/easing/easing.js"></script>
 <script src="../assets/js/custom.js"></script>
+<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
+<script>
+        window.onload = function() {
+            openModal("<?php echo $_SESSION['messenger'] ?>");
+        }
+    </script>
 </body>
 
 </html>

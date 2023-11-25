@@ -1,5 +1,4 @@
 <?php 
-	session_start();
 	include_once('../../config/config.php');
 ?>
 <?php
@@ -15,7 +14,7 @@
 									<div class="main_slider_content">
 										<h6><?= $row['slname']?></h6>
 										<h1><?= $row['sldescription']?></h1>
-										<div class="red_button shop_now_button"><a href="#">shop now</a></div>
+										<div class="red_button shop_now_button"><a href="../categories/categories.php">Mua ngay</a></div>
 									</div>
 								</div>
 							</div>

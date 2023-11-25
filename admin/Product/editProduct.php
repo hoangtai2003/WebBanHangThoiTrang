@@ -39,7 +39,6 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
             <li class="breadcrumb-item active">Sửa sản phẩm</li>
         </ol>
         <div class="row">
-            <?php include('../authen/message.php'); ?>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
@@ -80,17 +79,24 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdPriceSale'] ?>" name="ppricesale">
                             </div>
                             <div class="form-group">
+                                <label>Tình trạng sản phẩm</label>
+                                <br>
+                                <input type="radio" <?php if ($dataProduct["ProdStatus"] == 1) echo "checked"; ?> name="rdProdStatus" value=1>Đang bán
+                                <input type="radio" <?php if ($dataProduct["ProdStatus"] == 0) echo "checked"; ?> name=rdProdStatus value=0>Dừng kinh doanh
+                            </div>
+                            <div class="form-group">
                                 <label>Tình trạng sale</label>
                                 <br>
                                 <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 1) echo "checked"; ?> name="rdProdIsSale" value=1>Đang sale
                                 <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 0) echo "checked"; ?> name=rdProdIsSale value=0>Hết sale
                             </div>
                             <div class="form-group">
-                                <label>Ảnh sản phẩm</label>
-                                <br>
-                                <input type="file" name="pimage">
-                                <br>
-                                <img style="width: 100px" src="../../images/<?php echo $dataProduct['ProdImage'] ?>" alt="">
+                            <div class="form-group">
+                                <label>Hình ảnh</label>
+                                <input type="file" class="form-control" name="pimage" id="input-img">
+                                <input type="hidden" name="current_image" value="<?= $dataProduct['ProdImage'] ?>">
+                                <img style="width: 100px;" src="../upload/<?=$dataProduct['ProdImage'] ?>" width="760" class="img_preview">
+                            </div>  
                             </div>
                             <div class="form-group">
                                 <label>Ảnh mô tả</label>
@@ -101,7 +107,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                     <?php foreach ($imgProd as $key => $value) { ?>
                                         <div class="col-md-4">
                                             <a href="">
-                                                <img src="../../images/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
+                                                <img src="../upload/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
                                             </a>
                                         </div>
                                     <?php } ?>

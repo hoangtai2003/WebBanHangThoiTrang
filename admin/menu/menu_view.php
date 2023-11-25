@@ -15,7 +15,6 @@
         <li class="breadcrumb-item active">Danh sách Menu</li>
     </ol>   
     <div class="row">
-        <?php include('../authen/message.php'); ?>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -43,8 +42,8 @@
 
                         </tr>
                             <?php
-                            include("../OffsetPagination/offset.php");
-                            $result= $connection->query("select * from menu order by MenuId asc limit ".$item_per_page." offset ".$offset."");
+                            include("../pagination/offset.php");
+                            $result= $connection->query("select * from menu order by MenuId desc limit ".$item_per_page." offset ".$offset."");
                             $totalRecords = mysqli_query($connection, "select * from menu");
                             $totalRecords = $totalRecords->num_rows;
                             // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
@@ -80,7 +79,7 @@
                             $connection->close();
                         ?>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>

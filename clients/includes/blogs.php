@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="col text-center">
 					<div class="section_title">
-						<h2>Latest Blogs</h2>
+						<h2 style="color: #a84832;">Bài Viết</h2>
 					</div>
 				</div>
 			</div>

@@ -1,8 +1,7 @@
 <?php
     session_start();
-    unset($_SESSION['cus_loggedin']);
-    unset($_SESSION['cart_inserted']);
-    unset($_SESSION['cart']);
+    session_unset(); // Xóa tất cả các biến session
+    session_destroy(); // Hủy phiên làm việc hiện tại
     header('Location: ../index/index.php');
     exit(0);
 ?>

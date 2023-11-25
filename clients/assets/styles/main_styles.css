@@ -307,7 +307,6 @@ section
 	height: 50px;
 	line-height: 50px;
 	font-size: 13px;
-	text-transform: uppercase;
 }
 .currency > a > i
 {
@@ -1046,6 +1045,8 @@ section
 }
 .product_image img
 {
+	object-fit: cover;
+    height: 240px;
 	width: 100%;
 }
 .product_info

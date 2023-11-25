@@ -3,7 +3,11 @@
     require("../../config/config.php");
     require("../../mail/sendmail.php");
     
-    $order_code = rand(0, 9999);
+    //tạo random mã đơn hàng
+    $customerInfo = $_SESSION['cusid'];
+    $current_time = time();
+    $order_code = ($customerInfo .'-'. $current_time);
+
     $cusid = $_SESSION['cusid'];
     $order_payment  = $_POST['payment'];
 
@@ -14,7 +18,7 @@
     $shipid = $row_get_trans["ShipId"];
 
     $totalPrice = 0;
-    foreach ($_SESSION['cart'] as $key => $value) {
+    foreach ($_SESSION['selected_items'] as $key => $value) {
         $quantity = $value['quantity'];
         $price = $value['price'];
         $multotal = $quantity * $price;
@@ -30,7 +34,7 @@
 
             $totalPrice = 0;
             $totalQuantity = 0;
-            foreach ($_SESSION['cart'] as $key => $value) {
+            foreach ($_SESSION['selected_items'] as $key => $value) {
                 $productId = $value['id'];
                 $quantity = $value['quantity'];
                 $price = $value['price'];
@@ -57,7 +61,7 @@
                                 <th>Số lượng</th>
                                 <th>Thành tiền</th>
                             </tr>';
-            foreach ($_SESSION["cart"] as $key => $value) {
+            foreach ($_SESSION["selected_items"] as $key => $value) {
                 $content .= "<tr>
                                 <td>" . $value['name'] . "</td>
                                 <td>" . number_format($value['price'], 0, ',', '.') . "</td>
@@ -75,18 +79,27 @@
             $mail->orders_success($title, $content, $cusemail);
 
         }
-        // xóa giỏ hàng
+
+        //xóa trong giỏ hàng các sản phẩm đã mua
         $sql_get_cart = "SELECT * FROM cart WHERE CusId = '" . $cusid . "'";
         $result_get_cart = $connection->query($sql_get_cart);
         $row_get_cart = $result_get_cart->fetch_assoc();
-        
-        $sql_delete_cart_detail = "DELETE FROM cartdetail WHERE CartId = '" . $row_get_cart['CartId'] . "'";
-        $connection->query($sql_delete_cart_detail);
-        $sql_delete_cart = "DELETE FROM cart WHERE CusId = '" . $cusid . "'";
-        $connection->query($sql_delete_cart);
-        
-        unset($_SESSION['cart_inserted']);
-        unset($_SESSION['cart']);
+
+        foreach($_SESSION['selected_items'] as $key => $value){
+            $sql_delete_cart_detail = "DELETE FROM cartdetail WHERE CartId = '" . $row_get_cart['CartId'] . "' AND ProdId = '".$value['id']."'";
+            $connection->query($sql_delete_cart_detail);
+        }
+        unset($_SESSION['selected_items']);
+
+        $sql_check_cart_detail_final = "SELECT * FROM cartdetail where CartId = '".$row_get_cart['CartId']."'";
+        $result_check_cart_detail_final = $connection->query($sql_check_cart_detail_final);
+        if($result_check_cart_detail_final->num_rows == 0){
+            //xóa giỏ hàng
+            $sql_delete_cart = "DELETE FROM cart WHERE CusId = '" . $cusid . "'";
+            $connection->query($sql_delete_cart);
+
+            unset($_SESSION['cart_inserted']);
+        }
         
         $_SESSION['message'] = 'Bạn đã đặt hàng thành công! Click vào <a href="./percharse_order.php">Đơn mua</a> để xem thông tin!<br>Kiểm tra Email để xem thông tin chi tiết!';
         

@@ -4,14 +4,14 @@
 			<div class="sb-sidenav-menu">
 				<div class="nav">
 					<div class="sb-sidenav-menu-heading">Core</div>
-					<a class="nav-link" href="../home/index.php">
+					<a class="nav-link" href="../dashboard/thongke.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 						Dashboard
 					</a>
 					<?php if(checkPrivilege('../user/user_list.php')) { ?>
 					<a class="nav-link" href="../user/user_list.php">
 						<div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-						Quản lý  thành viên
+						Danh sách thành viên
 					</a>
 					<?php } ?>
 					<?php if(checkPrivilege('../customer/customer_list.php')) { ?>

@@ -8,12 +8,39 @@ if (!isset($_SESSION["cus_loggedin"])) {
 if(!isset($_SESSION["cart"])) {
     header("Location: ./cart_view.php");
 }
+
+?>
+<?php
+if(!isset($_SESSION["selected_items"])) {
+    if(isset($_SESSION['cart'])){
+        $selectedItems = array();
+        $count = 0;
+    
+        foreach ($_SESSION["cart"] as $cart_item) {
+            $itemId = $cart_item['id'];
+            if (isset($_POST['ckProdId_' . $itemId])) {
+                $selectedItems[] = $cart_item;
+                $count++;
+            }
+        }
+        if($count > 0){
+            $_SESSION["selected_items"] = $selectedItems;
+        }
+        else{
+            $_SESSION['message'] = "Bạn vui lòng chọn ít nhất một sản phẩm để mua!";
+            header("Location: ./cart_view.php");
+            exit;
+        }
+    }
+}
+
+                    
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Colo Shop Categories</title>
+    <title>Colo Shop</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Colo Shop Template">
@@ -26,6 +53,8 @@ if(!isset($_SESSION["cart"])) {
     <link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
+	<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
     <style>
     #overlay {
       display: none;
@@ -73,7 +102,7 @@ if(!isset($_SESSION["cart"])) {
 
                     <div class="breadcrumbs d-flex flex-row align-items-center">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="../index/index.php">Home</a></li>
                             <li class="active"><a href="./cart_view.php"><i class="fa fa-angle-right" aria-hidden="true"></i>Giỏ hàng</a></li>
                             <li class="active"><a href=""><i class="fa fa-angle-right" aria-hidden="true"></i>Hình thức vận chuyển</a></li>
                         </ul>
@@ -207,6 +236,7 @@ if(!isset($_SESSION["cart"])) {
                     
 
                     <br>
+                    
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table">
@@ -222,10 +252,10 @@ if(!isset($_SESSION["cart"])) {
                                     </tr>
                                 </thead>
                                 <?php
-                                if (isset($_SESSION["cart"])) {
+                                if (isset($_SESSION["selected_items"])) {
                                     $i = 0;
                                     $tongtien = 0;
-                                    foreach ($_SESSION["cart"] as $cart_item) {
+                                    foreach ($_SESSION["selected_items"] as $cart_item) {
                                         $thanhtien = $cart_item['quantity'] * $cart_item['price'];
                                         $tongtien += $thanhtien;
                                         $i++;
