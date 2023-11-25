@@ -83,7 +83,7 @@ require_once('../../config/config.php');
 									if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
 										echo '<div class="red_button add_to_cart_button"><a style="color: #fff;">hết hàng</a></div>';
 									} else {
-										echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
+										echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>';
 									}
 									?>
 

@@ -49,9 +49,9 @@ require_once('../../config/config.php')
 									$resultCate = mysqli_query($connection, $sqlCate);
 								?>
 								<?php if (!isset($_REQUEST['CateId'])) { ?>
-									<li class="active"><a href="categories.php"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>All</a></li>
+									<li class="active"><a href="categories.php"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Tất cả sản phẩm</a></li>
 								<?php } else { ?>
-									<li class=""><a href="categories.php">All</a></li>
+									<li class=""><a href="categories.php">Tất cả sản phẩm</a></li>
 								<?php } ?>
 								<?php
 								if (mysqli_num_rows($resultCate) > 0) {
@@ -145,7 +145,7 @@ require_once('../../config/config.php')
 														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
 															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
 														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
+															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
 														}
 														?>
 													</div>
@@ -206,7 +206,7 @@ require_once('../../config/config.php')
 														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
 															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
 														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
+															echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>';
 														}
 														?>
 													</div>
