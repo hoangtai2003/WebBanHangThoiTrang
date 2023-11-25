@@ -23,6 +23,8 @@
 <link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
 <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
+<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
 </head>
 
 <body>
@@ -49,7 +51,9 @@
 						<li class="active"><a href=""><i class="fa fa-angle-right" aria-hidden="true"></i>Giỏ hàng</a></li>
 					</ul>
 				</div>
-				<?php include("../authen/message.php") ?>
+				<?php
+				 include("../authen/message.php")
+				  ?>
 
 				<!-- Main Content -->
 
