@@ -53,6 +53,8 @@ if(!isset($_SESSION["selected_items"])) {
     <link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
+	<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
     <style>
     #overlay {
       display: none;

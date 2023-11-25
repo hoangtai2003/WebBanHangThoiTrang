@@ -217,7 +217,7 @@ include("../../config/config.php");
                         function selectProduct(val) {
                         $(".search-box").val(val);
                         $(".search-box").show();
-                        $("#suggesstion-box").hide();
+                        // $("#suggesstion-box").hide();
                         }
                         
                         

@@ -12,7 +12,10 @@
 	<?php while ($row=$result->fetch_assoc()){
 	?>
 	<li onClick="selectProduct('<?php echo $row["ProdName"];?>');">
+	<a style="width:100%;" href="../categories/categories.php?ProdId=<?php echo $row["ProdId"] ?>" >
+	
 		<?php echo $row["ProdName"];?>
+	</a>
 	</li>
 	<?php }} 
 	$connection->close();

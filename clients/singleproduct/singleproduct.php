@@ -80,6 +80,8 @@ if (isset($_SESSION['cusid'])) {
 	<link rel="stylesheet" type="text/css" href="./singleproduct.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
 </head>
 
 <body>

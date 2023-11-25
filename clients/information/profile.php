@@ -22,6 +22,8 @@ include('../../helpers/function.php');
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
 	<link rel="stylesheet" type="text/css" href="../assets/styles/profile.css">
 	<link href="../../admin/assets/css/toastr.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
 </head>
 
 <body>
