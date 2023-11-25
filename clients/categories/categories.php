@@ -51,9 +51,9 @@ require_once('../../config/config.php')
 									$resultCate = mysqli_query($connection, $sqlCate);
 								?>
 								<?php if (!isset($_REQUEST['CateId'])) { ?>
-									<li class="active"><a href="categories.php"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>All</a></li>
+									<li class="active"><a href="categories.php"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Tất cả sản phẩm</a></li>
 								<?php } else { ?>
-									<li class=""><a href="categories.php">All</a></li>
+									<li class=""><a href="categories.php">Tất cả sản phẩm</a></li>
 								<?php } ?>
 								<?php
 								if (mysqli_num_rows($resultCate) > 0) {
@@ -190,17 +190,18 @@ require_once('../../config/config.php')
 																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
 															</div>
 															<div class="favorite"></div>
-															<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
 															<div class="product_info">
 																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
 																<?php
+																$priceSale = number_format(floatval($row["ProdPriceSale"]), 0, ',', '.');
+																$price = number_format(floatval($row["ProdPrice"]), 0, ',', '.');
 																if ($row['ProdIsSale'] == 1) {
 																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
+																	<div class="product_price"><?= $priceSale ?>₫<span><?= $price ?>₫</span></div>
 																<?php
 																} else if ($row['ProdIsSale'] == 0) {
 																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+																	<div class="product_price"><?= $price ?>₫</div>
 																<?php
 																}
 																?>
@@ -210,7 +211,7 @@ require_once('../../config/config.php')
 														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
 															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
 														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
+															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
 														}
 														?>
 													</div>
@@ -252,13 +253,16 @@ require_once('../../config/config.php')
 															<div class="product_info">
 																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
 																<?php
+																$priceSale = number_format(floatval($row["ProdPriceSale"]), 0, ',', '.');
+																$price = number_format(floatval($row["ProdPrice"]), 0, ',', '.');
+														
 																if ($row['ProdIsSale'] == 1) {
 																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
+																	<div class="product_price"><?= $priceSale ?>₫<span><?=$price ?>₫</span></div>
 																<?php
 																} else if ($row['ProdIsSale'] == 0) {
 																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+																	<div class="product_price"><?=$price ?>₫</div>
 																<?php
 																}
 																?>
@@ -268,7 +272,7 @@ require_once('../../config/config.php')
 														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
 															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
 														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
+															echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>';
 														}
 														?>
 													</div>
