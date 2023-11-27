@@ -43,7 +43,7 @@ function fetchFilteredProducts($result)
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
 
-            $html .= '<body><form action="" class="form-submit " style="max-width:25%;"> 
+            $html .= '<body><form action="" class="form-submit " style="min-width:25%; width: 25%; max-width: 25%;"> 
                         <input type="hidden" class="ProdId" value=' .$row["ProdId"]. '>';
             $html .= '<div class="product-item" style="width:100%;">';
 

@@ -110,7 +110,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 											</li>
 										</ul>
 									</div>
-									<div class="product-grid" style="display: flex;">
+									<div class="product-grid" style="display: flex; flex-wrap: wrap;">
 
 										<?php 
 										$cmd=isset($_REQUEST["cmd"])?$_REQUEST["cmd"]:'';
