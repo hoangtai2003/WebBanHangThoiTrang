@@ -4,8 +4,8 @@ include('../includes/header.php');
 include_once('../includes/navbar_top.php');
 include_once('../includes/sidebar.php');
 require_once('../../config/config.php');
-$sql = "select * from Categories";
-$result = $connection->query($sql) or die($connection->connect_error);
+$sql_all_categories = "select * from Categories";
+$result_all_categories = $connection->query($sql_all_categories) or die($connection->connect_error);
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,7 +37,7 @@ $result = $connection->query($sql) or die($connection->connect_error);
                                 <select name="slCid" id="">
                                     <option value="">Chọn danh mục sản phẩm</option>
                                     <?php
-                                    while ($row = $result->fetch_assoc()) {
+                                    while ($row = $result_all_categories->fetch_assoc()) {
                                         echo '<option value="' . $row["CateId"] . '">' . $row["CateName"] . '</option>';
                                     }
                                     ?>

@@ -43,9 +43,9 @@ function fetchFilteredProducts($result)
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
 
-            $html .= '<body><form action="" class="form-submit"> 
+            $html .= '<body><form action="" class="form-submit " style="max-width:25%;"> 
                         <input type="hidden" class="ProdId" value=' .$row["ProdId"]. '>';
-            $html .= '<div class="product-item">';
+            $html .= '<div class="product-item" style="width:100%;">';
 
             // Product Image
             $html .= '<div class="product product_filter">';
@@ -57,14 +57,12 @@ function fetchFilteredProducts($result)
             $html .= '<div class="favorite"></div>';
             $html .= '<div class="product_info">';
             $html .= '<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=' . $row['ProdId'] . '">' . $row["ProdName"] . '</a></h6>';
-
             // Product Price
             if ($row['ProdIsSale'] == 1) {
                 $html .= '<div class="product_price">' . number_format($row["ProdPriceSale"], 0, ',', '.') . '<span>' . number_format($row["ProdPrice"], 0, ',', '.') . '</span></div>';
             } else if ($row['ProdIsSale'] == 0) {
                 $html .= '<div class="product_price">' . number_format($row["ProdPrice"], 0, ',', '.') . '</div>';
             }
-
             $html .= '</div>'; // Closing product_info
             $html .= '</div>'; // Closing product
 
@@ -74,80 +72,21 @@ function fetchFilteredProducts($result)
             }else{
                 $html .= '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
             }
-            
-
             $html .= '</div>'; // Closing product-item
-
             $html .= '</form>
-            <script type="text/javascript">
-		$(document).ready(function(e) {
-			function load_cart_item_number() {
-				$.ajax({
-					url: "../cart/cart_action.php",
-					method: "get",
-					data: {
-						cartItem: "cart_item"
-					},
-					success: function(response) {
-						$("#checkout_items").html(response);
-					}
-				});
-			}
-			$("body").on("click", "#cart_link", function(e) {
-				e.preventDefault();
-				var quantity = 1;
-				<?php
-				if (!isset($_SESSION["cus_loggedin"])) {
-				?>
-					window.location.href = "../authen/login.php";
-					return;
-				<?php
-				}
-				?>
-				var $form = $(this).closest(".form-submit");
-				var productId = $form.find(".ProdId").val();
-
-				$.ajax({
-					url: "../cart/cart_action.php",
-					method: "get",
-					data: {
-						cartadd: "themgiohang",
-						productId: productId,
-						quantity: quantity
-					},
-					dataType: "json",
-					success: function(response) {
-						if (response.success) {
-							alert(response.message);
-							load_cart_item_number();
-						} else {
-							alert(response.message);
-						}
-					}
-				});
-			});
-		});
-	</script>
             </body>';
-
         }
     } else {
         $html .= '<h3>Không có sản phẩm nào trong khoảng giá</h3>';
     }
-
-
     return $html;
 }
-
-
 // Return the HTML for the updated product list
-
 if ($CateId == "") {
     echo fetchFilteredProducts($resultAllProducts);
 } else {
     echo fetchFilteredProducts($resultFilteredProducts);
 }
-
 // Close the database connection
 mysqli_close($connection);
 ?>
