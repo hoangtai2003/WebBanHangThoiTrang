@@ -110,7 +110,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                     <?php foreach ($imgProd as $key => $value) { ?>
                                         <div class="col-md-4">
                                             <a href="">
-                                                <img src="../../images/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
+                                                <img src="../upload/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
                                             </a>
                                         </div>
                                     <?php } ?>

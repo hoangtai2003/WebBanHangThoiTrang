@@ -22,6 +22,8 @@ include('../../helpers/function.php');
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
 	<link rel="stylesheet" type="text/css" href="../assets/styles/profile.css">
 	<link href="../../admin/assets/css/toastr.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
 </head>
 
 <body>
@@ -38,8 +40,7 @@ include('../../helpers/function.php');
 			<div class="col product_section clearfix">
 				<div class="breadcrumbs d-flex flex-row align-items-center">
 					<ul>
-						<li>Home</a></li>
-						<li class="active"><i class="fa fa-angle-right" aria-hidden="true"></i>My Acount</a></li>
+						<li><a href="../index/index.php">Trang chủ</a></li>
 						<li class="active"><i class="fa fa-angle-right" aria-hidden="true"></i>Tài khoản của tôi</a></li>
 					</ul>
                 </div>

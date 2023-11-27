@@ -73,17 +73,43 @@ if (isset($_POST['update_customer'])) {
                 exit(0);
             }
         }
-        if ($update_username && strlen($username) >= 10) {
-            $update_sql = "UPDATE customer SET CusUserName = '$username', ChangeUserName = 1, CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
-            $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
-            if ($update_result) {
-                $_SESSION['message'] = "Cập nhật thành công";
-                $_SESSION['message_type'] = 'success';
-                header('Location: profile.php');
-                exit(0);
-            }
-        }
 
+        $result = mysqli_query($connection, "select * from customer where CusId = '$cus_id'");
+        $row = mysqli_fetch_assoc($result);
+        if ($row['ChangeUserName'] == 0){
+            if ($update_username) {
+                if (strlen($username) >= 10){
+                    $update_sql = "UPDATE customer SET CusUserName = '$username', ChangeUserName = 1, CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
+                    $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
+                    if ($update_result) {
+                        $_SESSION['message'] = "Cập nhật thành công";
+                        $_SESSION['message_type'] = 'success';
+                        header('Location: profile.php');
+                        exit(0);
+                    }
+                } else {
+                    $_SESSION['message'] = "Tên đăng nhập phải có ít nhất 10 ký tự.";
+                    $_SESSION['message_type'] = 'warning';
+                    header('Location: profile.php');
+                    exit(0);
+                }
+            } else {
+                $update_sql = "UPDATE customer SET CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
+                $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
+                if ($update_result) {
+                    $_SESSION['message'] = "Cập nhật thành công";
+                    $_SESSION['message_type'] = 'success';
+                    header('Location: profile.php');
+                    exit(0);
+                } else {
+                    $_SESSION['message'] = "Đã xảy ra sự cố";
+                    $_SESSION['message_type'] = 'error';
+                    header('Location: profile.php');
+                    exit(0);
+                }
+            }
+            
+        }
         $update_sql = "UPDATE customer SET CusName = '$name', CusPhone = '$phone', CusEmail = '$email', CusBirthday = '$birthday', CusGender = '$gender' WHERE CusId = '$cus_id'";
         $update_result = mysqli_query($connection, $update_sql) or die($connection->error);
         if ($update_result) {

@@ -5,13 +5,44 @@ include('../includes/header.php');
 include_once('../includes/navbar_top.php');
 include_once('../includes/sidebar.php');
 ?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                   <script>
+                    $(document).ready(function() {
+                        $(".txtSearch").keyup( function() {
+                            // Lấy giá trị từ trường input
+                            var inputValue = $(".txtSearch").val();
+                        // Sử dụng Ajax để gửi giá trị về máy chủ PHP
+                        $.ajax({
+                            type: "GET",
+                            url: "", // Đường dẫn đến chính tệp PHP hiện tại
+                            data: { input_value: inputValue },
+                            success: function(response) {
+                                // Xử lý phản hồi từ máy chủ và cập nhật nội dung trong bảng
+                                var limitedContent = $(response).find('.highlight');
+                                $("#product_table").html(limitedContent);
+                            },
+                            error: function(error) {
+                                // Xử lý lỗi nếu có
+                                console.error(error);
+                    }
+                });
+            });
+        });
+        
+    </script>
 <!-- container-product -->
 <div class="container-fluid px-4">
+    <div class="float-end ">
+
+        <form style="display: inline-flex;" name=f >
+            <input class="form-control txtSearch"   required type="text" style=" margin-left :0 ; "   placeholder="Tìm kiếm..."  />
+        </form>
+        </div>
     <ol class="breadcrumb mt-5">
         <li class="breadcrumb-item active">Sản phẩm</li>
         <li class="breadcrumb-item active">Danh sách sản phẩm</li>
     </ol>
-    <div class="Prod">
+    <div id="product_table" class="Prod highlight">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -22,7 +53,15 @@ include_once('../includes/sidebar.php');
                         </a>
                     <?php } ?>
                 </div>
-                <div class="card-body">
+                <?php
+                if ($_SERVER["REQUEST_METHOD"] === "GET") {
+                
+                        // Xử lý Ajax request
+                        $search = isset($_GET["input_value"]) ? $_GET["input_value"] : '';
+                        
+                        
+                ?>
+                <div class="card-body highlight">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -43,7 +82,7 @@ include_once('../includes/sidebar.php');
                         </thead>
                         <tbody>
                             <?php
-                            include("../OffsetPagination/offset.php");
+                            include("../pagination/offset.php");
                             // $sql = "Select a.*, b.CateName from product a inner join categories  b on a.CateId = b.CateId order by ProdId asc limit ".$item_per_page." offset ".$offset."";
                             $sql = "SELECT a.*, b.CateName, IFNULL(c.TotalOrders, 0) AS TotalOrders
                                 FROM product a
@@ -53,6 +92,7 @@ include_once('../includes/sidebar.php');
                                     FROM orderdetail
                                     GROUP BY ProdId
                                 ) c ON a.ProdId = c.ProdId
+                                where  a.ProdName like '%".$search."%' or a.ProdDescription like '%".$search."%'
                                 ORDER BY a.ProdId desc
                                 LIMIT $item_per_page OFFSET $offset;";
                             $result = mysqli_query($connection, $sql);
@@ -96,11 +136,11 @@ include_once('../includes/sidebar.php');
                                     </tr>
                             <?php
                                 }
-                            }
+                            }}
                             ?>
                         </tbody>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>

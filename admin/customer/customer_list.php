@@ -6,12 +6,40 @@ include('../includes/header.php');
 include_once('../includes/navbar_top.php');
 include_once('../includes/sidebar.php');
 ?>
+ <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+                   <script>
+                     $(document).ready(function(){
+			            $(".txtSearch").keyup(function(){
+                
+                        $.ajax({
+                            type: "GET",
+                            url: "", // Đường dẫn đến chính tệp PHP hiện tại
+                            data:  'keyword=' +$(this).val(),
+                            success: function(data) {
+                                // Xử lý phản hồi từ máy chủ và cập nhật nội dung trong bảng
+                                var limitedContent = $(data).find('.highlight');
+                                $("#customer_table").html(limitedContent);
+                            },
+                            error: function(error) {
+                                // Xử lý lỗi nếu có
+                                console.error(error);
+                    }
+                });
+            });
+                     });
+        
+    </script>
 <div class="container-fluid px-4">
+<div class="float-end">
+                                    <form style="display: inline-flex;" method="GET"  >
+                                        <input class="form-control txtSearch" id="" type="text" required style="margin-left:0;"  placeholder="Tìm kiếm..."  />
+                                         
+            </form></div>
     <ol class="breadcrumb mt-5">
         <li class="breadcrumb-item active">Khách hàng</li>
         <li class="breadcrumb-item active">Danh sách khách hàng</li>
     </ol>
-    <div class="row">
+    <div id="customer_table" class="Prod highlight">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -20,6 +48,15 @@ include_once('../includes/sidebar.php');
                         <a href="customer_add.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm</a>
                     <?php } ?>
                 </div>
+                <?php
+                if ($_SERVER["REQUEST_METHOD"] === "GET") {
+                
+                   
+                        // Xử lý Ajax request
+                        $search = isset($_GET["keyword"]) ? $_GET["keyword"] : '';
+                        
+                        
+                ?>
                 <div class="card-body">
                     <form method="POST"></form>
                     <table class="table table-bordered">
@@ -36,8 +73,10 @@ include_once('../includes/sidebar.php');
                             <th>Chăm sóc khách hàng</th>
                         </tr>
                         <?php
-                        include("../OffsetPagination/offset.php");
-                        $sql = "Select * from customer order by CusId desc limit " . $item_per_page . " offset " . $offset . " ";
+                        include("../pagination/offset.php");
+                        $sql = "Select * from customer
+                                where CusName like '%".$search."%'
+                                order by CusId desc limit " . $item_per_page . " offset " . $offset . " ";
                         $result = mysqli_query($connection, $sql);
                         $totalRecords = mysqli_query($connection, "select * from customer");
                         $totalRecords = $totalRecords->num_rows;
@@ -106,7 +145,8 @@ include_once('../includes/sidebar.php');
                         }
                         ?>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php }
+                             include("../pagination/pagination.php") ?>
                     </form>
                 </div>
             </div>

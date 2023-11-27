@@ -62,6 +62,8 @@ require_once('../../config/config.php');
 <script src="../assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="../assets/plugins/easing/easing.js"></script>
 <script src="../assets/js/custom.js"></script>
+<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
 <script>
         window.onload = function() {
             openModal("<?php echo $_SESSION['messenger'] ?>");

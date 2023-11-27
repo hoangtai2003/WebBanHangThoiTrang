@@ -3,18 +3,47 @@ session_start();
     include('../../config/config.php');
     include('../includes/header.php'); 
 ?>
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js" type="text/javascript"></script>
+                   <script>
+                    $(document).ready(function(){
+                   $('.orderSearch').on('input',function(){
+                    var inputValue= $('.orderSearch').val();
+                    var currentUrl = window.location.href;
+                    var orderListUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1) + 'order_list.php';
+                    
+
+                        $.get(orderListUrl ,{data: inputValue}, function(data){
+                            var limitedContent = $(data).find('.highlight');
+                                $("#order_table").html(limitedContent);
+                        });
+                    
+                    
+                   });
+                });
+                    </script>
     <div class="container-fluid px-4">
+        <div class=" float-end">
+                        <form action="" method="Post">
+                        <input class="form-control orderSearch" id=""  type="text" required style="margin-left:0;"  placeholder="Tìm kiếm..."  />
+                        </form>
+        </div>
         <ol class="breadcrumb mt-5">
             <li class="breadcrumb-item active">Đơn hàng</li>
             <li class="breadcrumb-item active">Danh sách đơn hàng</li>
         </ol>
-        <div class="row">
+        <div id="order_table" class="Prod highlight">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Danh sách đơn hàng</h4>
                     </div>
-                    <div class="card-body">
+                    <?php
+                        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+                
+                            // Xử lý Ajax request
+                            $search = isset($_GET["data"]) ? $_GET["data"] : '';
+                ?>
+                    <div class="card-body highlight">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr class="text-center">
@@ -32,8 +61,11 @@ session_start();
                             </thead>
                             <tbody>
                                 <?php
-                                    include("../OffsetPagination/offset.php");
-                                    $sql = "SELECT * FROM orders, customer WHERE orders.CusId = customer.CusId ORDER BY orders.OrderId desc limit ".$item_per_page." offset ".$offset."";
+                                    include("../pagination/offset.php");
+                                    $sql = "SELECT * FROM orders, customer
+                                     WHERE orders.CusId = customer.CusId and customer.CusName like '%".$search."%'
+                                     ORDER BY orders.OrderId desc 
+                                     limit ".$item_per_page." offset ".$offset."";
                                     $result = mysqli_query($connection,$sql);
                                     $totalRecords = mysqli_query($connection, "select * from orders");
                                     $totalRecords = $totalRecords->num_rows;
@@ -79,12 +111,12 @@ session_start();
                                                 </tr>
                                             <?php
                                         }
-                                    }
+                                    }}
                                     $connection->close();
                                 ?>
                             </tbody>
                         </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                     </div>
                 </div>
             </div>
