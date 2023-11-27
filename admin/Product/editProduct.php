@@ -4,6 +4,7 @@ require_once('../../config/config.php');
 include('../includes/header.php');
 include_once('../includes/navbar_top.php');
 include_once('../includes/sidebar.php');
+
 $ProdId = $_REQUEST['ProdId'];
 
 // Lấy thông tin sản phẩm
@@ -11,14 +12,12 @@ $sqlProd = "SELECT * FROM product where ProdId = $ProdId";
 $product = mysqli_query($connection, $sqlProd);
 $dataProduct = mysqli_fetch_assoc($product);
 
-// $sqlIsSale = "SELECT ProdIsSale from product group by ProdIsSale";
-// $dataIsSale = mysqli_query($connection, $sqlIsSale);
 
 // lấy thông tin sanh mục
 $sqlCate = "SELECT * FROM categories";
 $category = mysqli_query($connection, $sqlCate);
 
-// lấy ra ảnh sản phẩm
+// lấy ra ảnh mô tả sản phẩm
 $sqlImgProd = "select * from productimage where ProdId = $ProdId";
 $imgProd = mysqli_query($connection, $sqlImgProd);
 ?>
@@ -27,7 +26,7 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
 
 <head>
     <title>Sửa sản phẩm</title>
-    <link rel="stylesheet" href="./editProduct.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="./editProduct.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 </head>
@@ -68,7 +67,11 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                             </div>
                             <div class="form-group">
                                 <label>Số lượng</label>
-                                <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdQuantity'] ?>" name="pquantity">
+                                <input type="number" style="pointer-events: none; background-color: #ccc;" class="form-control" value="<?php echo $dataProduct['ProdQuantity'] ?>" name="pquantity">
+                            </div>
+                            <div class="form-group">
+                                <label>Số lượng nhập thêm</label>
+                                <input required type="number" min="0" oninput="validateInput(event)" class="form-control" value="<?php echo $dataProduct['ProdAddQuantity'] ?>" name="paddquantity">
                             </div>
                             <div class="form-group">
                                 <label>Giá gốc</label>
@@ -91,12 +94,12 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input type="radio" <?php if ($dataProduct["ProdIsSale"] == 0) echo "checked"; ?> name=rdProdIsSale value=0>Hết sale
                             </div>
                             <div class="form-group">
-                            <div class="form-group">
-                                <label>Hình ảnh</label>
-                                <input type="file" class="form-control" name="pimage" id="input-img">
-                                <input type="hidden" name="current_image" value="<?= $dataProduct['ProdImage'] ?>">
-                                <img style="width: 100px;" src="../upload/<?=$dataProduct['ProdImage'] ?>" width="760" class="img_preview">
-                            </div>  
+                                <div class="form-group">
+                                    <label>Hình ảnh</label>
+                                    <input type="file" class="form-control" name="pimage" id="input-img">
+                                    <input type="hidden" name="current_image" value="<?= $dataProduct['ProdImage'] ?>">
+                                    <img style="width: 100px;" src="../upload/<?= $dataProduct['ProdImage'] ?>" width="760" class="img_preview">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Ảnh mô tả</label>
@@ -127,6 +130,16 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
     </div>
     <?php include('../includes/footer.php');
     ?>
+    <script>
+        function validateInput(event) {
+            // Lấy giá trị từ sự kiện input
+            let inputValue = event.target.value;
+            // Loại bỏ mọi ký tự không phải số
+            let sanitizedValue = inputValue.replace(/[^0-9]/g, '');
+            // Cập nhật giá trị input
+            event.target.value = sanitizedValue;
+        }
+    </script>
 </body>
 
 </html>
