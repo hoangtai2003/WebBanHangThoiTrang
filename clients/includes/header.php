@@ -5,12 +5,16 @@ include("../../config/config.php");
 <header class="header trans_300">
 
 <!-- Top Navigation -->
-
+<style>
+    .currency > a {
+        text-transform: none !important;
+    }
+</style>
 <div class="top_nav">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="top_nav_left">free shipping on all u.s orders over $50</div>
+                <div class="top_nav_left">Miễn phí vận chuyển nội thành Hà Nội</div>
             </div>
             <div class="col-md-6 text-right">
                 <div class="top_nav_right">
@@ -19,27 +23,23 @@ include("../../config/config.php");
                             if(isset($_SESSION['cus_loggedin']) && $_SESSION['cus_loggedin'] == true){
                         ?>
                         <li class="currency">
-                            <a href="#">
-                                usd
+                             <a href="#">
+                                Mệnh giá
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="currency_selection">
-                                <li><a href="#">cad</a></li>
-                                <li><a href="#">aud</a></li>
-                                <li><a href="#">eur</a></li>
-                                <li><a href="#">gbp</a></li>
+                                <li><a href="#">VNĐ VNĐ</a></li>
+                                <li><a href="#">$ USD</a></li>
                             </ul>
                         </li>
                         <li class="language">
                             <a href="#">
-                                English
+                                Ngôn ngữ
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="language_selection">
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">Italian</a></li>
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
+                                <li><a href="#">Tiếng Việt</a></li>
+                                <li><a href="#">English</a></li>
                             </ul>
                         </li>
                         <?php
@@ -82,7 +82,7 @@ include("../../config/config.php");
                                 ?>
                                     <li><a href="../information/profile.php"><i class="fa fa-user"></i>Tài khoản</a></li>  
                                     <li><a href="../cart/percharse_order.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Đơn mua</a></li>
-                                    <li><a href="../authen/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
+                                    <li><a href="../authen/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a></li>
                                 <?php    
                                     }
                                 ?>
@@ -93,39 +93,33 @@ include("../../config/config.php");
                         ?>
                         <li class="currency">
                             <a href="#">
-                                usd
+                                Mệnh giá
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="currency_selection">
-                                <li><a href="#">cad</a></li>
-                                <li><a href="#">aud</a></li>
-                                <li><a href="#">eur</a></li>
-                                <li><a href="#">gbp</a></li>
+                                <li><a href="#">VNĐ VNĐ</a></li>
+                                <li><a href="#">$ USD</a></li>
                             </ul>
                         </li>
                         <li class="language">
                             <a href="#">
-                                English
+                                Ngôn ngữ
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="language_selection">
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">Italian</a></li>
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
+                                <li><a href="#">Tiếng Việt</a></li>
+                                <li><a href="#">English</a></li>
                             </ul>
                         </li>
                         <li class="account" style="border-right: solid 1px #33333b;padding-right: 21px;">
-                            <a href="../authen/register.php">Register</a>
+                            <a href="../authen/register.php">Đăng ký</a>
                         </li>
                         <li class="account">
-                            <a href="../authen/login.php">Sign in</a>
+                            <a href="../authen/login.php">Đăng nhập</a>
                         </li>
                         <?php
                             }
                         ?>
-                        <!-- Currency / Language / My Account -->
-
                     </ul>
                 </div>
             </div>
@@ -155,7 +149,21 @@ include("../../config/config.php");
                             ?>
                     </ul>
                     <ul class="navbar_user">
-                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                        <li class="search_hover">
+                            <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                            <div class="search_notify">
+                                <div class="search_notify__bar">
+                                    <form action="../categories/categories.php" method="GET" class="search_notify__bar-form">
+                                        <input type="text" name="search-box" class="search-box">
+                                        <button type="submit" name=cmd value="1"  class="btn btn-primary">Search</button>
+                                    </form>
+                                </div>
+
+                                <div id="suggesstion-box"></div>
+                                
+                            </div>       
+                    
+                    </li>
                         <li class="checkout">
                             <a href="../cart/cart_view.php">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -189,5 +197,31 @@ include("../../config/config.php");
 			}
 		});
 	</script>
+     <script>
+                        $(document).ready(function(){
+                            $(".search-box").keyup(function(){
+                                $.ajax({
+                                type: "GET",
+                                url: "../includes/readProduct.php",
+                                data:'keyword='+$(this).val(),
+                               
+                                success: function(data){
+                                    $("#suggesstion-box").show();
+                                    $("#suggesstion-box").html(data);
+                                    $(".search-box").css("background","#FFF");
+                                }
+                                });
+                            });
+                        });
+                       
+                        function selectProduct(val) {
+                        $(".search-box").val(val);
+                        $(".search-box").show();
+                        // $("#suggesstion-box").hide();
+                        }
+                        
+                        
+		            </script>
+
 
 </header>

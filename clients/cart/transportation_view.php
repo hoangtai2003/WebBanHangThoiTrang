@@ -40,7 +40,7 @@ if(!isset($_SESSION["selected_items"])) {
 <html lang="en">
 
 <head>
-    <title>Colo Shop Categories</title>
+    <title>Colo Shop</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Colo Shop Template">
@@ -53,6 +53,8 @@ if(!isset($_SESSION["selected_items"])) {
     <link rel="stylesheet" type="text/css" href="../assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/styles/categories_responsive.css">
+	<link rel="stylesheet" type="text/css" href="../includes/header_search.css">
+
     <style>
     #overlay {
       display: none;

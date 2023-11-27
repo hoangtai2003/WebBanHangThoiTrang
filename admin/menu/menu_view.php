@@ -42,7 +42,7 @@
 
                         </tr>
                             <?php
-                            include("../OffsetPagination/offset.php");
+                            include("../pagination/offset.php");
                             $result= $connection->query("select * from menu order by MenuId desc limit ".$item_per_page." offset ".$offset."");
                             $totalRecords = mysqli_query($connection, "select * from menu");
                             $totalRecords = $totalRecords->num_rows;
@@ -79,7 +79,7 @@
                             $connection->close();
                         ?>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>

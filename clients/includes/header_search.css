@@ -1,0 +1,84 @@
+.search_notify{
+    position: absolute;
+    top: 75%;
+    right: 0;
+    margin: 2px 0px;
+    padding: 3px;
+    border-radius:4px;
+    background-color: #b9af98;
+    border: 1px solid #686b69;
+    display: none;
+    transform-origin: calc(100% - 50px) top;
+    animation: SearchGrowth ease-in .2s;
+}
+
+.search_notify::before{
+    content: "";
+    border-style: solid ;
+    border-width: 14px  ;
+    border-color: transparent transparent #b9af98;
+    position: absolute;
+    right: 48px;
+    top: -28px;
+}
+
+.search_notify::after{
+    content: "";
+    display: block;
+    position: absolute;
+    right: 40px;
+    top: -20px;
+    width: 200px;
+    height: 30px;
+    
+}
+
+.container .search_hover:hover .search_notify{
+    display: block;
+}
+.search-box{
+    width: 70%;
+    padding: 10px;
+    border: #a8d4b1 1px solid;
+    border-radius:4px;
+}
+
+.search_notify__bar-form{
+    display: flex;
+}
+
+#product-list{
+    float:left;
+    list-style:none;
+    margin-top:-3px;
+    padding:0;
+    width:100%;
+    position: absolute;
+}
+
+#product-list li{
+    text-align: center;
+    float: left;
+    width: 70%;
+    padding: 10px;
+     background: #f0f0f0;
+      border-bottom: #bbb9b9 1px solid;
+}
+		
+
+#product-list li:hover{
+    background:#ece3d2;
+    cursor: pointer;
+}
+
+
+@keyframes SearchGrowth{
+    from{
+        opacity: 0;
+        transform:scale(0);
+    }
+    to{
+        opacity: 1;
+        transform:scale(1);
+    }
+}

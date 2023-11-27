@@ -6,12 +6,42 @@ include('../includes/header.php');
 include_once('../includes/navbar_top.php');
 include_once('../includes/sidebar.php');
 ?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                   <script>
+                    $(document).ready(function() {
+                        $(".txtSearch").keyup( function() {
+                            // Lấy giá trị từ trường input
+                            var inputValue = $(".txtSearch").val();
+                        // Sử dụng Ajax để gửi giá trị về máy chủ PHP
+                        $.ajax({
+                            type: "GET",
+                            url: "", // Đường dẫn đến chính tệp PHP hiện tại
+                            data: { input_value: inputValue },
+                            success: function(response) {
+                                // Xử lý phản hồi từ máy chủ và cập nhật nội dung trong bảng
+                                var limitedContent = $(response).find('.highlight');
+                                $("#user_table").html(limitedContent);
+                            },
+                            error: function(error) {
+                                // Xử lý lỗi nếu có
+                                console.error(error);
+                    }
+                });
+            });
+        });
+        
+    </script>
 <div class="container-fluid px-4">
+    <div class="float-end">
+                <form style="display: inline-flex;" name=f method="get">
+                    <input class="form-control txtSearch" name="" type="text" required style="margin-left:0;"  placeholder="Tìm kiếm..."  />
+                                            
+            </form></div>
     <ol class="breadcrumb mt-5">
         <li class="breadcrumb-item active">User</li>
         <li class="breadcrumb-item active">Danh sách thành viên</li>
     </ol>
-    <div class="row">
+    <div class="Prod highlight" id="user_table" >
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -20,7 +50,7 @@ include_once('../includes/sidebar.php');
                         <a href="user_add.php" class="btn btn-primary float-end"><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>Thêm</a>
                     <?php } ?>
                 </div>
-                <div class="card-body">
+                <div class="card-body highlight">
                     <table class="table table-bordered">
                         <tr>
                             <th>ID</th>
@@ -41,8 +71,15 @@ include_once('../includes/sidebar.php');
                             <?php } ?>
                         </tr>
                         <?php
-                            include("../OffsetPagination/offset.php");
-                            $sql = "Select * from user order by UserId desc limit ".$item_per_page." offset ".$offset." ";
+                        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+                
+                                // Xử lý Ajax request
+                            $search = isset($_GET["input_value"]) ? $_GET["input_value"] : '';
+                            include("../pagination/offset.php");
+                            $sql = "Select * from user 
+                                    where UserEmail like '%".$search."%'
+                                    order by UserId desc
+                                    limit ".$item_per_page." offset ".$offset." ";
                             $result = mysqli_query($connection, $sql);
                             $totalRecords = mysqli_query($connection, "select * from user");
                             $totalRecords = $totalRecords->num_rows;
@@ -104,10 +141,10 @@ include_once('../includes/sidebar.php');
                             </tr>
                         <?php
                             }
-                        }
+                        }}
                         ?>
                     </table>
-                    <?php include("../../pagination/pagination.php") ?>
+                    <?php include("../pagination/pagination.php") ?>
                 </div>
             </div>
         </div>

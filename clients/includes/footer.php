@@ -8,7 +8,7 @@
 						<ul class="footer_nav">
 							<li><a href="#">Blog</a></li>
 							<li><a href="#">FAQs</a></li>
-							<li><a href="contact.html">Contact us</a></li>
+							<li><a href="../contact/contact.php">Contact us</a></li>
 						</ul>
 					</div>
 				</div>
