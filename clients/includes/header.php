@@ -131,10 +131,13 @@ include("../../config/config.php");
             </div>
         </div>
     </div>
+    <?php # include_once('../includes/message.php') ?>
+    <?php # include_once('../includes/chat_message.php') ?>
+
 </div>
 
 <!-- Main Navigation -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <div class="main_nav_container">
     <div class="container">
         <div class="row">
@@ -189,5 +192,19 @@ include("../../config/config.php");
 			}
 		});
 	</script>
+    <script>
+        const iconMessage = document.querySelector(".fui-button-book-now");
+        const chatBox = document.querySelector(".chatBox");
+        const messBack = document.querySelector(".mess-back");
+        console.log(iconMessage);
+        iconMessage.addEventListener("click", function() {
+            chatBox.style.display = "block";
+            iconMessage.style.display = "none";
+        });
+        messBack.addEventListener("click", function() {
+            chatBox.style.display = "none";
+            iconMessage.style.display = "block";
+        });
+    </script>
 
 </header>

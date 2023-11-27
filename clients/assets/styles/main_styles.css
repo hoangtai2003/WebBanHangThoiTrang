@@ -1089,11 +1089,12 @@ section
 .product_bubble
 {
 	position: absolute;
-	top: 15px;
-	width: 50px;
-	height: 22px;
-	border-radius: 3px;
-	text-transform: uppercase;
+    top: 15px;
+    padding: 0 5px;
+    width: max-content;
+    height: 22px;
+    border-radius: 3px;
+    text-transform: uppercase;
 }
 .product_bubble span
 {

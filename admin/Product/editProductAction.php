@@ -1,8 +1,10 @@
 <?php
+session_start();
 require_once('../../config/config.php');
 $pid = $_REQUEST['ProdId'];
 $pname = $_POST["pname"];
 $pquantity = $_POST["pquantity"];
+$paddquantity = $_POST["paddquantity"];
 $pprice = $_POST["pprice"];
 $ppricesale = $_POST["ppricesale"];
 $pdesc = $_POST["pdesc"];
@@ -10,11 +12,20 @@ $pissale = $_POST["rdProdIsSale"];
 $pstatus = $_POST["rdProdStatus"];
 $CateId = $_POST["slCid"];
 
-
+$newQuantity = $pquantity + $paddquantity;
 $sqlProd = "SELECT * from  product where product.ProdId = $pid";
 $product = mysqli_query($connection, $sqlProd);
 $dataProduct = mysqli_fetch_assoc($product);
 
+
+$sql_check_product = "select * from product where ProdName like '" . $pname . "'";
+$rerult_check_product = $connection->query($sql_check_product) or die($conn->connect_error);
+if ($rerult_check_product->num_rows > 0) {
+    $_SESSION["message"] = "Sản phẩm: $pname đã tồn tại!";
+    $_SESSION['message_type'] = 'error';
+    header("Location: ./myProduct.php");
+} else {
+    
 // ảnh đại diện
 if (isset($_FILES['pimage'])) {
     $file = $_FILES['pimage'];
@@ -49,13 +60,17 @@ if (isset($_FILES['pimages'])) {
     }
 }
 
-$sqlupdate = "update Product set ProdName = '$pname', ProdDescription = '$pdesc', ProdImage = '$file_name', ProdPrice = '$pprice', ProdPriceSale = '$ppricesale', ProdQuantity = '$pquantity',ProdIsSale = '$pissale',ProdStatus = '$pstatus',CateId = '$CateId' where ProdId = $pid";
+$sqlupdate = "update Product set ProdName = '$pname', ProdDescription = '$pdesc', ProdImage = '$file_name', ProdPrice = '$pprice', ProdPriceSale = '$ppricesale', ProdQuantity = '$newQuantity',ProdIsSale = '$pissale',ProdStatus = '$pstatus',CateId = '$CateId' where ProdId = $pid";
 $query = mysqli_query($connection, $sqlupdate);
 if ($query) {
-    $_SESSION['message'] = "Thêm sản phẩm thành công";
+    $_SESSION['message'] = "Cập nhật sản phẩm thành công";
     $_SESSION['message_type'] = 'success';
     header("Location: ./myProduct.php");
 } else {
-    $_SESSION['message'] = "Lỗi thêm sản phẩm";
+    $_SESSION['message'] = "Lỗi cập nhật sản phẩm";
     $_SESSION['message_type'] = 'error';
 }
+}
+
+
+?>

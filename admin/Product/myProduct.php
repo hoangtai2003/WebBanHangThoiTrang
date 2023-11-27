@@ -56,14 +56,6 @@ include_once('../includes/sidebar.php');
                                 ORDER BY a.ProdId desc
                                 LIMIT $item_per_page OFFSET $offset;";
                             $result = mysqli_query($connection, $sql);
-
-                            // $sqlProductSold = "SELECT ProdId, COUNT(*) AS TotalOrders
-                            // FROM orderdetail
-                            // GROUP BY ProdId";
-                            // $totalSold = mysqli_query($connection, $sqlProductSold);
-                            // $dataSold = mysqli_fetch_array($totalSold);
-                            // var_dump($dataSold);
-
                             $totalRecords = mysqli_query($connection, "select * from product");
                             $totalRecords = $totalRecords->num_rows;
                             // Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
