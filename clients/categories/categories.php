@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once('../../config/config.php');
-$CateId = $_REQUEST['CateId'];
 $sqlCate = "Select * from categories";
 $resultCate = mysqli_query($connection, $sqlCate);
 
