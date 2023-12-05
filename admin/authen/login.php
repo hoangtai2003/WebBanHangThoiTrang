@@ -15,44 +15,31 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Login</title>
-        <link href="./../assets/css/styles.css" rel="stylesheet" />
+        <link href="../assets/css/login.css" rel="stylesheet" />
         <link rel="stylesheet" href="../assets/css/toastr.min.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
-    <body class="bg-primary">
-        <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-5">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
-                                    <div class="card-body">
-                                        <form method="post" action="login_action.php">
-                                            <div class="form-floating mb-3">
-                                                <input required class="form-control" name="name"  type="text" placeholder="UserName" />
-                                                <label for="inputEmail">UserName</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input required class="form-control" name="password"  type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="forgot_password.php">Forgot Password?</a>
-                                                <button type="submit" class="btn btn-primary btn-block" name="login_btn">Login</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.php">Need an account? Sign up!</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
+    <body>
+        <div class="wrapper">
+            <form method="post" action="login_action.php">
+                <h1>Đăng nhập</h1>
+                <div class="input-box">
+                    <input required name="name" type="text" placeholder="Tên đăng nhập"/>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="input-box">
+                    <input required name="password" type="password" placeholder="Mật khẩu"/>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a href="#">Quên mật khẩu</a>
+                </div>
+                <button type="submit" class="btn" name="login_btn">Đăng nhập</button>
+                <div class="register-link">
+                    <p>Chưa có tài khoản?<a href="./register.php"> Đăng ký</a></p>
+                </div>
+            </form>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="./../assets/js/scripts.js"></script>
