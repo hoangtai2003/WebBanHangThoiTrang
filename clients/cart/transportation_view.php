@@ -11,6 +11,7 @@ if(!isset($_SESSION["cart"])) {
 
 ?>
 <?php
+// kiểm tra nếu chưa tồn tại session lưu các sp muốn mua
 if(!isset($_SESSION["selected_items"])) {
     if(isset($_SESSION['cart'])){
         $selectedItems = array();
@@ -18,7 +19,9 @@ if(!isset($_SESSION["selected_items"])) {
     
         foreach ($_SESSION["cart"] as $cart_item) {
             $itemId = $cart_item['id'];
+            // nếu tồn tại dữ liệu gửi từ form khi chọn sp
             if (isset($_POST['ckProdId_' . $itemId])) {
+                // thêm sp đó vào mảng các sp đc chọn
                 $selectedItems[] = $cart_item;
                 $count++;
             }
@@ -114,8 +117,10 @@ if(!isset($_SESSION["selected_items"])) {
 
                     <?php
                     $cusid = $_SESSION['cusid'];
+                    // lấy thông tin vận chuyển dựa trên cusid
                     $sql_get_trans = "SELECT * FROM ship WHERE CusId = '" . $cusid . "' ORDER BY ShipId DESC LIMIT 1";
                     $result_get_trans = $connection->query($sql_get_trans);
+                    // nếu có thì hiển thị
                     if ($result_get_trans->num_rows > 0) {
                         $row_get_trans = $result_get_trans->fetch_assoc();
                         $name = $row_get_trans['ShipName'];
@@ -194,6 +199,7 @@ if(!isset($_SESSION["selected_items"])) {
                     
                     <?php
                     }
+                    // nếu chưa thì thêm thông tin mới
                     else 
                     {
                         $name = '';
@@ -252,6 +258,7 @@ if(!isset($_SESSION["selected_items"])) {
                                     </tr>
                                 </thead>
                                 <?php
+                                // hiển thị các sp muốn mua
                                 if (isset($_SESSION["selected_items"])) {
                                     $i = 0;
                                     $tongtien = 0;
