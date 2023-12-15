@@ -203,7 +203,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 														<div class="product-item">
 															<div class="product product_filter">
 																<div class="product_image">
-																	<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+																	<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
 																</div>
 																<div class="favorite"></div>
 																<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
@@ -265,7 +265,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 													<div class="product-item">
 														<div class="product product_filter">
 															<div class="product_image">
-																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+																<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
 															</div>
 															<div class="favorite"></div>
 															<div class="product_info">
@@ -325,7 +325,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 														<div class="product-item">
 															<div class="product product_filter">
 																<div class="product_image">
-																	<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+																	<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
 																</div>
 																<div class="favorite"></div>
 																<div class="product_info">
