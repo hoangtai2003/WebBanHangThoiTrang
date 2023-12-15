@@ -11,60 +11,38 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Đăng ký</title>
-        <link href="../../admin/assets/css/styles.css" rel="stylesheet" />
+        <link href="../assets/styles/login.css" rel="stylesheet" />
         <link href="../../admin/assets/css/toastr.min.css" rel="stylesheet">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
-    <body class="bg-primary">
-        <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-7">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng ký</h3></div>
-                                    <div class="card-body">
-                                        <form action="./register_action.php" method="POST">
-                                            <div class="form-floating mb-3">
-                                                <input required class="form-control" type="text" name="phone" placeholder="Số điện thoại" />
-                                                <label>Số điện thoại</label>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input required class="form-control" type="password" name="password" placeholder="Mật khẩu" />
-                                                        <label >Mật khẩu</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input required class="form-control" type="password" name="cpassword" placeholder="Nhập lại mật khẩu" />
-                                                        <label>Nhập lại mật khẩu</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input required class="form-control" type="email" name="email" placeholder="name@example.com" />
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="mt-4 mb-0">
-                                                <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" name="register_btn">Đăng ký</button></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="./login.php">Bạn đã có tài khoản? Đăng nhập</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
+    <body>
+        <div class="wrapper">
+            <form method="post" action="./register_action.php">
+                <h1>Đăng ký</h1>
+                <div class="input-box">
+                    <input required name="phone" type="text" placeholder="Số điện thoại"/>
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="input-box">
+                    <input required name="email" type="email" placeholder="name@example.com"/>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="input-box">
+                    <input required name="password" type="password" placeholder="Mật khẩu"/>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="input-box">
+                    <input required name="cpassword" type="password" placeholder="Nhập lại mật khẩu"/>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <button type="submit" class="btn" name="register_btn">Đăng ký</button>
+                <div class="register-link">
+                    <p>Bạn đã có tài khoản?<a href="./login.php"> Đăng nhập</a></p>
+                </div>
+            </form>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../../admin/js/scripts.js"></script>
+        <script src="../../admin/assets/js/scripts.js"></script>
         <script src="../../admin/assets/js/jquery-3.7.1.min.js"></script>
         <script src="../../admin/assets/js/toastr.min.js"></script>
         <script src="../../admin/assets/js/toastr.js"></script>
