@@ -60,7 +60,7 @@ require_once('../../config/config.php');
 								<div class="product-item <?= strtolower($catenameReplace) ?>">
 									<div class="product discount product_filter">
 										<div class="product_image">
-											<img src="../../images/<?= $row["ProdImage"] ?>" alt="">
+											<a href="../singleproduct/singleproduct_action.php?ProdId=<?= $row["ProdId"] ?>"><img src="../../images/<?= $row["ProdImage"] ?>" alt=""></a>
 										</div>
 										<div class="favorite favorite_left"></div>
 										<!-- <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div> -->
