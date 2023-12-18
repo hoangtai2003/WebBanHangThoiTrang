@@ -30,7 +30,7 @@ $result_top_sellers = mysqli_query($connection, $sql_top_sellers);
 								<div class="product-item">
 									<div class="product discount">
 										<div class="product_image">
-											<img src="../../admin/upload/<?=$row["ProdImage"]?>" alt="">
+											<a href="../singleproduct/singleproduct_action.php?ProdId=<?=$row["ProdId"]?>"><img src="../../admin/upload/<?=$row["ProdImage"]?>" alt=""></a>
 										</div>
 										<div class="favorite favorite_left"></div>
 										<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span><?=number_format($row["ProdPriceSale"] - $row["ProdPrice"], 0, ",", ".")?></span></div>
