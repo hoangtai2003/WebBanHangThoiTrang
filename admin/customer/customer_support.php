@@ -15,6 +15,7 @@ session_start();
             align-items: center;
             justify-content: flex-start;
         }
+
         .status-customer {
             display: block;
             width: 10px;
@@ -23,12 +24,14 @@ session_start();
             background-color: green;
             margin-right: 5px;
         }
+
         .status-customer.offline {
             background-color: red;
         }
     </style>
     <title>Document</title>
 </head>
+
 <body>
     <?php
     include('../../config/config.php');
@@ -47,6 +50,17 @@ session_start();
     $sql_customer = "select * from customer where CusId = $CusId";
     $result_customer = mysqli_query($connection, $sql_customer);
     $data_customer = mysqli_fetch_assoc($result_customer);
+
+    
+    $sql_chat_data = "SELECT * FROM messages WHERE CusId = $CusId AND UserId = $UserId";
+    $result_chat_data = mysqli_query($connection, $sql_chat_data);
+    
+    // Sử dụng MYSQLI_ASSOC để lấy key là tên trường
+    $chatdata = mysqli_fetch_all($result_chat_data, MYSQLI_ASSOC);
+    
+    echo '<pre>';
+    // var_dump($chatdata);
+    echo '</pre>';
 
     ?>
     <div class="container-chatbox">
@@ -73,8 +87,18 @@ session_start();
                 </div>
             </div>
             <div class="chat-messages">
+
+                <?php
+                for ($i = 0; $i < count($chatdata); $i++) {
+                    $is_from_me = ($chatdata[$i]["WriteId"] == $UserId);
+
+                    echo '<div class="message ' . ($is_from_me ? "message-sender" : "") . '">
+                  <p>' . $chatdata[$i]["message"] . '</p>
+                </div>';
+                } ?>
+
             </div>
-            <form method="post" action="./customer_support_sending.php?userID=<?php echo $CusId ?>" class="input-box">
+            <form method="post" action="./customer_support_sending.php?CusId=<?php echo $CusId ?>" class="input-box">
                 <input class="input_mess" type="text" name="textmessage" placeholder="Type a message...">
                 <input type="submit" value="Gửi">
             </form>
