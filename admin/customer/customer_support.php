@@ -107,7 +107,7 @@ session_start();
     <script>
         function getNewMessages() {
             var xhr = new XMLHttpRequest();
-            var url = "./customer_new_message.php?userID=<?php echo $ReceverID ?>"
+            var url = "./customer_new_message.php?CusId=<?php echo $CusId?>"
             xhr.open("GET", url, true);
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {

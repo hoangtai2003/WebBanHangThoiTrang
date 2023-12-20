@@ -313,7 +313,7 @@
 
 <?php
 // session_start();
-if (isset($_SESSION['UserId'])) {
+if (isset($_SESSION['UserId']) && isset($_SESSION['cusid'])) {
     $UserId = $_SESSION['UserId'];
     $CusId = $_SESSION['cusid'];
     require_once('../../config/config.php');
@@ -338,7 +338,7 @@ if (isset($_SESSION['UserId'])) {
 
 ?>
 <?php
-if (isset($_SESSION['UserId'])) { ?>
+if (isset($_SESSION['UserId']) && isset($_SESSION['cusid'])) { ?>
     <div id="chatApp">
         <div class="chatBox" id="chatBox">
             <div class="card">
