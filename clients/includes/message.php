@@ -103,7 +103,7 @@
 </style>
 
 <?php
-if (isset($_SESSION['UserId'])) { ?>
+if (isset($_SESSION['UserId']) && isset($_SESSION['cusid'])) { ?>
     <div class="fui-button-book-now">
         <a class="btn-link" href="" data-toggle="modal" data-target="#modalBookRoom">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
