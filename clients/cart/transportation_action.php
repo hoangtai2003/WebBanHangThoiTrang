@@ -1,4 +1,5 @@
 <?php
+// thay đổi thông tin vận chuyển
 session_start();
 require("../../config/config.php");
 if (isset($_POST['cmdTransportation'])) {

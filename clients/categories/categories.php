@@ -1,7 +1,20 @@
 <?php
 session_start();
-require_once('../../config/config.php')
+require_once('../../config/config.php');
+$sqlCate = "Select * from categories";
+$resultCate = mysqli_query($connection, $sqlCate);
 
+$sqlAllProduct = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
+FROM product
+inner join categories on product.CateId = categories.CateId
+LEFT JOIN (
+	SELECT ProdId, SUM(od.OrdQuantity) AS TotalOrders
+	FROM orderdetail AS od
+	GROUP BY ProdId
+) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
+WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
+";
+$resultProduct = mysqli_query($connection, $sqlAllProduct);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,6 +72,7 @@ require_once('../../config/config.php')
 								<?php } else { ?>
 									<li class=""><a href="categories.php">Tất cả sản phẩm</a></li>
 								<?php } ?>
+
 								<?php
 								if (mysqli_num_rows($resultCate) > 0) {
 									foreach ($resultCate as $row) {
@@ -75,12 +89,11 @@ require_once('../../config/config.php')
 						<div>
 							<h5>Khoảng giá</h5>
 						</div>
-						<div class="shopee-price-range-filter__inputs"><input id="min-price" type="number" aria-label="" maxlength="13" class="shopee-price-range-filter__input" placeholder="₫ từ" value="" fdprocessedid="krwrii">
-							<div class="shopee-price-range-filter__range-line"></div><input id="max-price" type="number" aria-label="" maxlength="13" class="shopee-price-range-filter__input" placeholder="₫ đến" value="" fdprocessedid="kthd6b">
+						<div class="shopee-price-range-filter__inputs"><input id="min-price" type="number" oninput="validateInput(event)" maxlength="13" min="0" class="shopee-price-range-filter__input" placeholder="₫ từ">
+							<div class="shopee-price-range-filter__range-line"></div><input id="max-price" oninput="validateInput(event)" type="number"  min="0" maxlength="13" class="shopee-price-range-filter__input" placeholder="₫ đến">
 						</div>
 						<div class="filter_button" onclick="filterByPrice()"><span>Áp dụng</span></div>
 					</div>
-
 					<!-- Main Content -->
 					
 					<div class="main_content">
@@ -99,7 +112,7 @@ require_once('../../config/config.php')
 											</li>
 										</ul>
 									</div>
-									<div class="product-grid" style="display: flex;">
+									<div class="product-grid" style="display: flex; flex-wrap: wrap;">
 
 										<?php 
 										if ($ProdId !='') {
@@ -138,11 +151,11 @@ require_once('../../config/config.php')
 																	<?php
 																	if ($row['ProdIsSale'] == 1) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> ₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> ₫</span></div>
 																	<?php
 																	} else if ($row['ProdIsSale'] == 0) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> ₫</div>
 																	<?php
 																	}
 																	?>
@@ -150,9 +163,9 @@ require_once('../../config/config.php')
 															</div>
 															<?php
 															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-																echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
 															} else {
-																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
 															}
 															?>
 														</div>
@@ -186,39 +199,39 @@ require_once('../../config/config.php')
 										if ($result->num_rows > 0) {
 											while ($row = $result->fetch_assoc()) {
 										?>
-											<form action="" class="form-submit">
-													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
-													<div class="product-item">
-														<div class="product product_filter">
-															<div class="product_image">
-																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+													<form action="" class="form-submit">
+														<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
+														<div class="product-item">
+															<div class="product product_filter">
+																<div class="product_image">
+																	<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
+																</div>
+																<div class="favorite"></div>
+																<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
+																<div class="product_info">
+																	<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+																	<?php
+																	if ($row['ProdIsSale'] == 1) {
+																	?>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?>₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</span></div>
+																	<?php
+																	} else if ($row['ProdIsSale'] == 0) {
+																	?>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</div>
+																	<?php
+																	}
+																	?>
+																</div>
 															</div>
-															<div class="favorite"></div>
-															<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
-															<div class="product_info">
-																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
-																<?php
-																if ($row['ProdIsSale'] == 1) {
-																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
-																<?php
-																} else if ($row['ProdIsSale'] == 0) {
-																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
-																<?php
-																}
-																?>
-															</div>
+															<?php
+															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
+															} else {
+																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
+															}
+															?>
 														</div>
-														<?php
-														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
-														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
-														}
-														?>
-													</div>
-												</form>
+													</form>
 												<?php
 												}
 											} else {
@@ -253,7 +266,7 @@ require_once('../../config/config.php')
 													<div class="product-item">
 														<div class="product product_filter">
 															<div class="product_image">
-																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+																<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
 															</div>
 															<div class="favorite"></div>
 															<div class="product_info">
@@ -275,7 +288,7 @@ require_once('../../config/config.php')
 														</div>
 														<?php
 														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
+															echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
 														} else {
 															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
 														}
@@ -308,41 +321,38 @@ require_once('../../config/config.php')
 											if ($resultProduct->num_rows > 0) {
 												while ($row = $resultProduct->fetch_assoc()) {
 												?>
-												<form action="" class="form-submit">
-													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
-													<div class="product-item">
-														<div class="product product_filter">
-															<div class="product_image">
-																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+													<form action="" class="form-submit ">
+														<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
+														<div class="product-item">
+															<div class="product product_filter">
+																<div class="product_image">
+																	<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
+																</div>
+																<div class="favorite"></div>
+																<div class="product_info">
+																	<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+																	<?php
+																	if ($row['ProdIsSale'] == 1) {
+																	?>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?>₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</span></div>
+																	<?php
+																	} else if ($row['ProdIsSale'] == 0) {
+																	?>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</div>
+																	<?php
+																	}
+																	?>
+																</div>
 															</div>
-															<div class="favorite"></div>
-															<div class="product_info">
-																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
-																<?php
-																$priceSale = number_format(floatval($row["ProdPriceSale"]), 0, ',', '.');
-																$price = number_format(floatval($row["ProdPrice"]), 0, ',', '.');
-														
-																if ($row['ProdIsSale'] == 1) {
-																?>
-																	<div class="product_price"><?= $priceSale ?>₫<span><?=$price ?>₫</span></div>
-																<?php
-																} else if ($row['ProdIsSale'] == 0) {
-																?>
-																	<div class="product_price"><?=$price ?>₫</div>
-																<?php
-																}
-																?>
-															</div>
+															<?php
+															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
+															} else {
+																echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>';
+															}
+															?>
 														</div>
-														<?php
-														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
-														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>';
-														}
-														?>
-													</div>
-												</form>
+													</form>
 
 										<?php
 												}
@@ -374,52 +384,53 @@ require_once('../../config/config.php')
 
 	<script type="text/javascript">
 		$(document).ready(function(e) {
-			function load_cart_item_number() {
-				$.ajax({
-					url: '../cart/cart_action.php',
-					method: 'get',
-					data: {
-						cartItem: "cart_item"
-					},
-					success: function(response) {
-						$("#checkout_items").html(response);
-					}
-				});
-			}
-			$('body').on('click', '#cart_link', function(e) {
-				e.preventDefault();
-				var quantity = 1;
-				<?php
-				if (!isset($_SESSION['cus_loggedin'])) {
-				?>
-					window.location.href = '../authen/login.php';
-					return;
-				<?php
+		function load_cart_item_number() {
+			$.ajax({
+				url: '../cart/cart_action.php',
+				method: 'get',
+				data: {
+					cartItem: "cart_item"
+				},
+				success: function(response) {
+					$("#checkout_items").html(response);
 				}
-				?>
-				var $form = $(this).closest(".form-submit");
-				var productId = $form.find(".ProdId").val();
+			});
+		}
+		$('body').on('click', '#cart_link', function(e) {
+			e.preventDefault();
+			var quantity = 1;
+			<?php
+			if (!isset($_SESSION['cus_loggedin'])) {
+			?>
+				window.location.href = '../authen/login.php';
+				return;
+			<?php
+			}
+			?>
+			var $form = $(this).closest(".form-submit");
+			var productId = $form.find(".ProdId").val();
 
-				$.ajax({
-					url: '../cart/cart_action.php',
-					method: 'get',
-					data: {
-						cartadd: "themgiohang",
-						productId: productId,
-						quantity: quantity
-					},
-					dataType: 'json',
-					success: function(response) {
-						if (response.success) {
-							alert(response.message);
-							load_cart_item_number();
-						} else {
-							alert(response.message);
-						}
+			$.ajax({
+				url: '../cart/cart_action.php',
+				method: 'get',
+				data: {
+					cartadd: "themgiohang",
+					productId: productId,
+					quantity: quantity
+				},
+				dataType: 'json',
+				success: function(response) {
+					if (response.success) {
+						alert(response.message);
+						load_cart_item_number();
+					} else {
+						alert(response.message);
 					}
-				});
+				}
 			});
 		});
+		}
+		);
 	</script>
 
 	<script src="../assets/js/jquery-3.2.1.min.js"></script>
@@ -435,6 +446,7 @@ require_once('../../config/config.php')
 	<script>
 		const deleteSelect = document.querySelector('.btn-delete');
 		console.log(deleteSelect)
+
 		function filterByPrice() {
 			var minPrice = document.getElementById("min-price").value;
 			var maxPrice = document.getElementById("max-price").value;
@@ -462,6 +474,16 @@ require_once('../../config/config.php')
 			});
 		}
 	</script>
+	<script>
+  function validateInput(event) {
+    // Lấy giá trị từ sự kiện input
+    let inputValue = event.target.value;
+    // Loại bỏ mọi ký tự không phải số
+    let sanitizedValue = inputValue.replace(/[^0-9]/g, '');
+    // Cập nhật giá trị input
+    event.target.value = sanitizedValue;
+  }
+</script>
 </body>
 
 </html>

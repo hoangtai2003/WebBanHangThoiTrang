@@ -125,10 +125,13 @@ include("../../config/config.php");
             </div>
         </div>
     </div>
+    <?php  include_once('../includes/message.php') ?>
+    <?php  include_once('../includes/chat_message.php') ?>
+
 </div>
 
 <!-- Main Navigation -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/all.min.css">
 <div class="main_nav_container">
     <div class="container">
         <div class="row">
@@ -197,31 +200,19 @@ include("../../config/config.php");
 			}
 		});
 	</script>
-     <script>
-                        $(document).ready(function(){
-                            $(".search-box").keyup(function(){
-                                $.ajax({
-                                type: "GET",
-                                url: "../includes/readProduct.php",
-                                data:'keyword='+$(this).val(),
-                               
-                                success: function(data){
-                                    $("#suggesstion-box").show();
-                                    $("#suggesstion-box").html(data);
-                                    $(".search-box").css("background","#FFF");
-                                }
-                                });
-                            });
-                        });
-                       
-                        function selectProduct(val) {
-                        $(".search-box").val(val);
-                        $(".search-box").show();
-                        // $("#suggesstion-box").hide();
-                        }
-                        
-                        
-		            </script>
-
+    <script>
+        const iconMessage = document.querySelector(".fui-button-book-now");
+        const chatBox = document.querySelector(".chatBox");
+        const messBack = document.querySelector(".mess-back");
+        console.log(iconMessage);
+        iconMessage.addEventListener("click", function() {
+            chatBox.style.display = "block";
+            iconMessage.style.display = "none";
+        });
+        messBack.addEventListener("click", function() {
+            chatBox.style.display = "none";
+            iconMessage.style.display = "block";
+        });
+    </script>
 
 </header>
