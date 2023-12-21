@@ -150,11 +150,11 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 																	<?php
 																	if ($row['ProdIsSale'] == 1) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> ₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> ₫</span></div>
 																	<?php
 																	} else if ($row['ProdIsSale'] == 0) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> ₫</div>
 																	<?php
 																	}
 																	?>
@@ -162,9 +162,9 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 															</div>
 															<?php
 															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-																echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
 															} else {
-																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
 															}
 															?>
 														</div>
@@ -212,11 +212,11 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 																	<?php
 																	if ($row['ProdIsSale'] == 1) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?><span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?></span></div>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?>₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</span></div>
 																	<?php
 																	} else if ($row['ProdIsSale'] == 0) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?></div>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</div>
 																	<?php
 																	}
 																	?>
@@ -224,9 +224,9 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 															</div>
 															<?php
 															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-																echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
 															} else {
-																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
 															}
 															?>
 														</div>
@@ -287,7 +287,7 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 														</div>
 														<?php
 														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
+															echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
 														} else {
 															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
 														}
@@ -333,11 +333,11 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 																	<?php
 																	if ($row['ProdIsSale'] == 1) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?><span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?></span></div>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?>₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</span></div>
 																	<?php
 																	} else if ($row['ProdIsSale'] == 0) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?></div>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</div>
 																	<?php
 																	}
 																	?>
@@ -345,9 +345,9 @@ $resultProduct = mysqli_query($connection, $sqlAllProduct);
 															</div>
 															<?php
 															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-																echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
 															} else {
-																echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">add to cart</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>';
 															}
 															?>
 														</div>

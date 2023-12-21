@@ -36,7 +36,7 @@ $result_top_sellers = mysqli_query($connection, $sql_top_sellers);
 										<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span><?=number_format($row["ProdPriceSale"] - $row["ProdPrice"], 0, ",", ".")?></span></div>
 										<div class="product_info">
 											<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?=$row["ProdId"]?>"><?=$row["ProdName"]?></a></h6>
-											<div class="product_price"><?=number_format($row["ProdPriceSale"], 0, ",", ".")?><span><?=number_format($row["ProdPrice"], 0, ",", ".")?></span></div>
+											<div class="product_price"><?=number_format($row["ProdPriceSale"], 0, ",", ".")?>₫<span><?=number_format($row["ProdPrice"], 0, ",", ".")?>₫</span></div>
 										</div>
 									</div>
 								</div>

@@ -38,19 +38,25 @@ if (isset($_POST['slCid'])) {
                 move_uploaded_file($files['tmp_name'][$key], '../../images/' . $value);
             }
         }
-        $sqlinsert = "insert into Product(ProdName, ProdDescription, ProdImage, ProdPrice, ProdPriceSale, ProdQuantity, CateId, UserId) values('" . $pname . "','" . $pdesc . "','" . $file_name . "'," . $pprice . "," . $ppricesale . "," . $pquantity . "," . $CateId . "," . $userid . ")";
-        $query = mysqli_query($connection, $sqlinsert);
-        $ProdId = mysqli_insert_id($connection);
-        foreach ($file_names as $key => $value) {
-            mysqli_query($connection, "insert into productimage(ProdId, Image) values ('$ProdId', '$value') ");
-        }
-        if ($query) {
-            $_SESSION['message'] = "Thêm sản phẩm thành công";
-            $_SESSION['message_type'] = 'success';
-            header("Location: ./myProduct.php");
+        if ($ppricesale < $pprice){
+            $sqlinsert = "insert into Product(ProdName, ProdDescription, ProdImage, ProdPrice, ProdPriceSale, ProdQuantity, CateId, UserId) values('" . $pname . "','" . $pdesc . "','" . $file_name . "'," . $pprice . "," . $ppricesale . "," . $pquantity . "," . $CateId . "," . $userid . ")";
+            $query = mysqli_query($connection, $sqlinsert);
+            $ProdId = mysqli_insert_id($connection);
+            foreach ($file_names as $key => $value) {
+                mysqli_query($connection, "insert into productimage(ProdId, Image) values ('$ProdId', '$value') ");
+            }
+            if ($query) {
+                $_SESSION['message'] = "Thêm sản phẩm thành công";
+                $_SESSION['message_type'] = 'success';
+                header("Location: ./myProduct.php");
+            } else {
+                $_SESSION['message'] = "Lỗi thêm sản phẩm";
+                $_SESSION['message_type'] = 'error';
+            }
         } else {
-            $_SESSION['message'] = "Lỗi thêm sản phẩm";
+            $_SESSION['message'] = "Giá Sale nhập vào phải nhỏ hơn giá bán";
             $_SESSION['message_type'] = 'error';
+            header("Location: ./createProduct.php");
         }
     }
 }
