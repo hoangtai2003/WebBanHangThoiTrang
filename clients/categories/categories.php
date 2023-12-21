@@ -48,10 +48,13 @@ require_once('../../config/config.php')
 							<ul class="sidebar_categories">
 								<?php
 									$CateId = isset($_REQUEST['CateId']) ? $_REQUEST['CateId'] : null;
+									$ProdId=isset($_REQUEST["ProdId"])? $_REQUEST["ProdId"] :'';
+									$cmd=isset($_REQUEST["cmd"])?$_REQUEST["cmd"]:'';
+
 									$sqlCate = "Select * from categories";
 									$resultCate = mysqli_query($connection, $sqlCate);
 								?>
-								<?php if (!isset($_REQUEST['CateId'])) { ?>
+								<?php if(($ProdId=='') and ($CateId==null) and ($cmd=='') )  { ?>
 									<li class="active"><a href="categories.php"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Tất cả sản phẩm</a></li>
 								<?php } else { ?>
 									<li class=""><a href="categories.php">Tất cả sản phẩm</a></li>
@@ -99,12 +102,10 @@ require_once('../../config/config.php')
 									<div class="product-grid" style="display: flex;">
 
 										<?php 
-										$cmd=isset($_REQUEST["cmd"])?$_REQUEST["cmd"]:'';
-										$ProdId=isset($_REQUEST["ProdId"])? $_REQUEST["ProdId"] :'';
 										if ($ProdId !='') {
 
 											include("../pagination/offset.php");
-											$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId  ");
+											$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId where product.ProdId = '$ProdId'  ");
 											$totalRecords = $totalRecords->num_rows;
 											// Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
 											$totalPage = ceil($totalRecords / $item_per_page);
@@ -166,7 +167,7 @@ require_once('../../config/config.php')
 												else if ($cmd !='') {
 											$search=isset($_REQUEST["search-box"])?$_REQUEST["search-box"]:'';
 											include("../pagination/offset.php");
-										$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId  ");
+										$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId where product.ProdName like '%".$search."%'");
 										$totalRecords = $totalRecords->num_rows;
 										// Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
 										$totalPage = ceil($totalRecords / $item_per_page);
