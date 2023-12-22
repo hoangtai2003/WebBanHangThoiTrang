@@ -121,9 +121,15 @@ if (isset($_SESSION['cusid'])) {
 									<div class="item-container">
 										<ul style="overflow-y: auto;" class="">
 											<li class="active "><img src="../../admin/upload/<?= $dataProduct['ProdImage'] ?>" alt="" data-image="../../admin/upload/<?= $dataProduct['ProdImage'] ?>"></li>
-											<?php foreach ($imgProd as $key => $value) { ?>
-												<li><img src="../../admin/upload/<?= $value["Image"] ?>" alt="" data-image="../../admin/upload/<?= $value["Image"] ?>"></li>
-											<?php } ?>
+											<?php
+											foreach ($imgProd as $key => $value) {
+												// Kiểm tra nếu có ảnh thì mới in ra thẻ <li>
+												if (!empty($value["Image"])) {
+											?>
+													<li><img src="../../admin/upload/<?= $value["Image"] ?>" alt="" data-image="../../admin/upload/<?= $value["Image"] ?>"></li>
+											<?php
+												}
+											} ?>
 										</ul>
 									</div>
 								</div>

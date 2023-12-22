@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('../../config/config.php');
-if (isset($_POST['slCid'])) {
+if (isset($_POST['slCid'])  && $_POST['slCid'] !== "") {
     $CateId = $_POST['slCid'];
     $userid = $_SESSION["UserId"];
     $pname = $_POST['pname'];
@@ -9,7 +9,6 @@ if (isset($_POST['slCid'])) {
     $pquantity = $_POST['pquantity'];
     $pprice = $_POST['pprice'];
     $ppricesale = $_POST['ppricesale'];
-
     // kiểm tra tên sản phẩm đã tồn tại chưa
     $sql_check_product = "select * from product where ProdName like '" . $pname . "'";
     $rerult_check_product = $connection->query($sql_check_product) or die($conn->connect_error);
@@ -38,7 +37,7 @@ if (isset($_POST['slCid'])) {
                 move_uploaded_file($files['tmp_name'][$key], '../../images/' . $value);
             }
         }
-        if ($ppricesale < $pprice){
+        if ($ppricesale < $pprice) {
             $sqlinsert = "insert into Product(ProdName, ProdDescription, ProdImage, ProdPrice, ProdPriceSale, ProdQuantity, CateId, UserId) values('" . $pname . "','" . $pdesc . "','" . $file_name . "'," . $pprice . "," . $ppricesale . "," . $pquantity . "," . $CateId . "," . $userid . ")";
             $query = mysqli_query($connection, $sqlinsert);
             $ProdId = mysqli_insert_id($connection);
@@ -59,4 +58,8 @@ if (isset($_POST['slCid'])) {
             header("Location: ./createProduct.php");
         }
     }
+} else {
+    $_SESSION['message'] = "Vui lòng chọn danh mục của sản phẩm";
+    $_SESSION['message_type'] = 'error';
+    header("Location: ./createProduct.php");
 }

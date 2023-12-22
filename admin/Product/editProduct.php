@@ -52,7 +52,6 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <label>Nhóm sản phẩm</label>
                                 <br>
                                 <select name="slCid" id="slCid">
-                                    <option value="">_________Tên danh mục________</option>
                                     <?php
                                     foreach ($category as $key => $value) { ?>
                                         <option value="<?php echo $value['CateId'] ?>" <?php echo (($value['CateId'] == $dataProduct["CateId"]) ? 'selected' : '') ?>> <?php echo $value["CateName"] ?></option>
@@ -107,13 +106,15 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input type="file" name="pimages[]" multiple>
                                 <br>
                                 <div class="row">
-                                    <?php foreach ($imgProd as $key => $value) { ?>
-                                        <div class="col-md-4">
-                                            <a href="">
-                                                <img src="../upload/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
-                                            </a>
-                                        </div>
-                                    <?php } ?>
+                                    <?php foreach ($imgProd as $key => $value) {
+                                        if (!empty($value["Image"])) { ?>
+                                            <div class="col-md-4">
+                                                <a href="">
+                                                    <img src="../upload/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
+                                                </a>
+                                            </div>
+                                    <?php }
+                                    } ?>
                                 </div>
                             </div>
                             <div class="form-group">

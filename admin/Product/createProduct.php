@@ -64,7 +64,7 @@ $result_all_categories = $connection->query($sql_all_categories) or die($connect
                             <div class="form-group">
                                 <label>Ảnh sản phẩm</label>
                                 <br>
-                                <input type="file" class="form-control" name="pimage" id="input-img">
+                                <input type="file" required class="form-control" name="pimage" id="input-img">
                                 <img class="img_preview" width="100px">
                             </div>
                             <div class="form-group">
@@ -89,6 +89,7 @@ $result_all_categories = $connection->query($sql_all_categories) or die($connect
     <script src="../../admin/assets/js/validateInput.js">
 
     </script>
+
 </body>
 
 </html>
