@@ -125,9 +125,7 @@ include("../../config/config.php");
             </div>
         </div>
     </div>
-    <?php  include_once('../includes/message.php') ?>
-    <?php  include_once('../includes/chat_message.php') ?>
-
+   
 </div>
 
 <!-- Main Navigation -->
