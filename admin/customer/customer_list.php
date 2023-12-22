@@ -70,7 +70,6 @@ include_once('../includes/sidebar.php');
                                 <th>Giới tính</th>
                                 <th>Trạng thái</th>
                                 <th>Sửa</th>
-                                <th>Chăm sóc khách hàng</th>
                             </tr>
                             <?php
                             include("../pagination/offset.php");
@@ -123,22 +122,6 @@ include_once('../includes/sidebar.php');
                                                 </a>
                                             </td>
                                         <?php } ?>
-                                        <td style="position:relative">
-                                            <?php if (isset($_SESSION['cusid']) && ($_SESSION['cusid'] ==  $row['CusId'])) { ?>
-                                                <a href="customer_support.php?CusId=<?php echo $row["CusId"]; ?>" class="btn btn-primary" value="<?= $row['CusId']; ?>"><i style="margin-right: 10px;" class="fa-brands fa-facebook-messenger">
-                                                    </i>Nhắn tin
-                                                </a>
-                                                <span style="border-radius: 50%;
-                                            position: absolute;
-                                            top: 12%;
-                                            font-size: 12px;
-                                            left: 16%;
-                                            background-color: red;
-                                            color: #fff;
-                                            padding: 0 6px;" class="number-mess">0
-                                                </span>
-                                            <?php } ?>
-                                        </td>
                                     </tr>
                             <?php
                                 }
