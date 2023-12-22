@@ -49,13 +49,20 @@ $sqlImgProd = "select * from productimage where ProdId = $ProdId";
 $imgProd = mysqli_query($connection, $sqlImgProd);
 
 
+
+// Kiểm tra người dùng đã mua sản phẩm và đã nhận được hàng chưa
+$sql_check_buy = "SELECT o.CusId, od.ProdId, o.OrderStatus
+    FROM orders o
+    INNER JOIN orderdetail od ON o.OrderId = od.OrderId where od.ProdId = '$ProdId' and o.CusId = '$CusId' and o.OrderStatus = 3";
+$result_check = mysqli_query($connection, $sql_check_buy);
+$data_check = mysqli_fetch_assoc($result_check);
+
 // Kiểm tra xem người dùng đã đánh giá chưa
 if (isset($_SESSION['cusid'])) {
 	$sql_check_rate = "SELECT COUNT(*) as count FROM comment WHERE ProdId = $ProdId AND CusId = $CusId";
 	$result_check_rate = mysqli_query($connection, $sql_check_rate);
 	$data_check_rate = mysqli_fetch_assoc($result_check_rate);
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -114,9 +121,15 @@ if (isset($_SESSION['cusid'])) {
 									<div class="item-container">
 										<ul style="overflow-y: auto;" class="">
 											<li class="active "><img src="../../admin/upload/<?= $dataProduct['ProdImage'] ?>" alt="" data-image="../../admin/upload/<?= $dataProduct['ProdImage'] ?>"></li>
-											<?php foreach ($imgProd as $key => $value) { ?>
-												<li><img src="../../admin/upload/<?= $value["Image"] ?>" alt="" data-image="../../admin/upload/<?= $value["Image"] ?>"></li>
-											<?php } ?>
+											<?php
+											foreach ($imgProd as $key => $value) {
+												// Kiểm tra nếu có ảnh thì mới in ra thẻ <li>
+												if (!empty($value["Image"])) {
+											?>
+													<li><img src="../../admin/upload/<?= $value["Image"] ?>" alt="" data-image="../../admin/upload/<?= $value["Image"] ?>"></li>
+											<?php
+												}
+											} ?>
 										</ul>
 									</div>
 								</div>
@@ -134,12 +147,12 @@ if (isset($_SESSION['cusid'])) {
 						<div class="product_details_title">
 							<h2><?= $dataProduct["ProdName"] ?></h2>
 							<div>
-								<span><?= $dataProduct["ProdViewCount"] ?></span><span> Lượt Xem</span>  | <span><?= count($data_feedback) ?></span><span> Đánh Giá</span> | <span><?= $dataProduct["TotalOrders"] ?></span><span> Đã Bán</span>
+								<span><?= $dataProduct["ProdViewCount"] ?></span><span> Lượt Xem</span> | <span><?= count($data_feedback) ?></span><span> Đánh Giá</span> | <span><?= $dataProduct["TotalOrders"] ?></span><span> Đã Bán</span>
 							</div>
-							
+
 						</div>
 						<div class="free_delivery d-flex flex-row align-items-center justify-content-center" style="margin-top: 35px;margin-bottom: 30px;">
-							 <span class="ti-truck"></span><span>Miễn phí vận chuyển</span>
+							<span class="ti-truck"></span><span>Miễn phí vận chuyển</span>
 						</div>
 						<?php
 						if ($dataProduct['ProdIsSale'] == 1) {
@@ -164,7 +177,7 @@ if (isset($_SESSION['cusid'])) {
 								}
 							}
 							?>
-						</ul> 
+						</ul>
 						<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
 							<span>Số lượng:</span>
 							<div class="quantity_selector">
@@ -174,20 +187,19 @@ if (isset($_SESSION['cusid'])) {
 							</div>
 							<div style="display: inline; margin-left: 20px;"><span style="margin-right:5px;"><?= $dataProduct["ProdQuantity"] - $dataProduct["TotalOrders"] ?></span>sản phẩm có sẵn</div>
 						</div>
-						
+
 						<?php
-							if ($dataProduct['ProdQuantity'] - $dataProduct['TotalOrders'] <= 0) {
-								?>
-									<div class="red_button add_to_cart_button" style="margin-top: 27px;margin-left: 0px;"><a style="color: #fff;">hết hàng</a></div>
-								<?php
-							} else {
-								?>
-									<div class="red_button add_to_cart_button" style="margin-top: 27px;margin-left: 0px;"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div> 
-									
-								<?php
-							}
-							?>
-						<!-- <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div> -->
+						if ($dataProduct['ProdQuantity'] - $dataProduct['TotalOrders'] <= 0) {
+						?>
+							<div class="red_button add_to_cart_button" style="margin-top: 27px;margin-left: 0px;"><a style="color: #fff;">hết hàng</a></div>
+						<?php
+						} else {
+						?>
+							<div class="red_button add_to_cart_button" style="margin-top: 27px;margin-left: 0px;"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>
+
+						<?php
+						}
+						?>
 					</div>
 				</div>
 			</div>
@@ -221,65 +233,66 @@ if (isset($_SESSION['cusid'])) {
 						</div>
 
 					</div>
-						<!-- Tab Reviews -->
-						<div id="tab_3" class="tab_container active">
-							<div class="row">
-								<!-- User Reviews -->
-								<div class="col-lg-6 reviews_col">
-									<div class="tab_title reviews_title">
-										<h4>Tất cả(<?php echo count($data_feedback); ?>)</h4>
-									</div>
-									<div class="reviews_list">
+					<!-- Tab Reviews -->
+					<div id="tab_3" class="tab_container active">
+						<div class="row">
+							<!-- User Reviews -->
+							<div class="col-lg-6 reviews_col">
+								<div class="tab_title reviews_title">
+									<h4>Tất cả(<?php echo count($data_feedback); ?>)</h4>
+								</div>
+								<div class="reviews_list">
 
-										<?php foreach ($data_feedback as $feedback) { ?>
-											<div class="user_review_container d-flex flex-column flex-sm-row">
-												<div class="user">
-													<div class="user_pic">
-														<?php
-														if ($feedback['ChangeImage'] == 1) {
-														?>
-															<img src="../upload/<?= $feedback["CusImage"] ?>" alt="">
-														<?php
-														} else {
-														?>
-															<img src="<?= $feedback["CusImage"] ?>" alt="">
-														<?php
-														}
-														?>
+									<?php foreach ($data_feedback as $feedback) { ?>
+										<div class="user_review_container d-flex flex-column flex-sm-row">
+											<div class="user">
+												<div class="user_pic">
+													<?php
+													if ($feedback['ChangeImage'] == 1) {
+													?>
+														<img src="../upload/<?= $feedback["CusImage"] ?>" alt="">
+													<?php
+													} else {
+													?>
+														<img src="<?= $feedback["CusImage"] ?>" alt="">
+													<?php
+													}
+													?>
 
-													</div>
-													<div class="user_rating">
-														<ul class="star_rating">
-															<?php for ($i = 1; $i <= 5; $i++) { ?>
-																<li>
-																	<?php if ($i <= $feedback['rate']) { ?>
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	<?php } else { ?>
-																		<i class="fa fa-star-o" aria-hidden="true"></i>
-																	<?php } ?>
-																</li>
-															<?php } ?>
-														</ul>
-													</div>
 												</div>
-												<div class="review">
-													<div class="review_date"><?php echo $feedback['created_at']; ?></div>
-													<div class="user_name"><?php echo $feedback['CusUserName']; ?></div>
-													<p><?= $feedback['CmtDescription'] ?></p>
+												<div class="user_rating">
+													<ul class="star_rating">
+														<?php for ($i = 1; $i <= 5; $i++) { ?>
+															<li>
+																<?php if ($i <= $feedback['rate']) { ?>
+																	<i class="fa fa-star" aria-hidden="true"></i>
+																<?php } else { ?>
+																	<i class="fa fa-star-o" aria-hidden="true"></i>
+																<?php } ?>
+															</li>
+														<?php } ?>
+													</ul>
 												</div>
 											</div>
-										<?php } ?>
-										<!-- User Review -->
-									</div>
+											<div class="review">
+												<div class="review_date"><?php echo $feedback['created_at']; ?></div>
+												<div class="user_name"><?php echo $feedback['CusUserName']; ?></div>
+												<p><?= $feedback['CmtDescription'] ?></p>
+											</div>
+										</div>
+									<?php } ?>
+									<!-- User Review -->
 								</div>
-								<!-- Add Review -->
-								<div class="col-lg-6 add_review_col">
-									<div class="add_review">
-										<?php include('../authen/message.php') ?>
-										<?php
-										if (isset($_SESSION['cus_loggedin']) && isset($_SESSION['cusid'])) {
+							</div>
+							<!-- Add Review -->
+							<div class="col-lg-6 add_review_col">
+								<div class="add_review">
+									<?php include('../authen/message.php') ?>
+									<?php
+									if (isset($_SESSION['cus_loggedin']) && isset($_SESSION['cusid'])) {
+										if (isset($data_check)) {
 											if ($data_check_rate["count"] < 1) {
-										?>
+									?>
 												<form class="form_reviews" action="./ProductFeedbackAction.php?ProdId=<?php echo $dataProduct["ProdId"] ?>" method="POST" id="review_form">
 													<div>
 														<div class="rating-container">
@@ -293,7 +306,7 @@ if (isset($_SESSION['cusid'])) {
 																<label for="star3" title="3 sao"></label>
 																<input type="radio" id="star2" name="rating" value="2">
 																<label for="star2" title="2 sao"></label>
-																<input type="radio" id="star1" name= "rating" value="1">
+																<input type="radio" id="star1" name="rating" value="1">
 																<label for="star1" title="1 sao"></label>
 															</span>
 														</div>
@@ -303,40 +316,27 @@ if (isset($_SESSION['cusid'])) {
 														<button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">Hoàn thành</button>
 													</div>
 												</form>
-											<?php
-											} else {
-											?>
-												<h1 class="notice-loggin">Bạn đã đánh giá sản phẩm rồi, Tiếp tục mua sắm để đánh giá sản phẩm khác nhé!</h1>
-												<div class="btn-loggin">
-													<button class="btn btn-action"><a href="../index/index.php">Mua sắm</a></button>
-												</div>
-											<?php
+									<?php
 											}
-										} else {
-											?>
-											<h1 class="notice-loggin">Bạn chưa đăng nhập, vui lòng đăng nhập để đánh giá</h1>
-											<div class="btn-loggin">
-												<button class="btn btn-action"><a href="../authen/login.php">Đăng nhập</a></button>
-											</div>
-										<?php
 										}
-										?>
-									</div>
-
+									}
+									?>
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- Benefit -->
-		<?php include_once("../includes/benefit.php") ?>
-		<!-- Newsletter -->
-		<?php include_once("../includes/newsletter.php") ?>
-		<!-- Footer -->
-		<?php include_once("../includes/footer.php") ?>
+	<!-- Benefit -->
+	<?php include_once("../includes/benefit.php") ?>
+	<!-- Newsletter -->
+	<?php include_once("../includes/newsletter.php") ?>
+	<!-- Footer -->
+	<?php include_once("../includes/footer.php") ?>
 	</div>
 	<script src="../assets/js/jquery-3.2.1.min.js"></script>
 	<script src="../assets/styles/bootstrap4/popper.js"></script>
