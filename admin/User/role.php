@@ -17,18 +17,22 @@ include_once('../includes/sidebar.php');
                 <div class="card-body">
                     <?php
                     if (!empty($_GET['action']) && $_GET['action'] == "save") {      
-                        $userId = $_POST['UserId'];
-                        $roles = $_POST['roles'];
-                        $insertString = "";
-                        $deleteOldRole = mysqli_query($connection, "Delete from roleuser where UserId = " .$userId);
-                        foreach ($roles as $insertRole) {
-                            $insertString .= !empty($insertString) ? "," : "";
-                            $insertString .= "(NULL, " . $userId . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
+                        if (isset($_POST['roles'])){
+                            $userId = $_POST['UserId'];
+                            $roles = $_POST['roles'];
+                            $insertString = "";
+                            $deleteOldRole = mysqli_query($connection, "Delete from roleuser where UserId = " .$userId);
+                            foreach ($roles as $insertRole) {
+                                $insertString .= !empty($insertString) ? "," : "";
+                                $insertString .= "(NULL, " . $userId . ", " . $insertRole . ", current_timestamp(), current_timestamp())";
+                            }
+                            $resultRole = mysqli_query($connection, "INSERT INTO roleuser (id, UserId, RoleId, created_at, updated_at) VALUES " . $insertString);
+                            if(!$resultRole){
+                                $error = "Phân quyền không thành công. Xin mời thử lại";
+                            } 
+                        } else {
+                            $error = "Không có vai trò nào được chọn.";
                         }
-                        $resultRole = mysqli_query($connection, "INSERT INTO roleuser (id, UserId, RoleId, created_at, updated_at) VALUES " . $insertString);
-                        if(!$resultRole){
-                            $error = "Phân quyền không thành công. Xin mời thử lại";
-                        } 
                     ?>
                     <?php if(!empty($error)){ ?>
                         <p><?php echo $error; ?></p>
@@ -38,13 +42,23 @@ include_once('../includes/sidebar.php');
                     <?php } else { ?>
                         <?php
                         $result_role = mysqli_query($connection,  "select * from role");
-                        $query_run_role = mysqli_fetch_all($result_role, MYSQLI_ASSOC);
+                        $query_run_role = array();
 
+                        // Lặp qua từng dòng kết quả và thêm vào mảng
+                        while ($row = mysqli_fetch_assoc($result_role)) {
+                            $query_run_role[] = $row;
+                        }
                         $result_role_group = mysqli_query($connection, "select * from role_group order by role_group.position ASC");
-                        $query_run_role_group = mysqli_fetch_all($result_role_group, MYSQLI_ASSOC);
+                        $query_run_role_group = array();
+                        while($row = mysqli_fetch_assoc($result_role_group)){
+                            $query_run_role_group[] = $row;
+                        }
 
                         $currentRole =  mysqli_query($connection,  "select * from roleuser where UserId=". $_GET['UserId']);
-                        $currentRole_run =  mysqli_fetch_all($currentRole, MYSQLI_ASSOC);
+                        $currentRole_run =  array();
+                        while($row = mysqli_fetch_assoc($currentRole)){
+                            $currentRole_run[] = $row;
+                        }
                         $currentRoleList = array();
                         if(!empty($currentRole_run)){
                             foreach($currentRole_run as $current){
