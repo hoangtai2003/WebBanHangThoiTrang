@@ -28,48 +28,53 @@ if (isset($_POST['add_product'])){
     } else {
         
     // ảnh đại diện
-    if (isset($_FILES['pimage'])) {
-        $file = $_FILES['pimage'];
-        $file_name = $file['name'];
-        if (empty($file_name)) {
-            $file_name = $dataProduct['ProdImage'];
-        } else {
-            if ($file['type'] == 'image/jpeg' || $file['type'] == 'image/jpg' ||  $file['type'] == 'image/png') {
-                move_uploaded_file($file['tmp_name'], '../upload/' . $file_name);
+        if (isset($_FILES['pimage'])) {
+            $file = $_FILES['pimage'];
+            $file_name = $file['name'];
+            if (empty($file_name)) {
+                $file_name = $dataProduct['ProdImage'];
             } else {
-                $_SESSION['message'] = "Không đúng định dạng";
+                if ($file['type'] == 'image/jpeg' || $file['type'] == 'image/jpg' ||  $file['type'] == 'image/png') {
+                    move_uploaded_file($file['tmp_name'], '../upload/' . $file_name);
+                } else {
+                    $_SESSION['message'] = "Không đúng định dạng";
+                    $_SESSION['message_type'] = 'error';
+                    $file_name = '';
+                }
+            }
+        }
+
+        /// ảnh mô tả
+        if (isset($_FILES['pimages'])) {
+            $files = $_FILES['pimages'];
+            $file_names = $files['name'];
+            if (!empty($file_names[0])) {
+                mysqli_query($connection, "delete from productimage where ProdId = $pid");
+
+                foreach ($file_names as $key => $value) {
+                    move_uploaded_file($files['tmp_name'][$key], '../upload/' . $value);
+                }
+                foreach ($file_names as $key => $value) {
+                    $sqlInsertImage = "INSERT INTO productimage(ProdId, Image) values (" . $pid . ",  '" . $value . "' ) ";
+                    mysqli_query($connection,  $sqlInsertImage);
+                }
+            }
+        }
+        if ($pprice > $ppricesale) {
+            $sqlupdate = "update Product set ProdName = '$pname', ProdDescription = '$pdesc', ProdImage = '$file_name', ProdPrice = '$pprice', ProdPriceSale = '$ppricesale', ProdQuantity = '$newQuantity',ProdIsSale = '$pissale',ProdStatus = '$pstatus',CateId = '$CateId' where ProdId = $pid";
+            $query = mysqli_query($connection, $sqlupdate);
+            if ($query) {
+                $_SESSION['message'] = "Cập nhật sản phẩm thành công";
+                $_SESSION['message_type'] = 'success';
+                header("Location: ./myProduct.php");
+            } else {
+                $_SESSION['message'] = "Lỗi cập nhật sản phẩm";
                 $_SESSION['message_type'] = 'error';
-                $file_name = '';
             }
+        } else {
+            $_SESSION['message'] = "Giá Sale nhập vào phải nhỏ hơn giá bán";
+            $_SESSION['message_type'] = 'error';
+            header("Location: ./editProduct.php");
         }
-    }
-
-    /// ảnh mô tả
-    if (isset($_FILES['pimages'])) {
-        $files = $_FILES['pimages'];
-        $file_names = $files['name'];
-        if (!empty($file_names[0])) {
-            mysqli_query($connection, "delete from productimage where ProdId = $pid");
-
-            foreach ($file_names as $key => $value) {
-                move_uploaded_file($files['tmp_name'][$key], '../upload/' . $value);
-            }
-            foreach ($file_names as $key => $value) {
-                $sqlInsertImage = "INSERT INTO productimage(ProdId, Image) values (" . $pid . ",  '" . $value . "' ) ";
-                mysqli_query($connection,  $sqlInsertImage);
-            }
-        }
-    }
-
-    $sqlupdate = "update Product set ProdName = '$pname', ProdDescription = '$pdesc', ProdImage = '$file_name', ProdPrice = '$pprice', ProdPriceSale = '$ppricesale', ProdQuantity = '$newQuantity',ProdIsSale = '$pissale',ProdStatus = '$pstatus',CateId = '$CateId' where ProdId = $pid";
-    $query = mysqli_query($connection, $sqlupdate);
-    if ($query) {
-        $_SESSION['message'] = "Cập nhật sản phẩm thành công";
-        $_SESSION['message_type'] = 'success';
-        header("Location: ./myProduct.php");
-    } else {
-        $_SESSION['message'] = "Lỗi cập nhật sản phẩm";
-        $_SESSION['message_type'] = 'error';
-    }
     }
 }

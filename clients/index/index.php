@@ -45,9 +45,6 @@ require_once('../../config/config.php');
 	<!-- Benefit -->
     <?php include_once("../includes/benefit.php") ?>
 
-	<!-- Blogs -->
-    <?php include_once("../includes/blogs.php") ?>
-
 	<!-- Newsletter -->
     <?php include_once("../includes/newsletter.php") ?>
 	<!-- Footer -->

@@ -281,23 +281,29 @@
     .card-header-title img {
         border-radius: 40px;
     }
+
     .card-header-title {
         flex: 1;
     }
+
     .mess-back i {
         color: #fff;
     }
+
     .card-footer {
         display: flex;
         align-items: center;
     }
+
     .input-message {
         flex: 1;
     }
+
     .submit-message input {
         border: none;
         outline: none;
     }
+
     .admin-status {
         display: flex;
         flex-direction: column;
@@ -306,83 +312,78 @@
 </style>
 
 <?php
-    session_start();
-    if(isset( $_SESSION['UserId'])) {
-        $UserId = $_SESSION['UserId'];
-    }
+// session_start();
+if (isset($_SESSION['UserId']) && isset($_SESSION['cusid'])) {
+    $UserId = $_SESSION['UserId'];
+    $CusId = $_SESSION['cusid'];
     require_once('../../config/config.php');
     $sqlAdminSupport = "SELECT * FROM user where UserId = $UserId";
     $result = $connection->query($sqlAdminSupport);
     $dataAdmin = $result->fetch_assoc();
+
+
+
+    $sql_chat_data = "SELECT * FROM messages WHERE CusId = $CusId AND UserId = $UserId";
+    $result_chat_data = mysqli_query($connection, $sql_chat_data);
+
+    // Sử dụng MYSQLI_ASSOC để lấy key là tên trường
+    $chatdata = mysqli_fetch_all($result_chat_data, MYSQLI_ASSOC);
+
+    echo '<pre>';
+    // var_dump($chatdata);
+    echo '</pre>';
+}
+
+
+
 ?>
-<div id="chatApp">
-    <div class="chatBox" id="chatBox">
-        <div class="card">
-            <header class="card-header header-title" @click="toggleChat()">
-                <div class="card-header-title">
-                   <img src="../../admin/upload/<?php echo $dataAdmin["UserImage"] ?>" style="width: 35px;">
-                   <div class="admin-status">
-                        <div class="name-admin"><?php echo $dataAdmin["UserName"] ?></div>
-                        <i class="fa fa-circle is-online"></i>
-                   </div>
-                </div>
-                <div class="mess-back">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-            </header>
-            <div id="chatbox-area">
-                <div class="card-content chat-content">
-                    <div class="content">
-                        <div class="chat-message-group">
-                            <div class="chat-thumb">
-                                <img src="../../admin/upload/<?php echo $dataAdmin["UserImage"] ?>" style="width: 30px;">
-                            </div>
-                            <div class="chat-messages">
-                                <div class="message">Xin chào</div>
-                                <div class="from">Seen 04:55</div>
-                            </div>
+<?php
+if (isset($_SESSION['UserId']) && isset($_SESSION['cusid'])) { ?>
+    <div id="chatApp">
+        <div class="chatBox" id="chatBox">
+            <div class="card">
+                <header class="card-header header-title" @click="toggleChat()">
+                    <div class="card-header-title">
+                        <img src="../../admin/upload/<?php echo $dataAdmin["UserImage"] ?>" style="width: 35px;">
+                        <div class="admin-status">
+                            <div class="name-admin"><?php echo $dataAdmin["UserName"] ?></div>
+                            <i class="fa fa-circle is-online"></i>
                         </div>
-                        <div class="chat-message-group writer-user">
-                            <div class="chat-messages">
-                                <div class="message">Shop ơi em 45kg thì mặc size gì</div>
-                                <div class="from">Seen 04:55</div>
-                            </div>
-                        </div>
-                        <div class="chat-message-group">
-                            <div class="chat-thumb">
-                                <figure class="image is-32x32">
-                                <img src="../../admin/upload/<?php echo $dataAdmin["UserImage"] ?>" style="width: 30px;">
-                                </figure>
-                            </div>
-                            <div class="chat-messages">
-                                <div class="message">Size M nhé em</div>
-                                <div class="from">Seen 04:55</div>
-                            </div>
-                        </div>
-                        <!-- <div class="chat-message-group">
-                            <div class="typing">Typing</div>
-                            <div class="spinner">
-                                <div class="bounce1"></div>
-                                <div class="bounce2"></div>
-                                <div class="bounce3"></div>
-                            </div>
-                        </div> -->
                     </div>
+                    <div class="mess-back">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </header>
+                <div id="chatbox-area">
+                    <div class="card-content chat-content">
+                        <div class="content">
+                            <?php
+                            for ($i = 0; $i < count($chatdata); $i++) {
+                                $is_from_me = ($chatdata[$i]["WriteId"] == $CusId);
+                            ?>
+                                <div class="chat-message-group <?= $is_from_me ? "writer-user" : "" ?>">
+                                    <div class="chat-messages">
+                                        <div class="message"><?= $chatdata[$i]["message"] ?></div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <form class="card-footer" method="post" action="../includes/customer_support_sending.php" id="chatBox-textbox">
+                        <div class="input-message">
+                            <input id="chatTextarea" name="textmessage" class="chat-textarea" placeholder="Enter message..."></input>
+                        </div>
+                        <div class="submit-message">
+                            <input class="" type="submit" value="send">
+                        </div>
+                    </form>
                 </div>
-                <form class="card-footer" id="chatBox-textbox">
-                    <div class="input-message" >
-                        <input id="chatTextarea" class="chat-textarea" placeholder="Enter message..."></input>
-                    </div>
-                    <div class="submit-message">
-                        <input class="" type="submit" value="send">
-                    </div>
-                </form>
             </div>
         </div>
     </div>
+<?php   }
+?>
 
-
-</div>
 
 <script>
     var firebaseApp = firebase.initializeApp({
