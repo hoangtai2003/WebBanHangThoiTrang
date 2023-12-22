@@ -52,7 +52,6 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <label>Nhóm sản phẩm</label>
                                 <br>
                                 <select name="slCid" id="slCid">
-                                    <option value="">_________Tên danh mục________</option>
                                     <?php
                                     foreach ($category as $key => $value) { ?>
                                         <option value="<?php echo $value['CateId'] ?>" <?php echo (($value['CateId'] == $dataProduct["CateId"]) ? 'selected' : '') ?>> <?php echo $value["CateName"] ?></option>
@@ -75,11 +74,11 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                             </div>
                             <div class="form-group">
                                 <label>Giá gốc</label>
-                                <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdPrice'] ?>" name="pprice">
+                                <input required type="number" min="0" oninput="validateInput(event)" class="form-control" value="<?php echo $dataProduct['ProdPrice'] ?>" name="pprice">
                             </div>
                             <div class="form-group">
                                 <label>Giá đã được giảm giá</label>
-                                <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdPriceSale'] ?>" name="ppricesale">
+                                <input required type="number" min="0" oninput="validateInput(event)" class="form-control" value="<?php echo $dataProduct['ProdPriceSale'] ?>" name="ppricesale">
                             </div>
                             <div class="form-group">
                                 <label>Tình trạng sản phẩm</label>
@@ -107,13 +106,15 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                                 <input type="file" name="pimages[]" multiple>
                                 <br>
                                 <div class="row">
-                                    <?php foreach ($imgProd as $key => $value) { ?>
-                                        <div class="col-md-4">
-                                            <a href="">
-                                                <img src="../upload/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
-                                            </a>
-                                        </div>
-                                    <?php } ?>
+                                    <?php foreach ($imgProd as $key => $value) {
+                                        if (!empty($value["Image"])) { ?>
+                                            <div class="col-md-4">
+                                                <a href="">
+                                                    <img src="../upload/<?php echo $value['Image'] ?>" alt="" style="min-height: 100px; height: 100px; width: 100px; margin-bottom: 10px; max-width: 100px; object-fit: cover;">
+                                                </a>
+                                            </div>
+                                    <?php }
+                                    } ?>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -130,15 +131,8 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
     </div>
     <?php include('../includes/footer.php');
     ?>
-    <script>
-        function validateInput(event) {
-            // Lấy giá trị từ sự kiện input
-            let inputValue = event.target.value;
-            // Loại bỏ mọi ký tự không phải số
-            let sanitizedValue = inputValue.replace(/[^0-9]/g, '');
-            // Cập nhật giá trị input
-            event.target.value = sanitizedValue;
-        }
+    <script src="../../admin/assets/js/validateInput.js">
+
     </script>
 </body>
 

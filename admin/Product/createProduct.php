@@ -9,11 +9,13 @@ $result_all_categories = $connection->query($sql_all_categories) or die($connect
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Thêm Sản Phẩm Mới</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 </head>
+
 <body>
     <div class="container-fluid px-4">
         <ol class="breadcrumb mt-5">
@@ -49,21 +51,21 @@ $result_all_categories = $connection->query($sql_all_categories) or die($connect
                             </div>
                             <div class="form-group">
                                 <label>Số lượng</label>
-                                <input required type="number" class="form-control" name="pquantity">
+                                <input required type="number" min="0" oninput="validateInput(event)" class="form-control" name="pquantity">
                             </div>
                             <div class="form-group">
                                 <label>Giá gốc</label>
-                                <input required type="number" class="form-control" name="pprice">
+                                <input required type="number" min="0" oninput="validateInput(event)" class="form-control" name="pprice">
                             </div>
                             <div class="form-group">
                                 <label>Giá đã được giảm giá</label>
-                                <input required type="number" class="form-control" name="ppricesale">
+                                <input required type="number" min="0" oninput="validateInput(event)" class="form-control" name="ppricesale">
                             </div>
                             <div class="form-group">
                                 <label>Ảnh sản phẩm</label>
                                 <br>
-                                <input type="file" class="form-control" name="pimage" id="input-img">
-                                <img  class="img_preview" width="100px">
+                                <input type="file" required class="form-control" name="pimage" id="input-img">
+                                <img class="img_preview" width="100px">
                             </div>
                             <div class="form-group">
                                 <label>Ảnh mô tả</label>
@@ -84,6 +86,10 @@ $result_all_categories = $connection->query($sql_all_categories) or die($connect
     </div>
     <?php include('../includes/footer.php');
     ?>
+    <script src="../../admin/assets/js/validateInput.js">
+
+    </script>
+
 </body>
 
 </html>
