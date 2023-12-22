@@ -23,7 +23,10 @@
                 $user = $row;
                 $query = "SELECT * FROM roleuser INNER JOIN role on roleuser.RoleId = role.id where roleuser.UserId =" .$user['UserId'];
                 $query_run = mysqli_query($connection, $query);
-                $result = mysqli_fetch_all($query_run, MYSQLI_ASSOC);
+                $result = array();
+                while($row = mysqli_fetch_assoc($query_run)){
+                    $result[] = $row;
+                }
                 if (!empty($result)){
                     $user['privileges'] = array();
                     foreach($result as $role){
