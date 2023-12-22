@@ -75,11 +75,11 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
                             </div>
                             <div class="form-group">
                                 <label>Giá gốc</label>
-                                <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdPrice'] ?>" name="pprice">
+                                <input required type="number" min="0" oninput="validateInput(event)" class="form-control" value="<?php echo $dataProduct['ProdPrice'] ?>" name="pprice">
                             </div>
                             <div class="form-group">
                                 <label>Giá đã được giảm giá</label>
-                                <input required type="number" class="form-control" value="<?php echo $dataProduct['ProdPriceSale'] ?>" name="ppricesale">
+                                <input required type="number" min="0" oninput="validateInput(event)" class="form-control" value="<?php echo $dataProduct['ProdPriceSale'] ?>" name="ppricesale">
                             </div>
                             <div class="form-group">
                                 <label>Tình trạng sản phẩm</label>
@@ -130,15 +130,8 @@ $imgProd = mysqli_query($connection, $sqlImgProd);
     </div>
     <?php include('../includes/footer.php');
     ?>
-    <script>
-        function validateInput(event) {
-            // Lấy giá trị từ sự kiện input
-            let inputValue = event.target.value;
-            // Loại bỏ mọi ký tự không phải số
-            let sanitizedValue = inputValue.replace(/[^0-9]/g, '');
-            // Cập nhật giá trị input
-            event.target.value = sanitizedValue;
-        }
+    <script src="../../admin/assets/js/validateInput.js">
+
     </script>
 </body>
 
