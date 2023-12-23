@@ -42,11 +42,6 @@ require_once('../../config/config.php');
 	<!-- Best Sellers -->
     <?php include_once("../includes/best_sellers.php") ?>
 
-	<!-- Benefit -->
-    <?php include_once("../includes/benefit.php") ?>
-
-	<!-- Newsletter -->
-    <?php include_once("../includes/newsletter.php") ?>
 	<!-- Footer -->
     <?php include_once("../includes/footer.php") ?>
 

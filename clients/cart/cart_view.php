@@ -258,12 +258,6 @@
 		</div>
 	</div>
 
-	<!-- Benefit -->
-    <?php include_once("../includes/benefit.php") ?>
-
-	<!-- Newsletter -->
-    <?php include_once("../includes/newsletter.php") ?>
-
 	<!-- Footer -->
     <?php include_once("../includes/footer.php") ?>
 

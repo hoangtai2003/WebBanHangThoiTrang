@@ -110,10 +110,6 @@
 
 	<!-- Newsletter -->
 
-
-	<?php include("../includes/newsletter.php") ?>
-	<!-- Footer -->
-
 	<?php include("../includes/footer.php") ?>
 
 </div>
