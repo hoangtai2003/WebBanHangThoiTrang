@@ -18,6 +18,7 @@
     $shipid = $row_get_trans["ShipId"];
 
     $totalPrice = 0;
+    // duyệt các sp muốn mua
     foreach ($_SESSION['selected_items'] as $key => $value) {
         $quantity = $value['quantity'];
         $price = $value['price'];
@@ -30,10 +31,12 @@
         $sql_insert_order = "INSERT INTO orders (OrderCode, CusId, OrderPayment,ShipId) VALUES ('" . $order_code . "', '" . $cusid . "', '" . $order_payment . "', '" . $shipid . "')";
         $result_sql_insert_order = $connection->query($sql_insert_order);
         if ($result_sql_insert_order) {
+            // lấy id của orders mới insert
             $last_insert_orderid = $connection->insert_id;
 
             $totalPrice = 0;
             $totalQuantity = 0;
+            // duyệt các sp muốn mua
             foreach ($_SESSION['selected_items'] as $key => $value) {
                 $productId = $value['id'];
                 $quantity = $value['quantity'];
@@ -91,6 +94,7 @@
         }
         unset($_SESSION['selected_items']);
 
+        // kiểm tra xem còn sp nào trong giỏ ko
         $sql_check_cart_detail_final = "SELECT * FROM cartdetail where CartId = '".$row_get_cart['CartId']."'";
         $result_check_cart_detail_final = $connection->query($sql_check_cart_detail_final);
         if($result_check_cart_detail_final->num_rows == 0){

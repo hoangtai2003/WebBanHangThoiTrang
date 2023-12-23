@@ -1,7 +1,20 @@
 <?php
 session_start();
-require_once('../../config/config.php')
+require_once('../../config/config.php');
+$sqlCate = "Select * from categories";
+$resultCate = mysqli_query($connection, $sqlCate);
 
+$sqlAllProduct = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
+FROM product
+inner join categories on product.CateId = categories.CateId
+LEFT JOIN (
+	SELECT ProdId, SUM(od.OrdQuantity) AS TotalOrders
+	FROM orderdetail AS od
+	GROUP BY ProdId
+) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
+WHERE categories.CateStatus = 1 AND product.ProdStatus = 1;
+";
+$resultProduct = mysqli_query($connection, $sqlAllProduct);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,39 +60,42 @@ require_once('../../config/config.php')
 							</div>
 							<ul class="sidebar_categories">
 								<?php
-									$CateId = isset($_REQUEST['CateId']) ? $_REQUEST['CateId'] : null;
-									$sqlCate = "Select * from categories";
-									$resultCate = mysqli_query($connection, $sqlCate);
+								$CateId = isset($_REQUEST['CateId']) ? $_REQUEST['CateId'] : null;
+								$ProdId = isset($_REQUEST["ProdId"]) ? $_REQUEST["ProdId"] : '';
+								$cmd = isset($_REQUEST["cmd"]) ? $_REQUEST["cmd"] : '';
+
+								$sqlCate = "Select * from categories";
+								$resultCate = mysqli_query($connection, $sqlCate);
 								?>
-								<?php if (!isset($_REQUEST['CateId'])) { ?>
+								<?php if (($ProdId == '') and ($CateId == null) and ($cmd == '')) { ?>
 									<li class="active"><a href="categories.php"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Tất cả sản phẩm</a></li>
 								<?php } else { ?>
 									<li class=""><a href="categories.php">Tất cả sản phẩm</a></li>
 								<?php } ?>
+
 								<?php
 								if (mysqli_num_rows($resultCate) > 0) {
 									foreach ($resultCate as $row) {
 								?>
-								<?php if ($row["CateId"] == $CateId) { ?>
-									<li class="active"><a href=""><span><i class="fa fa-angle-double-right" aria-hidden="true"></i><?= $row["CateName"] ?></a></li>
-								<?php  } else { ?>
-										<li class=""><a href="categories.php?CateId=<?php echo $row["CateId"] ?>"><?= $row["CateName"] ?></a></li>
+										<?php if ($row["CateId"] == $CateId) { ?>
+											<li class="active"><a href=""><span><i class="fa fa-angle-double-right" aria-hidden="true"></i><?= $row["CateName"] ?></a></li>
+										<?php  } else { ?>
+											<li class=""><a href="categories.php?CateId=<?php echo $row["CateId"] ?>"><?= $row["CateName"] ?></a></li>
+										<?php } ?>
 									<?php } ?>
 								<?php } ?>
-							<?php } ?>
 							</ul>
 						</div>
 						<div>
 							<h5>Khoảng giá</h5>
 						</div>
-						<div class="shopee-price-range-filter__inputs"><input id="min-price" type="number" aria-label="" maxlength="13" class="shopee-price-range-filter__input" placeholder="₫ từ" value="" fdprocessedid="krwrii">
-							<div class="shopee-price-range-filter__range-line"></div><input id="max-price" type="number" aria-label="" maxlength="13" class="shopee-price-range-filter__input" placeholder="₫ đến" value="" fdprocessedid="kthd6b">
+						<div class="shopee-price-range-filter__inputs"><input id="min-price" type="number" oninput="validateInput(event)" maxlength="13" min="0" class="shopee-price-range-filter__input" placeholder="₫ từ">
+							<div class="shopee-price-range-filter__range-line"></div><input id="max-price" oninput="validateInput(event)" type="number" min="0" maxlength="13" class="shopee-price-range-filter__input" placeholder="₫ đến">
 						</div>
 						<div class="filter_button" onclick="filterByPrice()"><span>Áp dụng</span></div>
 					</div>
-
 					<!-- Main Content -->
-					
+
 					<div class="main_content">
 						<div class="products_iso">
 							<div class="row">
@@ -96,19 +112,16 @@ require_once('../../config/config.php')
 											</li>
 										</ul>
 									</div>
-									<div class="product-grid" style="display: flex;">
+									<div class="product-grid" style="display: flex; flex-wrap: wrap;">
 
-										<?php 
-										$cmd=isset($_REQUEST["cmd"])?$_REQUEST["cmd"]:'';
-										$ProdId=isset($_REQUEST["ProdId"])? $_REQUEST["ProdId"] :'';
-										if ($ProdId !='') {
-
+										<?php
+										if ($ProdId != '') {
 											include("../pagination/offset.php");
-											$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId  ");
+											$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId where product.ProdId = '$ProdId'  ");
 											$totalRecords = $totalRecords->num_rows;
 											// Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
 											$totalPage = ceil($totalRecords / $item_per_page);
-																	
+
 											$sql = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
 											FROM product
 											inner join categories on product.CateId = categories.CateId
@@ -118,12 +131,12 @@ require_once('../../config/config.php')
 												GROUP BY ProdId
 											) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
 											WHERE categories.CateStatus = 1 AND product.ProdStatus = 1 and product.ProdId = '$ProdId' 
-											order by ProdId desc limit ".$item_per_page." offset ".$offset."";
+											order by ProdId desc limit " . $item_per_page . " offset " . $offset . "";
 											$result = $connection->query($sql);
 											if ($result->num_rows > 0) {
 												while ($row = $result->fetch_assoc()) {
-											?>
-												<form action="" class="form-submit">
+										?>
+													<form action="" class="form-submit">
 														<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
 														<div class="product-item">
 															<div class="product product_filter">
@@ -137,11 +150,11 @@ require_once('../../config/config.php')
 																	<?php
 																	if ($row['ProdIsSale'] == 1) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> ₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> ₫</span></div>
 																	<?php
 																	} else if ($row['ProdIsSale'] == 0) {
 																	?>
-																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> ₫</div>
 																	<?php
 																	}
 																	?>
@@ -149,29 +162,27 @@ require_once('../../config/config.php')
 															</div>
 															<?php
 															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-																echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
 															} else {
-																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
+																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
 															}
 															?>
 														</div>
 													</form>
-													<?php
-													}
-												} else {
-													echo "Không có sản phẩm nào";
+												<?php
 												}
-											
-											} 
-												else if ($cmd !='') {
-											$search=isset($_REQUEST["search-box"])?$_REQUEST["search-box"]:'';
+											} else {
+												echo "Không có sản phẩm nào";
+											}
+										} else if ($cmd != '') {
+											$search = isset($_REQUEST["search-box"]) ? $_REQUEST["search-box"] : '';
 											include("../pagination/offset.php");
-										$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId  ");
-										$totalRecords = $totalRecords->num_rows;
-										// Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
-										$totalPage = ceil($totalRecords / $item_per_page);
-																
-										$sql = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
+											$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId where product.ProdName like '%" . $search . "%'");
+											$totalRecords = $totalRecords->num_rows;
+											// Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+											$totalPage = ceil($totalRecords / $item_per_page);
+
+											$sql = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
 										FROM product
 										inner join categories on product.CateId = categories.CateId
 										LEFT JOIN (
@@ -179,61 +190,60 @@ require_once('../../config/config.php')
 											FROM orderdetail AS od
 											GROUP BY ProdId
 										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
-										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1 and product.ProdName like '%".$search."%' 
-										order by ProdId desc limit ".$item_per_page." offset ".$offset."";
-										$result = $connection->query($sql);
-										if ($result->num_rows > 0) {
-											while ($row = $result->fetch_assoc()) {
-										?>
-											<form action="" class="form-submit">
-													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
-													<div class="product-item">
-														<div class="product product_filter">
-															<div class="product_image">
-																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1 and product.ProdName like '%" . $search . "%' 
+										order by ProdId desc limit " . $item_per_page . " offset " . $offset . "";
+											$result = $connection->query($sql);
+											if ($result->num_rows > 0) {
+												while ($row = $result->fetch_assoc()) {
+												?>
+													<form action="" class="form-submit">
+														<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
+														<div class="product-item">
+															<div class="product product_filter">
+																<div class="product_image">
+																	<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
+																</div>
+																<div class="favorite"></div>
+																<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
+																<div class="product_info">
+																	<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+																	<?php
+																	if ($row['ProdIsSale'] == 1) {
+																	?>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?>₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</span></div>
+																	<?php
+																	} else if ($row['ProdIsSale'] == 0) {
+																	?>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</div>
+																	<?php
+																	}
+																	?>
+																</div>
 															</div>
-															<div class="favorite"></div>
-															<!-- <div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div> -->
-															<div class="product_info">
-																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
-																<?php
-																if ($row['ProdIsSale'] == 1) {
-																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?> VNĐ<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</span></div>
-																<?php
-																} else if ($row['ProdIsSale'] == 0) {
-																?>
-																	<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?> VNĐ</div>
-																<?php
-																}
-																?>
-															</div>
+															<?php
+															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
+															} else {
+																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
+															}
+															?>
 														</div>
-														<?php
-														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
-														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">add to cart</a></div>';
-														}
-														?>
-													</div>
-												</form>
-												<?php
+													</form>
+											<?php
 												}
 											} else {
 												echo "Không có sản phẩm nào";
 											}
-										
 										} else if (isset($CateId)) {
 											?>
-										<?php
-										include("../pagination/offset.php");
-										$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId where categories.CateId = '$CateId' ");
-										$totalRecords = $totalRecords->num_rows;
-										// Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
-										$totalPage = ceil($totalRecords / $item_per_page);
-																
-										$sql = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
+											<?php
+											include("../pagination/offset.php");
+											$totalRecords = mysqli_query($connection, "select product.*, categories.* from product inner join categories on product.CateId = categories.CateId where categories.CateId = '$CateId' ");
+											$totalRecords = $totalRecords->num_rows;
+											// Tổng số trang = tổng số sản phẩm / tổng số sản phẩm một trang
+											$totalPage = ceil($totalRecords / $item_per_page);
+
+											$sql = "SELECT product.*,categories.*, IFNULL(TotalOrders, 0) AS TotalOrders
 										FROM product
 										inner join categories on product.CateId = categories.CateId
 										LEFT JOIN (
@@ -242,51 +252,50 @@ require_once('../../config/config.php')
 											GROUP BY ProdId
 										) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
 										WHERE categories.CateStatus = 1 AND product.ProdStatus = 1 and product.CateId = '$CateId'
-										order by ProdId desc limit ".$item_per_page." offset ".$offset."";
-										$result = $connection->query($sql);
+										order by ProdId desc limit " . $item_per_page . " offset " . $offset . "";
+											$result = $connection->query($sql);
 											if ($result->num_rows > 0) {
 												while ($row = $result->fetch_assoc()) {
-										?>
-												<form action="" class="form-submit">
-													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
-													<div class="product-item">
-														<div class="product product_filter">
-															<div class="product_image">
-																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+											?>
+													<form action="" class="form-submit">
+														<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
+														<div class="product-item">
+															<div class="product product_filter">
+																<div class="product_image">
+																	<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
+																</div>
+																<div class="favorite"></div>
+																<div class="product_info">
+																	<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+																	<?php
+																	$priceSale = number_format(floatval($row["ProdPriceSale"]), 0, ',', '.');
+																	$price = number_format(floatval($row["ProdPrice"]), 0, ',', '.');
+																	if ($row['ProdIsSale'] == 1) {
+																	?>
+																		<div class="product_price"><?= $priceSale ?>₫<span><?= $price ?>₫</span></div>
+																	<?php
+																	} else if ($row['ProdIsSale'] == 0) {
+																	?>
+																		<div class="product_price"><?= $price ?>₫</div>
+																	<?php
+																	}
+																	?>
+																</div>
 															</div>
-															<div class="favorite"></div>
-															<div class="product_info">
-																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
-																<?php
-																$priceSale = number_format(floatval($row["ProdPriceSale"]), 0, ',', '.');
-																$price = number_format(floatval($row["ProdPrice"]), 0, ',', '.');
-																if ($row['ProdIsSale'] == 1) {
-																?>
-																	<div class="product_price"><?= $priceSale ?>₫<span><?= $price ?>₫</span></div>
-																<?php
-																} else if ($row['ProdIsSale'] == 0) {
-																?>
-																	<div class="product_price"><?= $price ?>₫</div>
-																<?php
-																}
-																?>
-															</div>
+															<?php
+															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
+															} else {
+																echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
+															}
+															?>
 														</div>
-														<?php
-														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
-														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="" id="cart_link">Thêm vào giỏ hàng</a></div>';
-														}
-														?>
-													</div>
-												</form>
+													</form>
 												<?php
 												}
 											} else {
 												echo "Không có sản phẩm nào";
 											}
-
 										} else {
 											include("../pagination/offset.php");
 											$totalRecords = mysqli_query($connection, "select * from product");
@@ -302,46 +311,43 @@ require_once('../../config/config.php')
 												GROUP BY ProdId
 											) AS SoldProducts ON product.ProdId = SoldProducts.ProdId
 											WHERE categories.CateStatus = 1 AND product.ProdStatus = 1
-											order by ProdId desc limit ".$item_per_page." offset ".$offset."";
+											order by ProdId desc limit " . $item_per_page . " offset " . $offset . "";
 											$resultProduct = mysqli_query($connection, $sqlAllProduct);
 											if ($resultProduct->num_rows > 0) {
 												while ($row = $resultProduct->fetch_assoc()) {
 												?>
-												<form action="" class="form-submit">
-													<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
-													<div class="product-item">
-														<div class="product product_filter">
-															<div class="product_image">
-																<img src="../../images/<?php echo $row["ProdImage"]; ?>" alt="">
+													<form action="" class="form-submit ">
+														<input type="hidden" class="ProdId" value="<?php echo $row['ProdId'] ?>">
+														<div class="product-item">
+															<div class="product product_filter">
+																<div class="product_image">
+																	<a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><img src="../../images/<?php echo $row["ProdImage"]; ?>" alt=""></a>
+																</div>
+																<div class="favorite"></div>
+																<div class="product_info">
+																	<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
+																	<?php
+																	if ($row['ProdIsSale'] == 1) {
+																	?>
+																		<div class="product_price"><?php echo number_format($row["ProdPriceSale"], 0, ',', '.') ?>₫<span><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</span></div>
+																	<?php
+																	} else if ($row['ProdIsSale'] == 0) {
+																	?>
+																		<div class="product_price"><?php echo number_format($row["ProdPrice"], 0, ',', '.') ?>₫</div>
+																	<?php
+																	}
+																	?>
+																</div>
 															</div>
-															<div class="favorite"></div>
-															<div class="product_info">
-																<h6 class="product_name"><a href="../singleproduct/singleproduct_action.php?ProdId=<?php echo $row['ProdId'] ?>"><?php echo $row["ProdName"] ?></a></h6>
-																<?php
-																$priceSale = number_format(floatval($row["ProdPriceSale"]), 0, ',', '.');
-																$price = number_format(floatval($row["ProdPrice"]), 0, ',', '.');
-														
-																if ($row['ProdIsSale'] == 1) {
-																?>
-																	<div class="product_price"><?= $priceSale ?>₫<span><?=$price ?>₫</span></div>
-																<?php
-																} else if ($row['ProdIsSale'] == 0) {
-																?>
-																	<div class="product_price"><?=$price ?>₫</div>
-																<?php
-																}
-																?>
-															</div>
+															<?php
+															if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
+																echo '<div class="red_button add_to_cart_button"><a href="#">Hết hàng</a></div>';
+															} else {
+																echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>';
+															}
+															?>
 														</div>
-														<?php
-														if ($row['ProdQuantity'] - $row['TotalOrders'] <= 0) {
-															echo '<div class="red_button add_to_cart_button"><a href="#">hết hàng</a></div>';
-														} else {
-															echo '<div class="red_button add_to_cart_button"><a href="#" id="cart_link">Thêm vào giỏ hàng</a></div>';
-														}
-														?>
-													</div>
-												</form>
+													</form>
 
 										<?php
 												}
@@ -359,12 +365,6 @@ require_once('../../config/config.php')
 				</div>
 			</div>
 		</div>
-
-		<!-- Benefit -->
-		<?php include_once("../includes/benefit.php") ?>
-
-		<!-- Newsletter -->
-		<?php include_once("../includes/newsletter.php") ?>
 
 		<!-- Footer -->
 		<?php include_once("../includes/footer.php") ?>
@@ -434,6 +434,7 @@ require_once('../../config/config.php')
 	<script>
 		const deleteSelect = document.querySelector('.btn-delete');
 		console.log(deleteSelect)
+
 		function filterByPrice() {
 			var minPrice = document.getElementById("min-price").value;
 			var maxPrice = document.getElementById("max-price").value;
@@ -459,6 +460,16 @@ require_once('../../config/config.php')
 					console.log(error);
 				}
 			});
+		}
+	</script>
+	<script>
+		function validateInput(event) {
+			// Lấy giá trị từ sự kiện input
+			let inputValue = event.target.value;
+			// Loại bỏ mọi ký tự không phải số
+			let sanitizedValue = inputValue.replace(/[^0-9]/g, '');
+			// Cập nhật giá trị input
+			event.target.value = sanitizedValue;
 		}
 	</script>
 </body>

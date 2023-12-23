@@ -97,7 +97,7 @@
 								
 											if ($result_get_product->num_rows > 0) {
 												$row_get_product = $result_get_product->fetch_assoc();
-												
+												// bán theo giá gốc
 												if($row_get_product['ProdIsSale'] == 0){
 													$_SESSION['cart'][] = array(
 														'id' => $row_get_product['ProdId'],
@@ -107,6 +107,7 @@
 														'quantity' => $quantity
 													);
 												}
+												// bán theo giá sale
 												else if ($row_get_product['ProdIsSale'] == 1){
 													$_SESSION['cart'][] = array(
 														'id' => $row_get_product['ProdId'],
@@ -126,6 +127,7 @@
 									foreach($_SESSION["cart"] as $key => $cart_item){
 										$i++;
 
+										// sql lấy ra số lượng sp sẵn có = sl sp đó - sl sp đó có trong các đơn hàng
 										$sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
 										FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
 										WHERE p.ProdId = '".$cart_item['id']."'
@@ -136,6 +138,7 @@
 							<tbody>
 								<form action="./transportation_view.php" method="post">
 								<?php
+									// nếu số lượng của 1 sp trong giỏ > số lượng sẵn có => số lượng sp đó trong giỏ bằng sl sẵn có
 									if($cart_item['quantity'] > ($rowProd['ProdQuantity'] - $rowProd['TotalOrders']) && ($rowProd['ProdQuantity'] - $rowProd['TotalOrders']) > 0){
 										$_SESSION['cart'][$key]['quantity'] = $rowProd['ProdQuantity'] - $rowProd['TotalOrders'];
 										$cart_item['quantity'] = $_SESSION['cart'][$key]['quantity'];
@@ -168,6 +171,7 @@
 									<td><a onclick="return confirm('Bạn có chắc muốn xóa sản phẩm <?php echo $cart_item['name'] ?> khỏi giỏ hàng không?')" href="../cart/cart_action.php?delete=<?php echo $cart_item['id'] ?>" class="btn btn-sm btn-danger">Xóa</a></td>
 								</tr>
 								<?php
+									// nếu sl sẵn có bằng 0 => số lượng của sp đó trong giỏ = 0
 									}else if(($rowProd['ProdQuantity'] - $rowProd['TotalOrders']) == 0){
 										$_SESSION['cart'][$key]['quantity'] = 0;
 										$cart_item['quantity'] = $_SESSION['cart'][$key]['quantity'];
@@ -196,6 +200,7 @@
 									<td><a onclick="return confirm('Bạn có chắc muốn xóa sản phẩm <?php echo $cart_item['name'] ?> khỏi giỏ hàng không?')" href="../cart/cart_action.php?delete=<?php echo $cart_item['id'] ?>" class="btn btn-sm btn-danger">Xóa</a></td>
 								</tr>
 								<?php
+									// trường hợp còn lại: số lượng trong giỏ <= sl sẵn có (bình thường)
 									}else{
 										$thanhtien = $cart_item['quantity'] * $cart_item['price'];
 								?>
@@ -252,12 +257,6 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- Benefit -->
-    <?php include_once("../includes/benefit.php") ?>
-
-	<!-- Newsletter -->
-    <?php include_once("../includes/newsletter.php") ?>
 
 	<!-- Footer -->
     <?php include_once("../includes/footer.php") ?>

@@ -17,12 +17,10 @@ require_once('../../config/config.php');
 <link rel="stylesheet" type="text/css" href="../assets/plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="../assets/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="../assets/styles/responsive.css">
+
 </head>
-
 <body>
-
 <div class="super_container">
-
 	<!-- Header -->
     <?php include_once("../includes/header.php") ?>
 
@@ -30,7 +28,6 @@ require_once('../../config/config.php');
 	<?php include_once("../includes/hamburger_menu.php") ?>
 
 	<!-- Slider -->
-    <?php # include_once('../includes/message.php') ?>
     <?php include_once("../includes/slider.php") ?>
 
 	<!-- Banner -->
@@ -45,14 +42,6 @@ require_once('../../config/config.php');
 	<!-- Best Sellers -->
     <?php include_once("../includes/best_sellers.php") ?>
 
-	<!-- Benefit -->
-    <?php include_once("../includes/benefit.php") ?>
-
-	<!-- Blogs -->
-    <?php include_once("../includes/blogs.php") ?>
-
-	<!-- Newsletter -->
-    <?php include_once("../includes/newsletter.php") ?>
 	<!-- Footer -->
     <?php include_once("../includes/footer.php") ?>
 

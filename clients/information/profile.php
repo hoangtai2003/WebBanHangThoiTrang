@@ -152,11 +152,6 @@ include('../../helpers/function.php');
 			</div>
 		</div>
 	</div>
-
-    <?php include_once("../includes/benefit.php") ?>
-    <?php include_once("../includes/newsletter.php") ?>
-    <?php include_once("../includes/footer.php") ?>
-
 </div>
 <script src="../assets/js/jquery-3.2.1.min.js"></script>
 <script src="../assets/styles/bootstrap4/popper.js"></script>

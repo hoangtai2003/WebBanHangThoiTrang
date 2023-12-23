@@ -13,9 +13,11 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
             //lấy max số sản phẩm sẵn có
             $sqlgetCartDetail = "SELECT * FROM cartdetail WHERE CartId = '".$row_check_cart['CartId']."' AND ProdId = '".$productId."'";
             $resultgetCartDetail = mysqli_query($connection, $sqlgetCartDetail);
+            // nếu sp đã có trong giỏ
             if($resultgetCartDetail->num_rows > 0){
                 $rowgetCartDetail = mysqli_fetch_assoc($resultgetCartDetail);
             
+                // sql lấy ra số lượng sp sẵn có = sl sp đó - sl sp đó có trong các đơn hàng
                 $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
                 FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
                 WHERE p.ProdId = '$productId'
@@ -23,6 +25,7 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
                 $product = mysqli_query($connection, $sqlProd);
                 $dataProduct = mysqli_fetch_assoc($product);
             
+                // tính số lượng sp của sp đó có thể thêm vào giỏ
                 $maxQuantity = ($dataProduct['ProdQuantity'] - $dataProduct["TotalOrders"]) - $rowgetCartDetail['Quantity'];
                 $response = array(
                     'success' => true,
@@ -31,6 +34,7 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
                 echo json_encode($response);
                 exit();
             }else{
+                // nếu sp chưa có trong giỏ
                 $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
                 FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
                 WHERE p.ProdId = '$productId'
@@ -45,6 +49,7 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
                 exit();
             }
         }
+        // nếu chưa có giỏ hàng
         else if ($result_check_cart->num_rows == 0){
             $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
             FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
@@ -60,6 +65,7 @@ if(isset($_GET['clickplus']) && $_GET['clickplus'] == 'plus'){
             exit();
         }
     }
+    // nếu chưa đăng nhập
     else{
         $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
         FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId

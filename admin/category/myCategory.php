@@ -71,9 +71,6 @@ require_once('../../config/config.php');
                                 <?php if (checkPrivilege('editCategory.php?CateId=0')) { ?>
                                 <th scope="col">Sửa</th>
                                 <?php } ?>
-                                <?php if (checkPrivilege('deleteCategoryAction.php?CateId=0')) { ?>
-                                <th scope="col">Xóa</th>
-                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,16 +99,6 @@ require_once('../../config/config.php');
                                                     <i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i>Sửa
                                                 </a>
                                             </td>
-                                        <?php } ?>
-                                        <?php if (checkPrivilege('deleteCategoryAction.php?CateId=0')) { ?>
-                                        <td>
-                                            <a 
-                                                href="deleteCategoryAction.php?CateId=<?=$row['CateId']?>"
-                                                class="btn btn-danger action_delete" 
-                                                value="<?= $row['CateId']; ?>"><i class="fa-solid fa-trash" 
-                                                style="margin-right: 5px;"></i>Xóa
-                                            </a>
-                                        </td>
                                         <?php } ?>
                                     </tr>
                             <?php

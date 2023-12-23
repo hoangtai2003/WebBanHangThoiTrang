@@ -40,7 +40,7 @@
 
 				<div class="breadcrumbs d-flex flex-row align-items-center">
 					<ul>
-						<li><a href="./categories.php">Trang chủ</a></li>
+						<li><a href="../index/index.php">Trang chủ</a></li>
 						<li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Liên hệ</a></li>
 					</ul>
 				</div>
@@ -109,10 +109,6 @@
 	</div>
 
 	<!-- Newsletter -->
-
-
-	<?php include("../includes/newsletter.php") ?>
-	<!-- Footer -->
 
 	<?php include("../includes/footer.php") ?>
 

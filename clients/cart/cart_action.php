@@ -4,6 +4,8 @@ include_once("../../config/config.php");
 // if(!isset($_SESSION["cus_loggedin"])){
 //     header("Location: ../authen/login.php");
 // }
+
+// hiển thị số lượng sản phẩm trong giỏ jquery
 if (isset($_GET['cartItem']) && $_GET['cartItem'] == 'cart_item') {
     if (!isset($_SESSION['cus_loggedin'])) {
         echo '0';
@@ -29,19 +31,24 @@ if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang' && isset($_GET[
     $productId = $_GET['productId'];
     $quantity = isset($_GET['quantity']) ? $_GET['quantity'] : 1;
 
+    // nếu đã đăng nhập
     if (isset($_SESSION['cusid'])) {
         $cusid = $_SESSION['cusid'];
         if (!isset($_SESSION['cart_inserted'])) {
+            // kiểm tra khách hàng đã có giỏ hàng chưa
             $sql_check_cart_exists = "SELECT * FROM cart WHERE CusId = '" . $cusid . "'";
             $result_check_cart_exists = $connection->query($sql_check_cart_exists);
 
+            // nếu có
             if ($result_check_cart_exists->num_rows > 0) {
                 $_SESSION['cart_inserted'] = true;
             } else {
                 $_SESSION['cart_inserted'] = false;
             }
         }
+        // nếu chưa có giỏ hàng
         if (isset($_SESSION['cart_inserted']) && $_SESSION['cart_inserted'] == false) {
+            // thêm giỏ hàng cho dựa vào cusid
             $sql_insert_cart = "INSERT INTO cart (CusId) VALUES ('" . $cusid . "')";
             $result = $connection->query($sql_insert_cart);
             $_SESSION['cart_inserted'] = true;
@@ -51,12 +58,15 @@ if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang' && isset($_GET[
         if( $result_check_cart->num_rows > 0) {
             $row_check_cart = $result_check_cart->fetch_assoc();
 
+            // kiểm tra sản phẩm thêm vào đã có trong giỏ hàng chưa
             $sql_check_cart_detail = "SELECT * FROM cartdetail WHERE CartId = '" . $row_check_cart['CartId'] . "' AND ProdId = '" . $productId . "' LIMIT 1";
             $result_check_cart_detail = $connection->query($sql_check_cart_detail);
 
+            // nếu có
             if ($result_check_cart_detail->num_rows > 0) {
                 $row_check_cart_detail = $result_check_cart_detail->fetch_assoc();
 
+                // sql lấy ra số lượng sp sẵn có = sl sp đó - sl sp đó có trong các đơn hàng
                 $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
                 FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
                 WHERE p.ProdId = '$productId'
@@ -64,7 +74,9 @@ if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang' && isset($_GET[
                 $product = mysqli_query($connection, $sqlProd);
                 $dataProduct = mysqli_fetch_assoc($product);
 
+                // tính số lượng sp của sp đó có thể thêm vào giỏ
                 $maxQuantity = ($dataProduct['ProdQuantity'] - $dataProduct["TotalOrders"]) - $row_check_cart_detail['Quantity'];
+                // không thêm được do quá sl sẵn có
                 if($maxQuantity == 0){
                     $response = array(
                         'success' => false,
@@ -73,6 +85,7 @@ if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang' && isset($_GET[
                     echo json_encode($response);
                     exit();
                 }
+                // thêm được
                 else{
                     $new_quantity = $row_check_cart_detail["Quantity"] + $quantity;
                     $sql_update_cart = "UPDATE cartdetail SET Quantity = '" . $new_quantity . "' WHERE CartId = '" . $row_check_cart['CartId'] . "' AND ProdId = '" . $productId . "'";
@@ -86,7 +99,7 @@ if (isset($_GET['cartadd']) && $_GET['cartadd'] == 'themgiohang' && isset($_GET[
                     exit();
                 }
 
-                
+            // nếu chưa có trong giỏ  
             } else if ($result_check_cart_detail->num_rows == 0) {
                 $sql_insert_cart_detail = "INSERT INTO cartdetail (CartId, ProdId, Quantity) VALUES ('" . $row_check_cart['CartId'] . "', '" . $productId . "', '".$quantity."')";
                 $connection->query($sql_insert_cart_detail);
@@ -200,12 +213,14 @@ if (isset($_GET['add'])) {
         $result_get_cart = $connection->query($sql_get_cart);
         $row_get_cart = $result_get_cart->fetch_assoc();
 
+        // lấy thông tin sp dựa trên cartid
         $sql_check_cart_detail = "SELECT * FROM cartdetail WHERE CartId = '" . $row_get_cart['CartId'] . "' AND ProdId = '" . $productId . "' LIMIT 1";
         $result_check_cart_detail = $connection->query($sql_check_cart_detail);
 
         if ($result_check_cart_detail->num_rows > 0) {
             $row_check_cart_detail = $result_check_cart_detail->fetch_assoc();
 
+            // sql lấy ra số lượng sp sẵn có = sl sp đó - sl sp đó có trong các đơn hàng
             $sqlProd = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders
             FROM product AS p LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
             WHERE p.ProdId = '$productId'
@@ -213,6 +228,7 @@ if (isset($_GET['add'])) {
             $product = mysqli_query($connection, $sqlProd);
             $dataProduct = mysqli_fetch_assoc($product);
 
+            // tính số lượng tối đa có thể thêm = sl sẵn có - sl đã có trong giỏ
             $maxQuantity = ($dataProduct['ProdQuantity'] - $dataProduct["TotalOrders"]) - $row_check_cart_detail['Quantity'];
             if($maxQuantity <= 0){
                 $_SESSION['message'] = 'Rất tiếc, mặt hàng này chỉ còn '.($dataProduct['ProdQuantity'] - $dataProduct['TotalOrders']).' sản phẩm sẵn có!';
