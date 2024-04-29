@@ -4,6 +4,8 @@ require_once('../../config/config.php');
 
 $sql_top_sellers = "SELECT p.*, IFNULL(SUM(od.OrdQuantity), 0) AS TotalOrders FROM product AS p 
 LEFT JOIN orderdetail AS od ON p.ProdId = od.ProdId
+JOIN categories AS c ON c.CateId = p.CateId
+WHERE c.CateStatus = 1 AND p.ProdStatus = 1
 GROUP BY p.ProdId
 ORDER BY TotalOrders DESC
 LIMIT 10;";

@@ -18,7 +18,7 @@ require_once('../../config/config.php');
 					<ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
 						<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
 						<?php
-						$sql_cate = "SELECT * FROM categories";
+						$sql_cate = "SELECT * FROM categories where categories.CateStatus = 1";
 						$result_cate = $connection->query($sql_cate);
 						if ($result_cate->num_rows > 0) {
 							while ($row = $result_cate->fetch_assoc()) {
